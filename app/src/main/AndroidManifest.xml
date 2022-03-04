@@ -101,7 +101,7 @@
         <activity android:name=".ui.search.SearchActivity" />
         <activity android:name=".ui.settings.SettingsActivity" />
         <activity android:name=".ui.auth.LoginActivity"
-            android:exported="false"
+            android:exported="true"
             tools:ignore="AppLinkUrlError">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -116,17 +116,18 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.auth.SplashActivity"
-            android:exported="false"
+            android:exported="true"
             tools:ignore="AppLinkUrlError">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.main.MainActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden" />
+            android:configChanges="orientation|screenSize|keyboardHidden">
+        </activity>
+
 
 
     </application>
