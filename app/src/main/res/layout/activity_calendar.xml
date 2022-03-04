@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <com.zen.alchan.helper.libs.CustomViewPager
+            <it.matteoleggio.alchan.helper.libs.CustomViewPager
                 android:id="@+id/calendarViewPager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>

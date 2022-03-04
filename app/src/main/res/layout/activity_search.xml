@@ -128,7 +128,7 @@
 
     </HorizontalScrollView>
 
-    <com.zen.alchan.helper.libs.CustomViewPager
+    <it.matteoleggio.alchan.helper.libs.CustomViewPager
         android:id="@+id/searchViewPager"
         app:layout_constraintTop_toBottomOf="@id/searchCategoryLayout"
         app:layout_constraintBottom_toBottomOf="parent"

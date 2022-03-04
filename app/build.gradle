@@ -3,14 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.apollographql.apollo'
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: "de.mannodermaus.android-junit5"
 
 android {
     compileSdkVersion 30
     defaultConfig {
-        applicationId "com.zen.alchan"
+        applicationId "it.matteoleggio.alchan"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 100207
@@ -101,10 +99,10 @@ dependencies {
     implementation "org.koin:koin-androidx-viewmodel:2.0.1"
 
     // Firebase
-    implementation 'com.google.firebase:firebase-analytics:17.6.0'
-    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
-    implementation 'com.google.firebase:firebase-messaging:20.3.0'
-    implementation 'com.google.firebase:firebase-database:19.5.0'
+    //implementation 'com.google.firebase:firebase-analytics:17.6.0'
+    //implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
+    //implementation 'com.google.firebase:firebase-messaging:20.3.0'
+    //implementation 'com.google.firebase:firebase-database:19.5.0'
 
     // WorkManager
     implementation "androidx.work:work-runtime-ktx:2.4.0"

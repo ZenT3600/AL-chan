@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.zen.alchan">
+    package="it.matteoleggio.alchan">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -21,13 +21,6 @@
         <service
             android:name=".notifications.PushNotificationsService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service
-            android:name=".notifications.MyFirebaseMessagingService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
@@ -42,7 +35,9 @@
         <activity android:name=".ui.common.TextEditorActivity" />
         <activity
             android:name=".ui.common.SpoilerActivity"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar.Translucent">
+            android:theme="@style/Theme.MaterialComponents.NoActionBar.Translucent"
+            android:exported="false"
+            tools:ignore="AppLinkUrlError">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -61,7 +56,9 @@
         <activity android:name=".ui.profile.favorites.reorder.ReorderFavoritesActivity" />
         <activity android:name=".ui.seasonal.SeasonalActivity" />
         <activity android:name=".ui.explore.ExploreActivity" />
-        <activity android:name=".ui.browse.BrowseActivity">
+        <activity android:name=".ui.browse.BrowseActivity"
+            android:exported="false"
+            tools:ignore="AppLinkUrlError">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -103,7 +100,9 @@
         <activity android:name=".ui.animelist.editor.AnimeListEditorActivity" />
         <activity android:name=".ui.search.SearchActivity" />
         <activity android:name=".ui.settings.SettingsActivity" />
-        <activity android:name=".ui.auth.LoginActivity">
+        <activity android:name=".ui.auth.LoginActivity"
+            android:exported="false"
+            tools:ignore="AppLinkUrlError">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -116,7 +115,9 @@
                     android:scheme="alchan" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.auth.SplashActivity">
+        <activity android:name=".ui.auth.SplashActivity"
+            android:exported="false"
+            tools:ignore="AppLinkUrlError">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

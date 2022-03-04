@@ -418,7 +418,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <com.zen.alchan.helper.libs.CustomViewPager
+        <it.matteoleggio.alchan.helper.libs.CustomViewPager
             android:id="@+id/profileViewPager"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             android:layout_width="match_parent"

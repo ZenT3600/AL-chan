@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.MainActivity">
 
-    <com.zen.alchan.helper.libs.CustomViewPager
+    <it.matteoleggio.alchan.helper.libs.CustomViewPager
         android:id="@+id/mainViewPager"
         android:layout_above="@+id/mainBottomNavigation"
         android:layout_width="match_parent"
