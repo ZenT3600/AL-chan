@@ -24,6 +24,7 @@ import ViewerQuery
 import com.apollographql.apollo.api.Input
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.rx2.Rx2Apollo
+import com.google.firebase.database.FirebaseDatabase
 import it.matteoleggio.alchan.data.network.ApolloHandler
 import it.matteoleggio.alchan.data.response.MediaListTypeOptions
 import it.matteoleggio.alchan.data.response.NotificationOption

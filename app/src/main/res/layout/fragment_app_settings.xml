@@ -461,13 +461,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/pushNotificationMinHoursText"
-                    style="?themeRegularClickableFont"
-                    android:foreground="?selectableItemBackground"
-                    android:padding="@dimen/iconPadding"
+                <EditText
+                    style="?themeRegularFont"
+                    android:id="@+id/pushNotificationsMinHoursInput"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:ems="2"
+                    android:inputType="numberDecimal" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

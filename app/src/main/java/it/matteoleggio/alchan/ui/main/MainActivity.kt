@@ -10,6 +10,8 @@ import androidx.core.view.get
 import androidx.core.view.updatePadding
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
+import com.google.firebase.FirebaseApp
+import com.google.firebase.messaging.FirebaseMessaging
 import it.matteoleggio.alchan.R
 import it.matteoleggio.alchan.helper.*
 import it.matteoleggio.alchan.helper.utils.DialogUtility
@@ -60,6 +62,14 @@ class MainActivity : BaseActivity(), BaseMainFragmentListener {
     private fun initPage() {
         setupObserver()
         initLayout()
+        FirebaseApp.initializeApp(applicationContext)
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            if (!it.isSuccessful) {
+                return@addOnCompleteListener
+            }
+
+            viewModel.sendFirebaseToken(it.result)
+        }
 
         if (intent.getBooleanExtra(GO_TO_NOTIFICATION, false)) {
             intent.removeExtra(GO_TO_NOTIFICATION)

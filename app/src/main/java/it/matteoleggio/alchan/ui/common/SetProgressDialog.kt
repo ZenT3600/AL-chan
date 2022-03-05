@@ -42,8 +42,8 @@ class SetProgressDialog : DialogFragment() {
 
             var newProgress = dialogView.setProgressField.text.toString().toInt()
 
-            if (newProgress > UShort.MAX_VALUE.toInt()) {
-                newProgress = UShort.MAX_VALUE.toInt()
+            if (newProgress > 65535) {
+                newProgress = 65535
             }
 
             if (totalEpisodes != null && newProgress > totalEpisodes) {
@@ -54,7 +54,7 @@ class SetProgressDialog : DialogFragment() {
         }
         builder.setNegativeButton(R.string.cancel, null)
 
-        if ((totalEpisodes == null || totalEpisodes > currentProgress ?: 0) && currentProgress ?: 0 < UShort.MAX_VALUE.toInt()) {
+        if ((totalEpisodes == null || totalEpisodes > currentProgress ?: 0) && currentProgress ?: 0 < 65535) {
             builder.setNeutralButton(R.string.increment) { _, _ ->
                 val newProgress = if (currentProgress == null) 1 else currentProgress + 1
                 listener?.passProgress(newProgress)

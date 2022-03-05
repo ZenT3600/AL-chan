@@ -96,30 +96,6 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/linkPlayStoreLayout"
-                    android:gravity="center_vertical"
-                    android:foreground="?selectableItemBackground"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        app:srcCompat="@drawable/ic_google_play"
-                        android:layout_marginEnd="@dimen/marginSmall"
-                        android:layout_width="@dimen/iconSize"
-                        android:layout_height="@dimen/iconSize"/>
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/linkPlayStoreText"
-                        android:text="Play Store"
-                        style="?themeSmallClickableFont"
-                        android:padding="@dimen/marginClose"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -152,30 +128,6 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/linkTwitterLayout"
-                    android:gravity="center_vertical"
-                    android:foreground="?selectableItemBackground"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        app:srcCompat="@drawable/ic_twitter_color"
-                        android:layout_marginEnd="@dimen/marginSmall"
-                        android:layout_width="@dimen/iconSize"
-                        android:layout_height="@dimen/iconSize"/>
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/linkTwitterText"
-                        android:text="Twitter"
-                        style="?themeSmallClickableFont"
-                        android:padding="@dimen/marginClose"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -194,11 +146,11 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/linkGmailText"
-                    android:text="Gmail"
                     style="?themeSmallClickableFont"
-                    android:padding="@dimen/marginClose"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/marginClose"
+                    android:text="Email" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

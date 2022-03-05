@@ -115,7 +115,7 @@ class AnimeListRvAdapter(private val context: Context,
             }
 
             holder.animeProgressText.text = "${mediaList.progress}/${mediaList.media?.episodes ?: '?'}"
-            holder.animeIncrementProgressButton.visibility = if ((mediaList.media?.episodes == null || mediaList.media?.episodes!! > mediaList.progress!!) && mediaList.progress!! < UShort.MAX_VALUE.toInt()) View.VISIBLE else View.GONE
+            holder.animeIncrementProgressButton.visibility = if ((mediaList.media?.episodes == null || mediaList.media?.episodes!! > mediaList.progress!!) && mediaList.progress!! < 65535) View.VISIBLE else View.GONE
 
             holder.itemView.setOnClickListener {
                 listener.openEditor(mediaList.id)

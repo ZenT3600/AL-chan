@@ -1,9 +1,15 @@
 package it.matteoleggio.alchan.ui.main
 
+import android.view.WindowInsets
 import androidx.lifecycle.ViewModel
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.messaging.FirebaseMessaging
 import it.matteoleggio.alchan.data.repository.AppSettingsRepository
+import it.matteoleggio.alchan.data.repository.AuthRepository
+import it.matteoleggio.alchan.data.repository.MediaListRepository
 import it.matteoleggio.alchan.data.repository.UserRepository
 import it.matteoleggio.alchan.helper.enums.AppColorTheme
+import it.matteoleggio.alchan.helper.pojo.InitialPadding
 
 class MainViewModel(private val appSettingsRepository: AppSettingsRepository,
                     private val userRepository: UserRepository

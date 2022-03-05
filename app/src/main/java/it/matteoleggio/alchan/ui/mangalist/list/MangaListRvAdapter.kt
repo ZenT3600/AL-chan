@@ -81,10 +81,10 @@ class MangaListRvAdapter(private val context: Context,
             }
 
             holder.mangaProgressVolumesText.text = "${mediaList.progressVolumes}/${mediaList.media?.volumes ?: '?'}"
-            holder.mangaIncrementProgressVolumesButton.visibility = if ((mediaList.media?.volumes == null || mediaList.media?.volumes!! > mediaList.progressVolumes!!) && mediaList.progressVolumes!! < UShort.MAX_VALUE.toInt()) View.VISIBLE else View.GONE
+            holder.mangaIncrementProgressVolumesButton.visibility = if ((mediaList.media?.volumes == null || mediaList.media?.volumes!! > mediaList.progressVolumes!!) && mediaList.progressVolumes!! < 65535) View.VISIBLE else View.GONE
 
             holder.mangaProgressText.text = "${mediaList.progress}/${mediaList.media?.chapters ?: '?'}"
-            holder.mangaIncrementProgressButton.visibility = if ((mediaList.media?.chapters == null || mediaList.media?.chapters!! > mediaList.progress!!) && mediaList.progress!! < UShort.MAX_VALUE.toInt()) View.VISIBLE else View.GONE
+            holder.mangaIncrementProgressButton.visibility = if ((mediaList.media?.chapters == null || mediaList.media?.chapters!! > mediaList.progress!!) && mediaList.progress!! < 65535) View.VISIBLE else View.GONE
 
             if (mediaList.media?.format == MediaFormat.MANGA || mediaList.media?.format == MediaFormat.ONE_SHOT) {
                 holder.mangaProgressVolumesLayout.visibility = if (listStyle?.hideMangaVolume == true) View.GONE else View.VISIBLE

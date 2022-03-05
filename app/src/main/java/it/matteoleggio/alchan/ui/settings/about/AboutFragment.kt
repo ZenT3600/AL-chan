@@ -51,33 +51,40 @@ class AboutFragment : Fragment() {
 
         versionText.text = "Version ${BuildConfig.VERSION_NAME}"
         linkGmailText.text = Constant.EMAIL_ADDRESS
-        linkTwitterText.text = Constant.TWITTER_ACCOUNT
 
         linkAniListLayout.setOnClickListener { openLink(Constant.ALCHAN_THREAD_URL) }
-        linkPlayStoreLayout.setOnClickListener { openLink(Constant.PLAY_STORE_URL) }
         linkGmailLayout.setOnClickListener {
-            val intent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", Constant.EMAIL_ADDRESS, null))
+            val intent =
+                Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", Constant.EMAIL_ADDRESS, null))
             startActivity(intent)
-        }
-        linkTwitterLayout.setOnClickListener { openLink(Constant.TWITTER_URL) }
-        linkGitHubLayout.setOnClickListener { openLink(Constant.GITHUB_URL) }
 
-        val targetText = "here"
-        val explanationText = SpannableString(getString(R.string.the_privacy_policy_of_this_app_can_be_read_fully_here))
-        val startIndex = explanationText.indexOf(targetText)
-        val endIndex = startIndex + targetText.length
-        val clickableSpan = object : ClickableSpan() {
-            override fun onClick(widget: View) {
-                openLink(Constant.PRIVACY_POLICY_URL)
+            linkGitHubLayout.setOnClickListener { openLink(Constant.GITHUB_URL) }
+
+            val targetText = "here"
+            val explanationText =
+                SpannableString(getString(R.string.the_privacy_policy_of_this_app_can_be_read_fully_here))
+            val startIndex = explanationText.indexOf(targetText)
+            val endIndex = startIndex + targetText.length
+            val clickableSpan = object : ClickableSpan() {
+                override fun onClick(widget: View) {
+                    openLink(Constant.PRIVACY_POLICY_URL)
+                }
             }
+
+            explanationText.setSpan(
+                clickableSpan,
+                startIndex,
+                endIndex,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            privacyPolicyText.movementMethod = LinkMovementMethod.getInstance()
+            privacyPolicyText.text = explanationText
         }
 
-        explanationText.setSpan(clickableSpan, startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        privacyPolicyText.movementMethod = LinkMovementMethod.getInstance()
-        privacyPolicyText.text = explanationText
+
     }
 
-    private fun openLink(url: String) {
+    fun openLink(url: String) {
         CustomTabsIntent.Builder().build().launchUrl(requireActivity(), Uri.parse(url))
     }
 }

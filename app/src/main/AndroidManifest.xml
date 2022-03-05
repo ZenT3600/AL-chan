@@ -22,6 +22,14 @@
             android:name=".notifications.PushNotificationsService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
+        <service
+            android:name=".notifications.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_notif" />

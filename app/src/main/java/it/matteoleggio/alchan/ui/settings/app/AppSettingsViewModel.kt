@@ -28,7 +28,8 @@ class AppSettingsViewModel(private val appSettingsRepository: AppSettingsReposit
         sendForumPushNotifications: Boolean = true,
         sendFollowsPushNotifications: Boolean = true,
         sendRelationsPushNotifications: Boolean = true,
-        mergePushNotifications: Boolean = false
+        mergePushNotifications: Boolean = false,
+        pushNotificationsMinHoursPassed: Double = 0.5
     ) {
         appSettingsRepository.setAppSettings(AppSettings(
             appTheme = selectedAppTheme,
@@ -45,7 +46,7 @@ class AppSettingsViewModel(private val appSettingsRepository: AppSettingsReposit
             sendFollowsPushNotification = sendFollowsPushNotifications,
             sendRelationsPushNotification = sendRelationsPushNotifications,
             mergePushNotifications = mergePushNotifications,
-            pushNotificationMinimumHours = pushNotificationsMinHours
+            pushNotificationMinimumHours = pushNotificationsMinHoursPassed
         ))
     }
 }

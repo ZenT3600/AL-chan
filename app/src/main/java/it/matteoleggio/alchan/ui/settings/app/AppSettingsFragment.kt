@@ -100,7 +100,8 @@ class AppSettingsFragment : Fragment() {
                         sendForumPushNotificationsCheckBox.isChecked,
                         sendFollowsPushNotificationsCheckBox.isChecked,
                         sendRelationsPushNotificationsCheckBox.isChecked,
-                        mergePushNotificationsCheckBox.isChecked
+                        mergePushNotificationsCheckBox.isChecked,
+                        pushNotificationsMinHoursInput.text.toString().toDouble()
                     )
 
                     activity?.recreate()
@@ -115,8 +116,7 @@ class AppSettingsFragment : Fragment() {
         selectedThemeText.text = viewModel.selectedAppTheme?.name.replaceUnderscore()
         selectedThemeText.setOnClickListener { showAppThemeDialog() }
 
-        pushNotificationMinHoursText.text = "${viewModel.pushNotificationsMinHours} ${getString(R.string.hour)}"
-        pushNotificationMinHoursText.setOnClickListener { showPushNotificationMinHoursDialog() }
+        pushNotificationsMinHoursInput.setText(viewModel.pushNotificationsMinHours.toString())
 
         resetDefaultButton.setOnClickListener {
             val isLowOnMemory = AndroidUtility.isLowOnMemory(activity)
@@ -175,20 +175,6 @@ class AppSettingsFragment : Fragment() {
                 negativeColorItem.setCardBackgroundColor(ContextCompat.getColor(requireActivity(), palette.negativeColor))
             }
         })
-        dialog.show(childFragmentManager, null)
-    }
-
-    private fun showPushNotificationMinHoursDialog() {
-        val dialog = PushNotificationMinHoursDialog()
-        dialog.setListener(object : PushNotificationMinHoursDialog.PushNotificationMinHoursListener {
-            override fun passHour(hour: Int) {
-                viewModel.pushNotificationsMinHours = hour.toDouble() / 2
-                pushNotificationMinHoursText.text = "${viewModel.pushNotificationsMinHours} ${getString(R.string.hour)}"
-            }
-        })
-        val bundle = Bundle()
-        bundle.putDouble(PushNotificationMinHoursDialog.CURRENT_HOUR, viewModel.pushNotificationsMinHours ?: 1.0)
-        dialog.arguments = bundle
         dialog.show(childFragmentManager, null)
     }
 }

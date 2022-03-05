@@ -15,7 +15,7 @@ class PushNotificationMinHoursDialog : DialogFragment() {
 
     private lateinit var listener: PushNotificationMinHoursListener
     private val hourArray = Array(48) { it + 1.0 }
-    private var currentHour = 1
+    private var currentHour = 1.0
 
     companion object {
         const val CURRENT_HOUR = "currentHour"
@@ -29,19 +29,19 @@ class PushNotificationMinHoursDialog : DialogFragment() {
             dismiss()
         }
 
-        currentHour = arguments?.getInt(CURRENT_HOUR, 1) ?: 1
+        currentHour = arguments?.getDouble(CURRENT_HOUR, 1.0) ?: 1.0
 
         view.numberPicker.apply {
             minValue = 1
             maxValue = 48
             displayedValues = hourArray.map { ((it * 3).toDouble() / 6).toString() }.toTypedArray()
             wrapSelectorWheel = false
-            value = currentHour
+            value = (currentHour * 2).toInt()
         }
 
         builder.setView(view)
         builder.setPositiveButton(R.string.set) { _, _ ->
-            listener.passHour(view.numberPicker.value)
+            listener.passHour(view.numberPicker.value / 2)
         }
         builder.setNegativeButton(R.string.cancel, null)
         return builder.create()

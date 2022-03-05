@@ -20,19 +20,19 @@ object Constant {
     const val ANILIST_IMPORT_LISTS_URL = "${ANILIST_SETTINGS_URL}import"
 
     const val PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}"
-    const val EMAIL_ADDRESS = "alchanapp@gmail.com"
+    const val EMAIL_ADDRESS = "info@matteoleggio.it"
     const val TWITTER_ACCOUNT = "@alchan_app"
     const val TWITTER_URL = "https://twitter.com/alchan_app"
-    const val GITHUB_URL = "https://github.com/zend10/AL-chan"
+    const val GITHUB_URL = "https://github.com/ZenT3600/AL-sama"
     const val PRIVACY_POLICY_URL = "https://zend10.github.io/AL-chan/privacy.html"
-    const val ALCHAN_THREAD_URL = "${ANILIST_URL}forum/thread/12889"
+    const val ALCHAN_THREAD_URL = "${ANILIST_URL}user/ZenT3600"
 
     const val JIKAN_URL = "https://api.jikan.moe/v3/"
     const val YOUTUBE_API_URL = "https://www.googleapis.com/youtube/v3/"
     const val SPOTIFY_AUTH_API_URL = "https://accounts.spotify.com/api/"
     const val SPOTIFY_API_URL = "https://api.spotify.com/v1/"
 
-    const val RAW_GITHUB_URL = "https://raw.githubusercontent.com/zend10/AL-chan/master/"
+    const val RAW_GITHUB_URL = "https://raw.githubusercontent.com/ZenT3600/AL-sama/master/"
     const val VIDEO_THUMBNAIL_URL = "${RAW_GITHUB_URL}docs/images/video_thumbnail.png"
     const val YOUTUBE_THUMBNAIL_URL = "${RAW_GITHUB_URL}docs/images/youtube_thumbnail.png"
 

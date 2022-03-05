@@ -523,7 +523,7 @@
     <string name="sorry_failed_to_find_this_song_on_spotify">Sorry, AL-sama failed to find this song on Spotify :(</string>
     <string name="select_player">Select Player</string>
     <string name="merge_activity_forum_follows_and_relations_push_notifications_into_one">Merge Activity, Forum, Follows, and Relations push notifications into one</string>
-    <string name="show_push_notification_not_earlier_than_every">Show push notification not earlier than every</string>
+    <string name="show_push_notification_not_earlier_than_every">Show push notification every [N] hours</string>
     <string name="you_have_unread_notifications">You have unread notifications.</string>
     <string name="hide_series_on_my_list">Hide series on my list</string>
     <string name="only_show_series_on_my_list">Only show series on my list</string>

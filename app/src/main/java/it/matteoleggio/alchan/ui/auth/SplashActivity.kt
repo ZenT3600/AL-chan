@@ -11,8 +11,9 @@ import it.matteoleggio.alchan.helper.Constant
 import it.matteoleggio.alchan.helper.enums.ResponseStatus
 import it.matteoleggio.alchan.helper.utils.AndroidUtility
 import it.matteoleggio.alchan.helper.utils.Utility
-import it.matteoleggio.alchan.ui.main.MainActivity
+import it.matteoleggio.alchan.notifications.PushNotificationsService
 import it.matteoleggio.alchan.ui.base.BaseActivity
+import it.matteoleggio.alchan.ui.main.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashActivity : BaseActivity() {
@@ -103,6 +104,8 @@ class SplashActivity : BaseActivity() {
 
     private fun moveToNextPage() {
         if (viewModel.isLoggedIn) {
+            val intent = Intent(applicationContext, PushNotificationsService::class.java)
+            PushNotificationsService().enqueueWork(applicationContext, intent)
             startActivity(Intent(this, MainActivity::class.java))
         } else {
             startActivity(Intent(this, LoginActivity::class.java))
