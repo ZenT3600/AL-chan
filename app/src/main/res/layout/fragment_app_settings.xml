@@ -85,28 +85,28 @@
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/secondaryColorLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/primaryColorLayout"
                     android:layout_marginTop="@dimen/marginNormal"
-                    android:gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:gravity="center_vertical">
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:text="@string/secondary"
                         style="?themeRegularFont"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:text="@string/secondary" />
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/secondaryColorItem"
-                        app:cardBackgroundColor="?themeSecondaryColor"
-                        app:strokeColor="?themeContentColor"
-                        app:strokeWidth="@dimen/lineWidth"
-                        app:cardCornerRadius="12dp"
+                        android:layout_width="@dimen/iconSize"
+                        android:layout_height="@dimen/iconSize"
                         android:layout_marginStart="@dimen/marginPage"
                         android:padding="@dimen/iconPadding"
-                        android:layout_width="@dimen/iconSize"
-                        android:layout_height="@dimen/iconSize"/>
+                        app:cardBackgroundColor="?themeSecondaryColor"
+                        app:cardCornerRadius="12dp"
+                        app:strokeColor="?themeContentColor"
+                        app:strokeWidth="@dimen/lineWidth" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -567,7 +567,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/marginNormal"
                     android:layout_weight="1"
-                    android:text="@string/clipboard_explanation" />
+                    android:text="@string/clipboard_explanation"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <com.google.android.material.button.MaterialButton

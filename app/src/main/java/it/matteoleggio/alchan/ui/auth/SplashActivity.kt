@@ -17,6 +17,7 @@ import it.matteoleggio.alchan.ui.base.BaseActivity
 import it.matteoleggio.alchan.ui.main.BroadcastReceiverNotifs
 import it.matteoleggio.alchan.ui.main.MainActivity
 import kotlinx.coroutines.Job
+import okhttp3.internal.wait
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashActivity : BaseActivity() {
