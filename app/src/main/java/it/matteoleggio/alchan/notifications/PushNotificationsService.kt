@@ -23,6 +23,7 @@ import it.matteoleggio.alchan.ui.main.MainActivity
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import org.koin.android.ext.android.inject
+import kotlin.concurrent.thread
 import kotlin.random.Random
 
 
@@ -43,10 +44,12 @@ class PushNotificationsService : JobIntentService() {
     }
 
     @SuppressLint("CheckResult")
-    override fun onHandleWork(intent: Intent) {
+    public override fun onHandleWork(intent: Intent) {
+        /*
         if (Utility.getCurrentTimestamp() - (appSettingManager.appSettings.pushNotificationMinimumHours ?: 1.0) * 3600000 < (userManager.lastPushNotificationTimestamp ?: 0)) {
             return
         }
+        */
 
         if (appSettingManager.appSettings.sendAiringPushNotification == false &&
             appSettingManager.appSettings.sendActivityPushNotification == false &&

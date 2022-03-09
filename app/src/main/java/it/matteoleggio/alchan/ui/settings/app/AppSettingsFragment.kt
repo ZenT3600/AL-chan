@@ -1,6 +1,7 @@
 package it.matteoleggio.alchan.ui.settings.app
 
 
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.text.Spannable
@@ -12,8 +13,10 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
 
 import it.matteoleggio.alchan.R
 import it.matteoleggio.alchan.helper.*
@@ -77,7 +80,35 @@ class AppSettingsFragment : Fragment() {
             sendRelationsPushNotificationsCheckBox.isChecked = viewModel.appSettings.sendRelationsPushNotification == true
             mergePushNotificationsCheckBox.isChecked = viewModel.appSettings.mergePushNotifications == true
             viewModel.pushNotificationsMinHours = viewModel.appSettings.pushNotificationMinimumHours
+            for (clip in viewModel.appSettings.postsCustomClipboard) {
+                val newClipboard = EditText(context)
+                newClipboard.setHorizontallyScrolling(false)
+                newClipboard.maxLines = Integer.MAX_VALUE
+                newClipboard.typeface = Typeface.MONOSPACE
+                newClipboard.textSize = 12F
+                newClipboard.setText(clip)
+                postsClipboardLayout.addView(newClipboard, 0)
+            }
             viewModel.isInit = true
+        } else {
+            for (clip in viewModel.appSettings.postsCustomClipboard) {
+                val newClipboard = EditText(context)
+                newClipboard.setHorizontallyScrolling(false)
+                newClipboard.maxLines = Integer.MAX_VALUE
+                newClipboard.typeface = Typeface.MONOSPACE
+                newClipboard.textSize = 12F
+                newClipboard.setText(clip)
+                postsClipboardLayout.addView(newClipboard, 0)
+            }
+        }
+
+        addClipboardButton.setOnClickListener {
+            val newClipboard = EditText(context)
+            newClipboard.setHorizontallyScrolling(false)
+            newClipboard.maxLines = Integer.MAX_VALUE
+            newClipboard.typeface = Typeface.MONOSPACE
+            newClipboard.textSize = 12F
+            postsClipboardLayout.addView(newClipboard, 0)
         }
 
         itemSave.setOnMenuItemClickListener {
@@ -87,6 +118,14 @@ class AppSettingsFragment : Fragment() {
                 R.string.are_you_sure_you_want_to_save_this_configuration,
                 R.string.save,
                 {
+                    var clip = arrayListOf<String>()
+                    for (i in 0 until (postsClipboardLayout.childCount)) {
+                        lateinit var child: EditText
+                        try { child = postsClipboardLayout.getChildAt(i) as EditText } catch(e: ClassCastException) { continue }
+                        if (child.text.toString().isEmpty()) continue
+                        clip.add(child.text.toString())
+                    }
+                    if (pushNotificationsMinHoursInput.text.toString().toDouble() < 0.1) { pushNotificationsMinHoursInput.setText("0.1") }
                     viewModel.setAppSettings(
                         circularAvatarCheckBox.isChecked,
                         whiteBackgroundAvatarCheckBox.isChecked,
@@ -101,7 +140,8 @@ class AppSettingsFragment : Fragment() {
                         sendFollowsPushNotificationsCheckBox.isChecked,
                         sendRelationsPushNotificationsCheckBox.isChecked,
                         mergePushNotificationsCheckBox.isChecked,
-                        pushNotificationsMinHoursInput.text.toString().toDouble()
+                        pushNotificationsMinHoursInput.text.toString().toDouble(),
+                        clip
                     )
 
                     activity?.recreate()

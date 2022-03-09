@@ -11,7 +11,7 @@ android {
     compileSdkVersion 30
     defaultConfig {
         applicationId "it.matteoleggio.alchan"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 100207
         versionName "1.2.7"

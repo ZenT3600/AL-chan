@@ -18,5 +18,6 @@ class AppSettings(
     var sendFollowsPushNotification: Boolean? = null,
     var sendRelationsPushNotification: Boolean? = null,
     var mergePushNotifications: Boolean? = null,
-    var pushNotificationMinimumHours: Double? = null
+    var pushNotificationMinimumHours: Double? = null,
+    var postsCustomClipboard: ArrayList<String> = arrayListOf()
 )

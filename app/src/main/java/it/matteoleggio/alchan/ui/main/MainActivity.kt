@@ -1,21 +1,24 @@
 package it.matteoleggio.alchan.ui.main
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
-import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.get
-import androidx.core.view.updatePadding
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
 import it.matteoleggio.alchan.R
+import it.matteoleggio.alchan.data.localstorage.AppSettingsManager
 import it.matteoleggio.alchan.helper.*
 import it.matteoleggio.alchan.helper.utils.DialogUtility
 import it.matteoleggio.alchan.helper.utils.Utility
+import it.matteoleggio.alchan.notifications.PushNotificationsService
 import it.matteoleggio.alchan.ui.animelist.AnimeListFragment
 import it.matteoleggio.alchan.ui.auth.SplashActivity
 import it.matteoleggio.alchan.ui.base.BaseActivity
@@ -26,6 +29,7 @@ import it.matteoleggio.alchan.ui.notification.NotificationActivity
 import it.matteoleggio.alchan.ui.profile.ProfileFragment
 import it.matteoleggio.alchan.ui.social.SocialFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -33,6 +37,7 @@ class MainActivity : BaseActivity(), BaseMainFragmentListener {
 
     private val viewModel by viewModel<MainViewModel>()
 
+    private val appSettingManager: AppSettingsManager by inject()
     private lateinit var handler: Handler
     private lateinit var runnable: Runnable
 
@@ -120,6 +125,16 @@ class MainActivity : BaseActivity(), BaseMainFragmentListener {
 
     override fun onStart() {
         super.onStart()
+        val mIntent = Intent(this, BroadcastReceiverNotifs::class.java)
+
+        val intervalMillis = appSettingManager.appSettings.pushNotificationMinimumHours?.times(60 * 60 * 1000)?.toLong()
+        val mPendingIntent = PendingIntent.getBroadcast(this, 0, mIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val mAlarmManager = this
+            .getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        mAlarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
+            intervalMillis!!, mPendingIntent
+        )
         viewModel.getNotificationCount()
     }
 

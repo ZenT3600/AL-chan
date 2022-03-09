@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import it.matteoleggio.alchan.data.repository.AppSettingsRepository
 import it.matteoleggio.alchan.helper.enums.AppColorTheme
 import it.matteoleggio.alchan.helper.pojo.AppSettings
-import type.StaffLanguage
 
 class AppSettingsViewModel(private val appSettingsRepository: AppSettingsRepository) : ViewModel() {
 
@@ -29,7 +28,8 @@ class AppSettingsViewModel(private val appSettingsRepository: AppSettingsReposit
         sendFollowsPushNotifications: Boolean = true,
         sendRelationsPushNotifications: Boolean = true,
         mergePushNotifications: Boolean = false,
-        pushNotificationsMinHoursPassed: Double = 0.5
+        pushNotificationsMinHoursPassed: Double = 0.5,
+        postsCustomClipboard: ArrayList<String> = arrayListOf()
     ) {
         appSettingsRepository.setAppSettings(AppSettings(
             appTheme = selectedAppTheme,
@@ -46,7 +46,8 @@ class AppSettingsViewModel(private val appSettingsRepository: AppSettingsReposit
             sendFollowsPushNotification = sendFollowsPushNotifications,
             sendRelationsPushNotification = sendRelationsPushNotifications,
             mergePushNotifications = mergePushNotifications,
-            pushNotificationMinimumHours = pushNotificationsMinHoursPassed
+            pushNotificationMinimumHours = pushNotificationsMinHoursPassed,
+            postsCustomClipboard = postsCustomClipboard
         ))
     }
 }

@@ -10,19 +10,20 @@
     <include layout="@layout/layout_toolbar"/>
 
     <ScrollView
-        android:layout_below="@+id/toolbarLayout"
-        android:layout_above="@id/textLimit"
+        android:id="@+id/MainScrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_above="@id/textLimit"
+        android:layout_below="@+id/toolbarLayout">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/editorEditText"
             style="?themeRegularFont"
-            android:inputType="textCapSentences|textMultiLine"
-            android:background="@android:color/transparent"
-            android:padding="@dimen/marginNormal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:inputType="textCapSentences|textMultiLine"
+            android:padding="@dimen/marginNormal" />
 
     </ScrollView>
 
@@ -52,141 +53,150 @@
 
     <HorizontalScrollView
         android:id="@+id/editorFormatLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="?themeCardColor"
-        android:elevation="@dimen/elevationNormal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:elevation="@dimen/elevationNormal">
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/editorFormatLayoutChild"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/formatBoldIcon"
-                android:src="@drawable/ic_format_bold"
-                app:tint="?themeContentColor"
-                android:padding="@dimen/marginNormal"
-                android:foreground="?selectableItemBackground"
+                android:id="@+id/newClipboard"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:padding="@dimen/marginNormal"
+                android:src="@drawable/ic_create"
+                app:tint="?themeContentColor" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/formatBoldIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foreground="?selectableItemBackground"
+                android:padding="@dimen/marginNormal"
+                android:src="@drawable/ic_format_bold"
+                app:tint="?themeContentColor" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/formatItalicIcon"
-                android:src="@drawable/ic_format_italic"
-                app:tint="?themeContentColor"
-                android:padding="@dimen/marginNormal"
-                android:foreground="?selectableItemBackground"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:foreground="?selectableItemBackground"
+                android:padding="@dimen/marginNormal"
+                android:src="@drawable/ic_format_italic"
+                app:tint="?themeContentColor" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/formatStrikeThroughIcon"
-                android:src="@drawable/ic_strikethrough_s"
-                app:tint="?themeContentColor"
-                android:padding="@dimen/marginNormal"
-                android:foreground="?selectableItemBackground"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:foreground="?selectableItemBackground"
+                android:padding="@dimen/marginNormal"
+                android:src="@drawable/ic_strikethrough_s"
+                app:tint="?themeContentColor" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/formatSpoilerIcon"
-                android:src="@drawable/ic_visibility_off"
-                app:tint="?themeContentColor"
-                android:padding="@dimen/marginNormal"
-                android:foreground="?selectableItemBackground"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:foreground="?selectableItemBackground"
+                android:padding="@dimen/marginNormal"
+                android:src="@drawable/ic_visibility_off"
+                app:tint="?themeContentColor" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/formatLinkIcon"
-                android:src="@drawable/ic_insert_link"
-                app:tint="?themeContentColor"
-                android:padding="@dimen/marginNormal"
-                android:foreground="?selectableItemBackground"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:foreground="?selectableItemBackground"
+                android:padding="@dimen/marginNormal"
+                android:src="@drawable/ic_insert_link"
+                app:tint="?themeContentColor" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/formatImageIcon"
-                android:src="@drawable/ic_image"
-                app:tint="?themeContentColor"
-                android:padding="@dimen/marginNormal"
-                android:foreground="?selectableItemBackground"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:foreground="?selectableItemBackground"
+                android:padding="@dimen/marginNormal"
+                android:src="@drawable/ic_image"
+                app:tint="?themeContentColor" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/formatYoutubeIcon"
-                android:src="@drawable/ic_play_button"
-                app:tint="?themeContentColor"
-                android:padding="@dimen/marginNormal"
-                android:foreground="?selectableItemBackground"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:foreground="?selectableItemBackground"
+                android:padding="@dimen/marginNormal"
+                android:src="@drawable/ic_play_button"
+                app:tint="?themeContentColor" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/formatVideoIcon"
-                android:src="@drawable/ic_videocam"
-                app:tint="?themeContentColor"
-                android:padding="@dimen/marginNormal"
-                android:foreground="?selectableItemBackground"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:foreground="?selectableItemBackground"
+                android:padding="@dimen/marginNormal"
+                android:src="@drawable/ic_videocam"
+                app:tint="?themeContentColor" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/formatOrderedListIcon"
-                android:src="@drawable/ic_numbered_list"
-                app:tint="?themeContentColor"
-                android:padding="@dimen/marginNormal"
-                android:foreground="?selectableItemBackground"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:foreground="?selectableItemBackground"
+                android:padding="@dimen/marginNormal"
+                android:src="@drawable/ic_numbered_list"
+                app:tint="?themeContentColor" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/formatUnorderedListIcon"
-                android:src="@drawable/ic_format_list_bulleted"
-                app:tint="?themeContentColor"
-                android:padding="@dimen/marginNormal"
-                android:foreground="?selectableItemBackground"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:foreground="?selectableItemBackground"
+                android:padding="@dimen/marginNormal"
+                android:src="@drawable/ic_format_list_bulleted"
+                app:tint="?themeContentColor" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/formatHeaderIcon"
-                android:src="@drawable/ic_title"
-                app:tint="?themeContentColor"
-                android:padding="@dimen/marginNormal"
-                android:foreground="?selectableItemBackground"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:foreground="?selectableItemBackground"
+                android:padding="@dimen/marginNormal"
+                android:src="@drawable/ic_title"
+                app:tint="?themeContentColor" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/formatCenterIcon"
-                android:src="@drawable/ic_format_align_center"
-                app:tint="?themeContentColor"
-                android:padding="@dimen/marginNormal"
-                android:foreground="?selectableItemBackground"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:foreground="?selectableItemBackground"
+                android:padding="@dimen/marginNormal"
+                android:src="@drawable/ic_format_align_center"
+                app:tint="?themeContentColor" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/formatQuoteIcon"
-                android:src="@drawable/ic_format_quote"
-                app:tint="?themeContentColor"
-                android:padding="@dimen/marginNormal"
-                android:foreground="?selectableItemBackground"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:foreground="?selectableItemBackground"
+                android:padding="@dimen/marginNormal"
+                android:src="@drawable/ic_format_quote"
+                app:tint="?themeContentColor" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/formatCodeIcon"
-                android:src="@drawable/ic_code"
-                app:tint="?themeContentColor"
-                android:padding="@dimen/marginNormal"
-                android:foreground="?selectableItemBackground"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:foreground="?selectableItemBackground"
+                android:padding="@dimen/marginNormal"
+                android:src="@drawable/ic_code"
+                app:tint="?themeContentColor" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

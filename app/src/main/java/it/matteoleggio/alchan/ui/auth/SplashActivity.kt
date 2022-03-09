@@ -1,5 +1,6 @@
 package it.matteoleggio.alchan.ui.auth
 
+import android.app.PendingIntent
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -13,12 +14,16 @@ import it.matteoleggio.alchan.helper.utils.AndroidUtility
 import it.matteoleggio.alchan.helper.utils.Utility
 import it.matteoleggio.alchan.notifications.PushNotificationsService
 import it.matteoleggio.alchan.ui.base.BaseActivity
+import it.matteoleggio.alchan.ui.main.BroadcastReceiverNotifs
 import it.matteoleggio.alchan.ui.main.MainActivity
+import kotlinx.coroutines.Job
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SplashActivity : BaseActivity() {
 
     private val viewModel by viewModel<SplashViewModel>()
+
+    private var job: Job? = null
 
     private val isTrue = "1"
 
@@ -104,8 +109,8 @@ class SplashActivity : BaseActivity() {
 
     private fun moveToNextPage() {
         if (viewModel.isLoggedIn) {
-            val intent = Intent(applicationContext, PushNotificationsService::class.java)
-            PushNotificationsService().enqueueWork(applicationContext, intent)
+            val mIntent = Intent(this, BroadcastReceiverNotifs::class.java)
+            PendingIntent.getBroadcast(this, 0, mIntent, PendingIntent.FLAG_UPDATE_CURRENT).send()
             startActivity(Intent(this, MainActivity::class.java))
         } else {
             startActivity(Intent(this, LoginActivity::class.java))

@@ -4,7 +4,6 @@ import android.graphics.Color
 import it.matteoleggio.alchan.BuildConfig
 import it.matteoleggio.alchan.R
 import it.matteoleggio.alchan.helper.enums.AppColorTheme
-import it.matteoleggio.alchan.helper.pojo.ColorPalette
 import type.*
 
 object Constant {

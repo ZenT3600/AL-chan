@@ -42,12 +42,15 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/newActivityButton"
-            android:src="@drawable/ic_create"
-            app:tint="?themeBackgroundColor"
-            app:backgroundTint="?themeSecondaryColor"
-            android:layout_margin="@dimen/marginNormal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/marginNormal"
+            android:layout_marginTop="@dimen/marginNormal"
+            android:layout_marginEnd="@dimen/marginNormal"
+            android:layout_marginBottom="@dimen/marginNormal"
+            android:src="@drawable/ic_create"
+            app:backgroundTint="?themeSecondaryColor"
+            app:tint="?themeBackgroundColor" />
 
     </RelativeLayout>
 

@@ -2,33 +2,45 @@ package it.matteoleggio.alchan.ui.common
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.EditText
+import android.widget.PopupMenu
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import it.matteoleggio.alchan.R
+import it.matteoleggio.alchan.data.localstorage.AppSettingsManager
+import it.matteoleggio.alchan.data.repository.AppSettingsRepository
 import it.matteoleggio.alchan.helper.*
 import it.matteoleggio.alchan.helper.enums.EditorType
 import it.matteoleggio.alchan.helper.enums.ResponseStatus
+import it.matteoleggio.alchan.helper.pojo.AppSettings
 import it.matteoleggio.alchan.helper.utils.AndroidUtility
 import it.matteoleggio.alchan.helper.utils.DialogUtility
 import it.matteoleggio.alchan.ui.base.BaseActivity
+import it.matteoleggio.alchan.ui.settings.app.AppSettingsViewModel
 import kotlinx.android.synthetic.main.activity_text_editor.*
 import kotlinx.android.synthetic.main.dialog_input.*
 import kotlinx.android.synthetic.main.dialog_input.view.*
+import kotlinx.android.synthetic.main.fragment_app_settings.*
 import kotlinx.android.synthetic.main.layout_loading.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.net.URLEncoder
 
 class TextEditorActivity : BaseActivity() {
 
     private val viewModel by viewModel<TextEditorViewModel>()
+    private val appSettingManager: AppSettingsManager by inject()
 
     private lateinit var rangeMarkdownLayout: ArrayList<AppCompatImageView>
     private lateinit var onlyStartMarkdownLayout: ArrayList<AppCompatImageView>
@@ -203,6 +215,25 @@ class TextEditorActivity : BaseActivity() {
 
     private fun initLayout() {
         editorEditText.requestFocus()
+
+
+        if (appSettingManager.appSettings.postsCustomClipboard.size == 0) {
+            newClipboard.visibility = View.GONE
+        }
+        newClipboard.setOnClickListener {
+            val menu = PopupMenu(this, MainScrollView)
+            menu.menu.apply {
+                for (clip in appSettingManager.appSettings.postsCustomClipboard) {
+                    add("${clip.take(32)}...").setOnMenuItemClickListener {
+                        val start = editorEditText.selectionStart
+                        editorEditText.text?.insert(start, clip)
+                        true
+                    }
+                }
+            }
+
+            menu.show()
+        }
 
         if (!viewModel.originalText.isNullOrBlank() && !viewModel.isInit) {
             editorEditText.setText(viewModel.originalText)

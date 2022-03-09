@@ -4,19 +4,15 @@ import android.content.Context
 import com.google.gson.Gson
 import it.matteoleggio.alchan.data.response.MediaTagCollection
 import it.matteoleggio.alchan.data.response.User
-import it.matteoleggio.alchan.helper.Constant
-import it.matteoleggio.alchan.helper.enums.AppColorTheme
 import it.matteoleggio.alchan.helper.genericType
 import it.matteoleggio.alchan.helper.pojo.AppSettings
 import it.matteoleggio.alchan.helper.pojo.BestFriend
 import it.matteoleggio.alchan.helper.pojo.ListStyle
 import it.matteoleggio.alchan.helper.pojo.UserPreferences
-import type.StaffLanguage
 
 class LocalStorageImpl(private val context: Context,
                        private val sharedPreferencesName: String,
-                       private val gson: Gson
-) : LocalStorage {
+                       private val gson: Gson) : LocalStorage {
 
     private val sharedPreferences = context.getSharedPreferences(sharedPreferencesName, Context.MODE_PRIVATE)
 
