@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
+import com.vdurmont.emoji.EmojiParser
 import it.matteoleggio.alchan.R
 import it.matteoleggio.alchan.data.localstorage.AppSettingsManager
 import it.matteoleggio.alchan.data.repository.AppSettingsRepository
@@ -257,6 +258,26 @@ class TextEditorActivity : BaseActivity() {
             }
 
             menu.show()
+        }
+
+        formatEmoji.setOnClickListener {
+            val inputDialogView = layoutInflater.inflate(R.layout.dialog_input, inputDialogLayout, false)
+            DialogUtility.showCustomViewDialog(
+                this,
+                R.string.inser_a_discord_emoji_alias,
+                inputDialogView,
+                R.string.add,
+                {
+                    val newEntry = inputDialogView.inputField.text.toString().trim()
+                    if (newEntry.isNotBlank()) {
+                        val start = editorEditText.selectionStart
+                        val markdown = EmojiParser.parseToHtmlHexadecimal(EmojiParser.parseToUnicode(":${newEntry}:"))
+                        editorEditText.text?.insert(start, markdown)
+                    }
+                },
+                R.string.cancel,
+                { }
+            )
         }
 
         if (!viewModel.originalText.isNullOrBlank() && !viewModel.isInit) {

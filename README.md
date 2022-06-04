@@ -27,3 +27,4 @@
 ## New AL-sama Features
 - Show notifications at more regular intervals.
 - Manage a custom clipboard for your commonly used messages
+- Easily insert emojis without them turning to "?" signs

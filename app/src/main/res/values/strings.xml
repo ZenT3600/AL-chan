@@ -540,4 +540,5 @@
     <string name="schedule">Schedule</string>
     <string name="scheduled_posts">Scheduled Posts</string>
     <string name="nothing_yet">No scheduled posts yet</string>
+    <string name="inser_a_discord_emoji_alias">Insert a Discord Emoji alias (e.g. flushed)</string>
 </resources>

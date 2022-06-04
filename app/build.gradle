@@ -136,6 +136,7 @@ dependencies {
     // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
 
     implementation "androidx.work:work-runtime-ktx:2.3.0"
+    compile 'com.vdurmont:emoji-java:4.0.0'
 }
 
 apollo {
