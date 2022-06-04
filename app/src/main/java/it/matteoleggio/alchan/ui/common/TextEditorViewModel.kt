@@ -6,6 +6,7 @@ import it.matteoleggio.alchan.helper.enums.EditorType
 
 class TextEditorViewModel(private val socialRepository: SocialRepository) : ViewModel() {
 
+    val originalDate: String = ""
     var editorType: EditorType? = null
 
     var activityId: Int? = null

@@ -463,7 +463,7 @@
 
                 <EditText
                     style="?themeRegularFont"
-                    android:id="@+id/pushNotificationsMinHoursInput"
+                    android:id="@+id/hoursCalendarSelection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="2"

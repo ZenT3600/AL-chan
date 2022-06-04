@@ -29,7 +29,8 @@ class AppSettingsViewModel(private val appSettingsRepository: AppSettingsReposit
         sendRelationsPushNotifications: Boolean = true,
         mergePushNotifications: Boolean = false,
         pushNotificationsMinHoursPassed: Double = 0.5,
-        postsCustomClipboard: ArrayList<ArrayList<String>> = arrayListOf()
+        postsCustomClipboard: ArrayList<ArrayList<String>> = arrayListOf(),
+        scheduledPosts: ArrayList<ArrayList<String>> = arrayListOf()
     ) {
         appSettingsRepository.setAppSettings(AppSettings(
             appTheme = selectedAppTheme,
@@ -47,7 +48,8 @@ class AppSettingsViewModel(private val appSettingsRepository: AppSettingsReposit
             sendRelationsPushNotification = sendRelationsPushNotifications,
             mergePushNotifications = mergePushNotifications,
             pushNotificationMinimumHours = pushNotificationsMinHoursPassed,
-            postsCustomClipboard = postsCustomClipboard
+            postsCustomClipboard = postsCustomClipboard,
+            scheduledPosts = scheduledPosts
         ))
     }
 }

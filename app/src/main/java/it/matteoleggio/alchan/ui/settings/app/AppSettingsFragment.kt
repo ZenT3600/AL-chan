@@ -11,12 +11,8 @@ import android.text.style.ClickableSpan
 import androidx.fragment.app.Fragment
 import android.widget.EditText
 import android.widget.LinearLayout
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
-import androidx.core.view.children
-import androidx.core.view.size
-import com.google.android.material.card.MaterialCardView
 
 import it.matteoleggio.alchan.R
 import it.matteoleggio.alchan.helper.*
@@ -26,12 +22,14 @@ import it.matteoleggio.alchan.helper.utils.DialogUtility
 import kotlinx.android.synthetic.main.fragment_app_settings.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import android.R.string.no
 import android.content.Context.WINDOW_SERVICE
 import android.util.DisplayMetrics
 import android.view.*
 import android.widget.Switch
-import kotlinx.android.synthetic.main.activity_text_editor.*
+import it.matteoleggio.alchan.helper.pojo.AppSettings
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 /**
@@ -150,7 +148,7 @@ class AppSettingsFragment : Fragment() {
                         if (editText.text.toString().isEmpty()) continue
                         clip.add(arrayListOf(editText.text.toString(), switch.isChecked.toString()))
                     }
-                    if (pushNotificationsMinHoursInput.text.toString().toDouble() < 0.1) { pushNotificationsMinHoursInput.setText("0.1") }
+                    if (hoursCalendarSelection.text.toString().toDouble() < 0.1) { hoursCalendarSelection.setText("0.1") }
                     viewModel.setAppSettings(
                         circularAvatarCheckBox.isChecked,
                         whiteBackgroundAvatarCheckBox.isChecked,
@@ -165,7 +163,7 @@ class AppSettingsFragment : Fragment() {
                         sendFollowsPushNotificationsCheckBox.isChecked,
                         sendRelationsPushNotificationsCheckBox.isChecked,
                         mergePushNotificationsCheckBox.isChecked,
-                        pushNotificationsMinHoursInput.text.toString().toDouble(),
+                        hoursCalendarSelection.text.toString().toDouble(),
                         clip
                     )
 
@@ -181,7 +179,7 @@ class AppSettingsFragment : Fragment() {
         selectedThemeText.text = viewModel.selectedAppTheme?.name.replaceUnderscore()
         selectedThemeText.setOnClickListener { showAppThemeDialog() }
 
-        pushNotificationsMinHoursInput.setText(viewModel.pushNotificationsMinHours.toString())
+        hoursCalendarSelection.setText(viewModel.pushNotificationsMinHours.toString())
 
         resetDefaultButton.setOnClickListener {
             val isLowOnMemory = AndroidUtility.isLowOnMemory(activity)

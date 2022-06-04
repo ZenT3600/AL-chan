@@ -44,12 +44,15 @@ class LocalStorageImpl(private val context: Context,
         set(value) { setData(BEARER_TOKEN, value) }
 
     override var appSettings: AppSettings
-        get() = if (getData(APP_SETTINGS) == null) AppSettings() else gson.fromJson(getData(APP_SETTINGS), AppSettings::class.java)
+        get() = if (getData(APP_SETTINGS) == null) AppSettings(scheduledPosts = scheduledPosts) else gson.fromJson(getData(APP_SETTINGS), AppSettings::class.java)
         set(value) { setData(APP_SETTINGS, gson.toJson(value)) }
 
     override var userPreferences: UserPreferences
         get() = if (getData(USER_PREFERENCES) == null) UserPreferences() else gson.fromJson(getData(USER_PREFERENCES), UserPreferences::class.java)
         set(value) { setData(USER_PREFERENCES, gson.toJson(value)) }
+
+    override val scheduledPosts: ArrayList<ArrayList<String>>
+        get() = appSettings.scheduledPosts
 
     override var viewerData: User?
         get() = gson.fromJson(getData(VIEWER_DATA), User::class.java)

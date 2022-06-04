@@ -39,7 +39,7 @@ class NotificationActivity : BaseActivity() {
 
         changeStatusBarColor(AndroidUtility.getResValueFromRefAttr(this, R.attr.themeCardColor))
 
-        notificationLayout.doOnApplyWindowInsets { view, windowInsets, initialPadding ->
+        scheduledLayout.doOnApplyWindowInsets { view, windowInsets, initialPadding ->
             view.updateTopPadding(windowInsets, initialPadding)
             view.updateSidePadding(windowInsets, initialPadding)
         }

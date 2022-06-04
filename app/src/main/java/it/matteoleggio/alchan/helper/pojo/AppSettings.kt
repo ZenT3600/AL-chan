@@ -19,5 +19,6 @@ class AppSettings(
     var sendRelationsPushNotification: Boolean? = null,
     var mergePushNotifications: Boolean? = null,
     var pushNotificationMinimumHours: Double? = null,
-    var postsCustomClipboard: ArrayList<ArrayList<String>> = arrayListOf()
+    var postsCustomClipboard: ArrayList<ArrayList<String>> = arrayListOf(),
+    var scheduledPosts: ArrayList<ArrayList<String>> = arrayListOf()
 )

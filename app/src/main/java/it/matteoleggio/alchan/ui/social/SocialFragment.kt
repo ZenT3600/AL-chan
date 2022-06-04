@@ -11,28 +11,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.Observer
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 import it.matteoleggio.alchan.R
 import it.matteoleggio.alchan.data.response.*
-import it.matteoleggio.alchan.helper.doOnApplyWindowInsets
 import it.matteoleggio.alchan.helper.enums.BrowsePage
 import it.matteoleggio.alchan.helper.enums.EditorType
 import it.matteoleggio.alchan.helper.enums.ResponseStatus
-import it.matteoleggio.alchan.helper.libs.GlideApp
 import it.matteoleggio.alchan.helper.pojo.ListActivity
 import it.matteoleggio.alchan.helper.pojo.MessageActivity
 import it.matteoleggio.alchan.helper.pojo.TextActivity
-import it.matteoleggio.alchan.helper.updateSidePadding
 import it.matteoleggio.alchan.helper.utils.AndroidUtility
 import it.matteoleggio.alchan.helper.utils.DialogUtility
 import it.matteoleggio.alchan.ui.browse.BrowseActivity
 import it.matteoleggio.alchan.ui.browse.activity.ActivityListRvAdapter
 import it.matteoleggio.alchan.ui.browse.activity.ActivityListener
 import it.matteoleggio.alchan.ui.common.TextEditorActivity
-import it.matteoleggio.alchan.ui.search.SearchActivity
-import it.matteoleggio.alchan.ui.social.global.GlobalFeedActivity
 import io.noties.markwon.Markwon
+import it.matteoleggio.alchan.ui.common.ScheduledTextEditorActivity
+import it.matteoleggio.alchan.ui.common.ScheduledTextEditorActivity.Companion.EDITOR_TYPE
 import kotlinx.android.synthetic.main.fragment_social.*
 import kotlinx.android.synthetic.main.layout_empty.*
 import kotlinx.android.synthetic.main.layout_loading.*
@@ -231,6 +227,21 @@ class SocialFragment : Fragment() {
         newActivityButton.setOnClickListener {
             val intent = Intent(activity, TextEditorActivity::class.java)
             startActivityForResult(intent, EditorType.ACTIVITY.ordinal)
+        }
+
+        schedulePostsButton.setOnClickListener {
+            // TODO: Schedule posts Service
+            // TODO: Reschedule post if an error occurred or the device was powered off
+            // TODO: Edit scheduled posts
+            // TODO: Reschedule scheduled posts
+            val intent = Intent(activity, ScheduledTextEditorActivity::class.java)
+            intent.putExtra(EDITOR_TYPE, EditorType.SCHEDULE)
+            startActivityForResult(intent, EditorType.SCHEDULE.ordinal)
+        }
+
+        alreadyScheduledPostsButton.setOnClickListener {
+            val intent = Intent(activity, AlreadyScheduledPostActivity::class.java)
+            startActivityForResult(intent, 0)
         }
     }
 

@@ -10,6 +10,7 @@ import it.matteoleggio.alchan.helper.pojo.UserPreferences
 import type.StaffLanguage
 
 interface LocalStorage {
+    val scheduledPosts: ArrayList<ArrayList<String>>
     var bearerToken: String?
 
     var appSettings: AppSettings

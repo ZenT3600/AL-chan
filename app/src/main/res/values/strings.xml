@@ -369,6 +369,9 @@
     <string name="global">Global</string>
     <string name="activity_type">Activity Type</string>
     <string name="post">Post</string>
+    <string name="select_a_date">Select a date</string>
+    <string name="select_hour">Select the Hour to post at</string>
+    <string name="select_minute">Select the Minute to post at</string>
     <string name="please_write_something">Please write something.</string>
     <string name="post_this_message">Post this Message</string>
     <string name="are_you_sure_you_want_to_post_this_message">Are you sure you want to post this message?</string>
@@ -534,4 +537,7 @@
     <string name="hide_media_format">Hide media format</string>
     <string name="hide_score_when_not_scored">Hide score when not scored</string>
     <string name="hide_airing_indicator">Hide airing indicator</string>
+    <string name="schedule">Schedule</string>
+    <string name="scheduled_posts">Scheduled Posts</string>
+    <string name="nothing_yet">No scheduled posts yet</string>
 </resources>
