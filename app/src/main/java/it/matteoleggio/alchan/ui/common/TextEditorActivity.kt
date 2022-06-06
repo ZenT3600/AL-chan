@@ -264,14 +264,14 @@ class TextEditorActivity : BaseActivity() {
             val inputDialogView = layoutInflater.inflate(R.layout.dialog_input, inputDialogLayout, false)
             DialogUtility.showCustomViewDialog(
                 this,
-                R.string.inser_a_discord_emoji_alias,
+                R.string.search_an_emoji_alias,
                 inputDialogView,
                 R.string.add,
                 {
                     val newEntry = inputDialogView.inputField.text.toString().trim()
                     if (newEntry.isNotBlank()) {
                         val start = editorEditText.selectionStart
-                        val markdown = EmojiParser.parseToHtmlHexadecimal(EmojiParser.parseToUnicode(":${newEntry}:"))
+                        val markdown = EmojiParser.parseToHtmlHexadecimal(EmojiParser.parseToUnicode(newEntry))
                         editorEditText.text?.insert(start, markdown)
                     }
                 },
