@@ -53,6 +53,7 @@ class AboutFragment : Fragment() {
         linkGmailText.text = Constant.EMAIL_ADDRESS
 
         linkAniListLayout.setOnClickListener { openLink(Constant.ALCHAN_THREAD_URL) }
+        linkGitHubLayout.setOnClickListener { openLink(Constant.GITHUB_URL) }
         linkGmailLayout.setOnClickListener {
             val intent =
                 Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", Constant.EMAIL_ADDRESS, null))
