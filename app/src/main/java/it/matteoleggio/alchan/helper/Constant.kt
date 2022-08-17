@@ -18,12 +18,8 @@ object Constant {
     const val ANILIST_ACCOUNT_URL = "${ANILIST_SETTINGS_URL}account"
     const val ANILIST_IMPORT_LISTS_URL = "${ANILIST_SETTINGS_URL}import"
 
-    const val PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}"
     const val EMAIL_ADDRESS = "info@matteoleggio.it"
-    const val TWITTER_ACCOUNT = "@alchan_app"
-    const val TWITTER_URL = "https://twitter.com/alchan_app"
     const val GITHUB_URL = "https://github.com/ZenT3600/AL-sama"
-    const val PRIVACY_POLICY_URL = "https://zend10.github.io/AL-chan/privacy.html"
     const val ALCHAN_THREAD_URL = "${ANILIST_URL}user/ZenT3600"
 
     const val JIKAN_URL = "https://api.jikan.moe/v3/"

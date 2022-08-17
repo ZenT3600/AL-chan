@@ -4,15 +4,13 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.apollographql.apollo'
 apply plugin: "de.mannodermaus.android-junit5"
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.crashlytics'
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 30
     defaultConfig {
-        applicationId "it.matteoleggio.alchan"
-        minSdkVersion 26
-        targetSdkVersion 32
+        applicationId "com.zen.alchan"
+        minSdkVersion 21
+        targetSdkVersion 30
         versionCode 100207
         versionName "1.2.7"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -101,10 +99,10 @@ dependencies {
     implementation "org.koin:koin-androidx-viewmodel:2.0.1"
 
     // Firebase
-    //implementation 'com.google.firebase:firebase-analytics:17.6.0'
-    //implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
-    //implementation 'com.google.firebase:firebase-messaging:20.3.0'
-    //implementation 'com.google.firebase:firebase-database:19.5.0'
+    implementation 'com.google.firebase:firebase-analytics:17.6.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
+    implementation 'com.google.firebase:firebase-messaging:20.3.0'
+    implementation 'com.google.firebase:firebase-database:19.5.0'
 
     // WorkManager
     implementation "androidx.work:work-runtime-ktx:2.4.0"
@@ -126,17 +124,10 @@ dependencies {
     implementation "io.noties.markwon:ext-strikethrough:$markwon_version"
     implementation "io.noties.markwon:inline-parser:$markwon_version"
 
-    // Firebase
-    implementation 'com.google.firebase:firebase-analytics:17.6.0'
-    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
-    implementation 'com.google.firebase:firebase-messaging:20.3.0'
-    implementation 'com.google.firebase:firebase-database:19.5.0'
-
-    implementation 'com.google.android.material:material:1.5.0'
     // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
 
-    implementation "androidx.work:work-runtime-ktx:2.3.0"
-    compile 'com.vdurmont:emoji-java:4.0.0'
+    implementation "androidx.work:work-runtime-ktx:2.7.1"
+    implementation 'com.vdurmont:emoji-java:4.0.0'
 }
 
 apollo {

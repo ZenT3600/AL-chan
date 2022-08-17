@@ -14,7 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
-import it.matteoleggio.alchan.BuildConfig
+import com.google.firebase.BuildConfig
 
 import it.matteoleggio.alchan.R
 import it.matteoleggio.alchan.helper.Constant
@@ -49,7 +49,7 @@ class AboutFragment : Fragment() {
             view.updateBottomPadding(windowInsets, initialPadding)
         }
 
-        versionText.text = "Version ${BuildConfig.VERSION_NAME}"
+        versionText.text = "Version X"
         linkGmailText.text = Constant.EMAIL_ADDRESS
 
         linkAniListLayout.setOnClickListener { openLink(Constant.ALCHAN_THREAD_URL) }
@@ -59,26 +59,6 @@ class AboutFragment : Fragment() {
             startActivity(intent)
 
             linkGitHubLayout.setOnClickListener { openLink(Constant.GITHUB_URL) }
-
-            val targetText = "here"
-            val explanationText =
-                SpannableString(getString(R.string.the_privacy_policy_of_this_app_can_be_read_fully_here))
-            val startIndex = explanationText.indexOf(targetText)
-            val endIndex = startIndex + targetText.length
-            val clickableSpan = object : ClickableSpan() {
-                override fun onClick(widget: View) {
-                    openLink(Constant.PRIVACY_POLICY_URL)
-                }
-            }
-
-            explanationText.setSpan(
-                clickableSpan,
-                startIndex,
-                endIndex,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            privacyPolicyText.movementMethod = LinkMovementMethod.getInstance()
-            privacyPolicyText.text = explanationText
         }
 
 

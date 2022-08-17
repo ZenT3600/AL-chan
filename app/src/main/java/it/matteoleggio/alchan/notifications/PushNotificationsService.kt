@@ -219,7 +219,7 @@ class PushNotificationsService : JobIntentService() {
         notificationIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         notificationIntent.putExtra(MainActivity.GO_TO_NOTIFICATION, true)
 
-        val notificationPendingIntent = PendingIntent.getActivity(applicationContext, 0, notificationIntent, 0)
+        val notificationPendingIntent = PendingIntent.getActivity(applicationContext, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE)
 
         val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notif)

@@ -244,14 +244,13 @@ class TextEditorActivity : BaseActivity() {
         newClipboard.setOnClickListener {
             val dots = "..."
             val nothing = ""
-            val size = 32
+            val size = 48
             val menu = PopupMenu(this, newClipboard)
             menu.menu.apply {
                 for (clip in appSettingManager.appSettings.postsCustomClipboard) {
-                    if (clip[1] != "true") continue
-                    add("${clip[0].take(size)}${if (clip.size > size) dots else nothing}").setOnMenuItemClickListener {
+                    add("${clip.take(size)}${if (clip.length > size) dots else nothing}").setOnMenuItemClickListener {
                         val start = editorEditText.selectionStart
-                        editorEditText.text?.insert(start, clip[0])
+                        editorEditText.text?.insert(start, clip)
                         true
                     }
                 }

@@ -27,8 +27,6 @@ import it.matteoleggio.alchan.ui.browse.activity.ActivityListRvAdapter
 import it.matteoleggio.alchan.ui.browse.activity.ActivityListener
 import it.matteoleggio.alchan.ui.common.TextEditorActivity
 import io.noties.markwon.Markwon
-import it.matteoleggio.alchan.ui.common.ScheduledTextEditorActivity
-import it.matteoleggio.alchan.ui.common.ScheduledTextEditorActivity.Companion.EDITOR_TYPE
 import kotlinx.android.synthetic.main.fragment_social.*
 import kotlinx.android.synthetic.main.layout_empty.*
 import kotlinx.android.synthetic.main.layout_loading.*
@@ -227,21 +225,6 @@ class SocialFragment : Fragment() {
         newActivityButton.setOnClickListener {
             val intent = Intent(activity, TextEditorActivity::class.java)
             startActivityForResult(intent, EditorType.ACTIVITY.ordinal)
-        }
-
-        schedulePostsButton.setOnClickListener {
-            // TODO: Schedule posts Service
-            // TODO: Reschedule post if an error occurred or the device was powered off
-            // TODO: Edit scheduled posts
-            // TODO: Reschedule scheduled posts
-            val intent = Intent(activity, ScheduledTextEditorActivity::class.java)
-            intent.putExtra(EDITOR_TYPE, EditorType.SCHEDULE)
-            startActivityForResult(intent, EditorType.SCHEDULE.ordinal)
-        }
-
-        alreadyScheduledPostsButton.setOnClickListener {
-            val intent = Intent(activity, AlreadyScheduledPostActivity::class.java)
-            startActivityForResult(intent, 0)
         }
     }
 

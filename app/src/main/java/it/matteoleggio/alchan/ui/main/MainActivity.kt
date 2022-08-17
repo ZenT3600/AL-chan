@@ -67,14 +67,6 @@ class MainActivity : BaseActivity(), BaseMainFragmentListener {
     private fun initPage() {
         setupObserver()
         initLayout()
-        FirebaseApp.initializeApp(applicationContext)
-        FirebaseMessaging.getInstance().token.addOnCompleteListener {
-            if (!it.isSuccessful) {
-                return@addOnCompleteListener
-            }
-
-            viewModel.sendFirebaseToken(it.result)
-        }
 
         if (intent.getBooleanExtra(GO_TO_NOTIFICATION, false)) {
             intent.removeExtra(GO_TO_NOTIFICATION)

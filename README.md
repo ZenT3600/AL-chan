@@ -12,6 +12,7 @@
 
 ## Features so far
 - NEW: Manage a custom clipboard for your most typed messages
+- NEW: Easily add emojis to posts
 - NEW: Get notifications as fast as possible
 - Manage your anime and manga lists.
 - Support various types of scoring method and custom lists.

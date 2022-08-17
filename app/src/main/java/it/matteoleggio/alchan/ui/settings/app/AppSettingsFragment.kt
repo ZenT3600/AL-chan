@@ -91,46 +91,26 @@ class AppSettingsFragment : Fragment() {
         val windowsManager = context!!.getSystemService(WINDOW_SERVICE) as WindowManager
         windowsManager.defaultDisplay.getMetrics(displayMetrics)
         val deviceWidth = displayMetrics.widthPixels
-        for (clip in viewModel.appSettings.postsCustomClipboard) {
-            val newClipboardBoundary = LinearLayout(context)
-            newClipboardBoundary.gravity = Gravity.CENTER_VERTICAL
-            newClipboardBoundary.orientation = LinearLayout.HORIZONTAL
-            val newClipboardRemove = Switch(context)
-            newClipboardRemove.isChecked = clip[1] == "true"
-            val newClipboardText = EditText(context)
-            newClipboardText.setHorizontallyScrolling(false)
-            newClipboardText.maxLines = Integer.MAX_VALUE
-            newClipboardText.typeface = Typeface.MONOSPACE
-            newClipboardText.textSize = 12F
-            newClipboardText.maxWidth = deviceWidth - 260
-            newClipboardText.width = deviceWidth - 260
-            newClipboardText.setText(clip[0])
 
-            newClipboardBoundary.addView(newClipboardText)
-            newClipboardBoundary.addView(newClipboardRemove)
-
-            postsClipboardLayout.addView(newClipboardBoundary, 0)
-        }
-
-        addClipboardButton.setOnClickListener {
-            val newClipboardBoundary = LinearLayout(context)
-            newClipboardBoundary.gravity = Gravity.CENTER_VERTICAL
-            newClipboardBoundary.orientation = LinearLayout.HORIZONTAL
-            val newClipboardRemove = Switch(context)
-            newClipboardRemove.isChecked = true
-            val newClipboardText = EditText(context)
-            newClipboardText.setHorizontallyScrolling(false)
-            newClipboardText.maxLines = Integer.MAX_VALUE
-            newClipboardText.typeface = Typeface.MONOSPACE
-            newClipboardText.textSize = 12F
-            newClipboardText.maxWidth = deviceWidth - 260
-            newClipboardText.width = deviceWidth - 260
-
-            newClipboardBoundary.addView(newClipboardText)
-            newClipboardBoundary.addView(newClipboardRemove)
-
-            postsClipboardLayout.addView(newClipboardBoundary, 0)
-        }
+//        addClipboardButton.setOnClickListener {
+//            val newClipboardBoundary = LinearLayout(context)
+//            newClipboardBoundary.gravity = Gravity.CENTER_VERTICAL
+//            newClipboardBoundary.orientation = LinearLayout.HORIZONTAL
+//            val newClipboardRemove = Switch(context)
+//            newClipboardRemove.isChecked = true
+//            val newClipboardText = EditText(context)
+//            newClipboardText.setHorizontallyScrolling(false)
+//            newClipboardText.maxLines = Integer.MAX_VALUE
+//            newClipboardText.typeface = Typeface.MONOSPACE
+//            newClipboardText.textSize = 12F
+//            newClipboardText.maxWidth = deviceWidth - 260
+//            newClipboardText.width = deviceWidth - 260
+//
+//            newClipboardBoundary.addView(newClipboardText)
+//            newClipboardBoundary.addView(newClipboardRemove)
+//
+//            postsClipboardLayout.addView(newClipboardBoundary, 0)
+//        }
 
         itemSave.setOnMenuItemClickListener {
             DialogUtility.showOptionDialog(
@@ -139,15 +119,16 @@ class AppSettingsFragment : Fragment() {
                 R.string.are_you_sure_you_want_to_save_this_configuration,
                 R.string.save,
                 {
-                    var clip = arrayListOf<ArrayList<String>>()
-                    for (i in 0 until (postsClipboardLayout.childCount)) {
-                        lateinit var boundary: LinearLayout
-                        try { boundary = postsClipboardLayout.getChildAt(i) as LinearLayout } catch(e: ClassCastException) { continue }
-                        val editText = boundary.getChildAt(0) as EditText
-                        val switch = boundary.getChildAt(1) as Switch
-                        if (editText.text.toString().isEmpty()) continue
-                        clip.add(arrayListOf(editText.text.toString(), switch.isChecked.toString()))
-                    }
+//                    var clip = arrayListOf<ArrayList<String>>()
+//                    for (i in 0 until (postsClipboardLayout.childCount)) {
+//                        lateinit var boundary: LinearLayout
+//                        try { boundary = postsClipboardLayout.getChildAt(i) as LinearLayout } catch(e: ClassCastException) { continue }
+//                        val editText = boundary.getChildAt(0) as EditText
+//                        val switch = boundary.getChildAt(1) as Switch
+//                        if (editText.text.toString().isEmpty()) continue
+//                        clip.add(arrayListOf(editText.text.toString(), switch.isChecked.toString()))
+//                    }
+                    val clip = viewModel.appSettings.postsCustomClipboard
                     if (hoursCalendarSelection.text.toString().toDouble() < 0.1) { hoursCalendarSelection.setText("0.1") }
                     viewModel.setAppSettings(
                         circularAvatarCheckBox.isChecked,

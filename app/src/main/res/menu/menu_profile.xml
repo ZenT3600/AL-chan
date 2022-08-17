@@ -13,6 +13,10 @@
     <item android:id="@+id/itemSettings"
         android:title="@string/settings"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/itemSettingsMod"
+        android:title="@string/mod_settings"
+        app:showAsAction="never" />
     <item android:id="@+id/itemViewOnAniList"
         android:title="@string/view_on_anilist"
         app:showAsAction="never"/>

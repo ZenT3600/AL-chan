@@ -45,9 +45,9 @@
                             android:layout_height="match_parent"/>
 
                         <View
-                            android:background="@drawable/dark_gradient_three_background"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
+                            android:layout_height="match_parent"
+                            android:background="@drawable/dark_gradient_three_background" />
 
                     </RelativeLayout>
 
@@ -180,9 +180,9 @@
                                 <com.google.android.material.textview.MaterialTextView
                                     android:id="@+id/profileMangaCountText"
                                     style="?themeAppNameFont"
-                                    android:text="0"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content"
+                                    android:text="0" />
 
                                 <com.google.android.material.textview.MaterialTextView
                                     style="?themeSmallClickableFont"
@@ -397,10 +397,10 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/profileReviewsIcon"
-                        app:srcCompat="@drawable/ic_inscription"
-                        app:tint="?themeContentColor"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_inscription"
+                        app:tint="?themeContentColor" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/profileReviewsText"

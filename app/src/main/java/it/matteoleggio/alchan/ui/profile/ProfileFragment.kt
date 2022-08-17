@@ -41,6 +41,7 @@ import it.matteoleggio.alchan.ui.profile.follows.FollowsActivity
 import it.matteoleggio.alchan.ui.profile.reviews.UserReviewsFragment
 import it.matteoleggio.alchan.ui.settings.SettingsActivity
 import it.matteoleggio.alchan.ui.profile.stats.StatsFragment
+import it.matteoleggio.alchan.ui.settings.ModSettingsActivity
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.layout_loading.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -59,6 +60,7 @@ class ProfileFragment : BaseMainFragment() {
     private lateinit var itemActivity: MenuItem
     private lateinit var itemNotifications: MenuItem
     private lateinit var itemSettings: MenuItem
+    private lateinit var itemSettingsMod: MenuItem
     private lateinit var itemViewInAniList: MenuItem
     private lateinit var itemShareProfile: MenuItem
     private lateinit var itemCopyLink: MenuItem
@@ -97,6 +99,7 @@ class ProfileFragment : BaseMainFragment() {
             itemActivity = findItem(R.id.itemActivity)
             itemNotifications = findItem(R.id.itemNotifications)
             itemSettings = findItem(R.id.itemSettings)
+            itemSettingsMod = findItem(R.id.itemSettingsMod)
             itemViewInAniList = findItem(R.id.itemViewOnAniList)
             itemShareProfile = findItem(R.id.itemShareProfile)
             itemCopyLink = findItem(R.id.itemCopyLink)
@@ -307,6 +310,11 @@ class ProfileFragment : BaseMainFragment() {
 
         itemSettings.setOnMenuItemClickListener {
             startActivity(Intent(activity, SettingsActivity::class.java))
+            true
+        }
+
+        itemSettingsMod.setOnMenuItemClickListener {
+            startActivity(Intent(activity, ModSettingsActivity::class.java))
             true
         }
 

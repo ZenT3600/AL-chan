@@ -35,7 +35,6 @@ import kotlinx.android.synthetic.main.dialog_input.*
 import kotlinx.android.synthetic.main.dialog_input.view.*
 import kotlinx.android.synthetic.main.layout_loading.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
-import kotlinx.android.synthetic.main.list_anime_list_grid.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import type.MediaListStatus
 import type.ScoreFormat

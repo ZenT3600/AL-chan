@@ -55,10 +55,6 @@ class SplashActivity : BaseActivity() {
                             setTitle(R.string.new_update_is_available)
                             setMessage(it.data.message)
                             setCancelable(false)
-                            setPositiveButton(R.string.go_to_play_store) { _, _ ->
-                                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(Constant.PLAY_STORE_URL)))
-                                finish()
-                            }
                             // show later if required_update is not "1"
                             if (it.data.required_update != isTrue) {
                                 setNegativeButton(R.string.later) { _, _ ->
