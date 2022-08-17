@@ -5,6 +5,7 @@
 <p align="center">AL-sama is an unofficial fork of AL-chan, an unofficial Android client for AniList, a place where you can track, share, discover, and experience Anime and Manga.</p>
 
 <br>
+
 ## Features so far
 - NEW: Manage a custom clipboard for your most typed messages
 - NEW: Easily add emojis to posts
