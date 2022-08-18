@@ -20,4 +20,5 @@ class AppSettings(
     var mergePushNotifications: Boolean? = null,
     var pushNotificationMinimumHours: Double? = null,
     var postsCustomClipboard: ArrayList<String> = arrayListOf(),
+    var fetchFromMal: Boolean = false,
 )

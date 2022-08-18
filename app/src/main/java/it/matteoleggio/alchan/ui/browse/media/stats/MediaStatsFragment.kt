@@ -1,20 +1,23 @@
 package it.matteoleggio.alchan.ui.browse.media.stats
 
 
-import android.graphics.Color
+import MediaOverviewQuery
+import MediaStatsQuery
 import android.os.Bundle
-import android.util.DisplayMetrics
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
-
 import it.matteoleggio.alchan.R
+import it.matteoleggio.alchan.data.network.service.JikanRestService
+import it.matteoleggio.alchan.data.response.AnimeStats
+import it.matteoleggio.alchan.data.response.MangaSerialization
+import it.matteoleggio.alchan.data.response.MangaStats
+import it.matteoleggio.alchan.data.response.ScoreEntry
 import it.matteoleggio.alchan.helper.Constant
 import it.matteoleggio.alchan.helper.enums.ResponseStatus
 import it.matteoleggio.alchan.helper.pojo.StatusDistributionItem
@@ -23,16 +26,26 @@ import it.matteoleggio.alchan.helper.utils.DialogUtility
 import it.matteoleggio.alchan.ui.base.BaseFragment
 import it.matteoleggio.alchan.ui.browse.media.MediaFragment
 import it.matteoleggio.alchan.ui.common.ChartDialog
+import it.matteoleggio.alchan.ui.settings.app.AppSettingsViewModel
 import kotlinx.android.synthetic.main.fragment_media_stats.*
 import kotlinx.android.synthetic.main.layout_loading.*
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import org.json.JSONObject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import type.MediaType
+import kotlin.concurrent.thread
+
 
 /**
  * A simple [Fragment] subclass.
  */
 class MediaStatsFragment : BaseFragment() {
-
     private val viewModel by viewModel<MediaStatsViewModel>()
+    private val viewModelSettings by viewModel<AppSettingsViewModel>()
+
+    var votes = arrayListOf<Int>()
 
     private var mediaData: MediaStatsQuery.Media? = null
 
@@ -89,11 +102,88 @@ class MediaStatsFragment : BaseFragment() {
         handleScoreDistribution()
     }
 
+    private fun addScoreToArray(scores: ScoreEntry) {
+        for (i in 0..scores.votes!!) {
+            votes.add(scores.score!!)
+        }
+    }
+
     private fun handlePerformance() {
         mediaAvgScoreText.text = "${mediaData?.averageScore?.toString() ?: "0"}%"
         mediaMeanScoreText.text = "${mediaData?.meanScore?.toString() ?: "0"}%"
         mediaPopularityText.text = mediaData?.popularity?.toString() ?: "0"
         mediaFavoritesText.text = mediaData?.favourites?.toString() ?: "0"
+
+        if (viewModelSettings.appSettings.fetchFromMal) {
+            var animeStats: AnimeStats? = null
+            var mangaStats: MangaStats? = null
+            try {
+                malPerformanceLayout.visibility = View.VISIBLE
+                malPerformanceTextView.visibility = View.VISIBLE
+                thread(start = true) {
+                    val client = OkHttpClient()
+                    val json = JSONObject()
+                    json.put("query", MediaOverviewQuery.QUERY_DOCUMENT)
+                    json.put("variables", JSONObject("{'id': ${viewModel.mediaId}}"))
+                    val requestBody = RequestBody.create(null, json.toString())
+                    val request = Request.Builder().url(Constant.ANILIST_API_URL).post(requestBody)
+                        .addHeader("content-type", "application/json").build()
+                    val response = client.newCall(request).execute().body?.string()
+                    println(response.toString())
+
+                    val Jobject = JSONObject(response!!)
+                    val data = Jobject.getJSONObject("data")
+                    val media = data.getJSONObject("Media")
+                    var idMal: Int? = null
+                    var type: String? = null
+                    try {
+                        idMal = media.getInt("idMal")
+                        type = media.getString("type")
+                    } catch (e: Exception) {
+                        idMal = 0
+                        type = ""
+                    }
+
+                    if (type == MediaType.ANIME.toString()) {
+                        println(idMal)
+                        animeStats =
+                            JikanRestService().getAnimeStats(idMal!!).execute().body()
+                        addScoreToArray(animeStats?.scores?.score1!!)
+                        addScoreToArray(animeStats?.scores?.score2!!)
+                        addScoreToArray(animeStats?.scores?.score3!!)
+                        addScoreToArray(animeStats?.scores?.score4!!)
+                        addScoreToArray(animeStats?.scores?.score5!!)
+                        addScoreToArray(animeStats?.scores?.score6!!)
+                        addScoreToArray(animeStats?.scores?.score7!!)
+                        addScoreToArray(animeStats?.scores?.score8!!)
+                        addScoreToArray(animeStats?.scores?.score9!!)
+                        addScoreToArray(animeStats?.scores?.score10!!)
+                    } else {
+                        println(idMal)
+                        mangaStats =
+                            JikanRestService().getMangaStats(idMal!!).execute().body()
+                        addScoreToArray(mangaStats?.scores?.score1!!)
+                        addScoreToArray(mangaStats?.scores?.score2!!)
+                        addScoreToArray(mangaStats?.scores?.score3!!)
+                        addScoreToArray(mangaStats?.scores?.score4!!)
+                        addScoreToArray(mangaStats?.scores?.score5!!)
+                        addScoreToArray(mangaStats?.scores?.score6!!)
+                        addScoreToArray(mangaStats?.scores?.score7!!)
+                        addScoreToArray(mangaStats?.scores?.score8!!)
+                        addScoreToArray(mangaStats?.scores?.score9!!)
+                        addScoreToArray(mangaStats?.scores?.score10!!)
+                    }
+                }
+                malMediaAvgScoreText.text = "${votes.average().toString() ?: "0"}%"
+                try {
+                    malTotalWatchesText.text = animeStats?.total.toString()
+                } catch (E: Exception) {
+                    malTotalWatchesText.text = mangaStats?.total.toString()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     private fun handleRankings() {

@@ -11,140 +11,220 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingTop="@dimen/marginFar"
-            android:paddingBottom="@dimen/marginFar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:paddingBottom="@dimen/marginFar">
 
             <com.google.android.material.textview.MaterialTextView
-                android:text="@string/performance"
+                android:id="@+id/materialTextView6"
                 style="?themeRegularBoldFont"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/marginPage"
                 android:layout_marginEnd="@dimen/marginPage"
                 android:layout_marginBottom="@dimen/marginNormal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:text="@string/performance" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_marginBottom="@dimen/marginPage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/marginPage"
                 android:layout_marginEnd="@dimen/marginPage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_marginBottom="@dimen/marginPage">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:orientation="vertical"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/mediaAvgScoreText"
-                        android:text="0%"
                         style="?themeTitleFont"
-                        android:textAlignment="center"
-                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"/>
+                        android:gravity="center"
+                        android:text="0%"
+                        android:textAlignment="center" />
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:text="@string/average"
                         style="?themeSmallFont"
-                        android:layout_marginTop="@dimen/marginClose"
-                        android:textAlignment="center"
-                        android:layout_gravity="bottom|center_horizontal"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_marginTop="@dimen/marginClose"
+                        android:text="@string/average"
+                        android:textAlignment="center" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/mediaMeanScoreText"
-                        android:text="0%"
                         style="?themeTitleFont"
-                        android:textAlignment="center"
-                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"/>
+                        android:gravity="center"
+                        android:text="0%"
+                        android:textAlignment="center" />
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:text="@string/mean"
                         style="?themeSmallFont"
-                        android:layout_marginTop="@dimen/marginClose"
-                        android:textAlignment="center"
-                        android:layout_gravity="bottom|center_horizontal"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_marginTop="@dimen/marginClose"
+                        android:text="@string/mean"
+                        android:textAlignment="center" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/mediaPopularityText"
-                        android:text="0"
                         style="?themeTitleFont"
-                        android:textAlignment="center"
-                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"/>
+                        android:gravity="center"
+                        android:text="0"
+                        android:textAlignment="center" />
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:text="@string/popularity"
                         style="?themeSmallFont"
-                        android:layout_marginTop="@dimen/marginClose"
-                        android:textAlignment="center"
-                        android:layout_gravity="bottom|center_horizontal"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_marginTop="@dimen/marginClose"
+                        android:text="@string/popularity"
+                        android:textAlignment="center" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/mediaFavoritesText"
-                        android:text="0"
                         style="?themeTitleFont"
-                        android:textAlignment="center"
-                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"/>
+                        android:gravity="center"
+                        android:text="0"
+                        android:textAlignment="center" />
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:text="@string/favorites"
                         style="?themeSmallFont"
-                        android:layout_marginTop="@dimen/marginClose"
-                        android:textAlignment="center"
-                        android:layout_gravity="bottom|center_horizontal"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_marginTop="@dimen/marginClose"
+                        android:text="@string/favorites"
+                        android:textAlignment="center" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/malPerformanceTextView"
+                style="?themeRegularBoldFont"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/marginPage"
+                android:layout_marginEnd="@dimen/marginPage"
+                android:layout_marginBottom="@dimen/marginNormal"
+                android:text="@string/mal_performance"
+                android:visibility="gone" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/malPerformanceLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/marginPage"
+                android:layout_marginEnd="@dimen/marginPage"
+                android:layout_marginBottom="@dimen/marginPage"
+                android:visibility="visible">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/malMediaAvgScoreText"
+                        style="?themeTitleFont"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="0%"
+                        android:textAlignment="center" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="?themeSmallFont"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_marginTop="@dimen/marginClose"
+                        android:text="@string/average"
+                        android:textAlignment="center" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/malTotalWatchesText"
+                        style="?themeTitleFont"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textAlignment="center" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="?themeSmallFont"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_marginTop="@dimen/marginClose"
+                        android:text="@string/total_watches"
+                        android:textAlignment="center" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -152,55 +232,55 @@
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:visibility="gone"
                 android:id="@+id/mediaStatsRankingLayout"
-                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/marginPage"
                 android:layout_marginEnd="@dimen/marginPage"
                 android:layout_marginBottom="@dimen/marginPage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:text="@string/rankings"
                     style="?themeRegularBoldFont"
-                    android:layout_marginBottom="@dimen/marginNormal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/marginNormal"
+                    android:text="@string/rankings" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/mediaStatsRankingRecyclerView"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:visibility="gone"
                 android:id="@+id/mediaStatsStatusLayout"
-                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/marginPage"
                 android:layout_marginEnd="@dimen/marginPage"
                 android:layout_marginBottom="@dimen/marginPage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:text="@string/status_distribution"
                     style="?themeRegularBoldFont"
-                    android:layout_marginBottom="@dimen/marginNormal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/marginNormal"
+                    android:text="@string/status_distribution" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:visibility="gone"
                     android:id="@+id/mediaStatsStatusShowButton"
-                    android:text="@string/show"
                     style="?themeButtonPrimary"
-                    android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/show"
+                    android:visibility="gone" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -208,48 +288,48 @@
 
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/mediaStatsStatusPieChart"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintDimensionRatio="@fraction/chartRatio"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"/>
+                        android:layout_height="0dp"
+                        app:layout_constraintDimensionRatio="@fraction/chartRatio"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/mediaStatsStatusRecyclerView"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:nestedScrollingEnabled="false"
-                    android:layout_marginTop="@dimen/marginNormal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/marginNormal"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:visibility="gone"
                 android:id="@+id/mediaStatsScoreLayout"
-                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/marginPage"
                 android:layout_marginEnd="@dimen/marginPage"
                 android:layout_marginBottom="@dimen/marginPage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:text="@string/score_distribution"
                     style="?themeRegularBoldFont"
-                    android:layout_marginBottom="@dimen/marginNormal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/marginNormal"
+                    android:text="@string/score_distribution" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:visibility="gone"
                     android:id="@+id/mediaStatsScoreShowButton"
-                    android:text="@string/show"
                     style="?themeButtonPrimary"
-                    android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/show"
+                    android:visibility="gone" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -257,10 +337,10 @@
 
                     <com.github.mikephil.charting.charts.BarChart
                         android:id="@+id/mediaStatsScoreBarChart"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintDimensionRatio="@fraction/chartRatio"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"/>
+                        android:layout_height="0dp"
+                        app:layout_constraintDimensionRatio="@fraction/chartRatio"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

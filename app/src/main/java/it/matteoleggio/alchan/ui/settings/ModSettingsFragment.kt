@@ -79,6 +79,8 @@ class ModSettingsFragment : BaseFragment() {
             addClipboard.addView(newClipboardText, 0)
         }
 
+        fetchFromMalCheckBox.isChecked = viewModel.appSettings.fetchFromMal
+
         addButton.setOnClickListener {
             val newClipboardText = TextInputEditText(context!!)
             newClipboardText.setHorizontallyScrolling(false)
@@ -112,7 +114,8 @@ class ModSettingsFragment : BaseFragment() {
                 viewModel.appSettings.sendRelationsPushNotification!!,
                 viewModel.appSettings.mergePushNotifications!!,
                 viewModel.appSettings.pushNotificationMinimumHours!!,
-                clip
+                clip,
+                fetchFromMalCheckBox.isChecked
             )
         }
     }

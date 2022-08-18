@@ -4,12 +4,15 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import it.matteoleggio.alchan.R
+import it.matteoleggio.alchan.data.network.service.JikanRestService
 import it.matteoleggio.alchan.helper.*
 import it.matteoleggio.alchan.helper.enums.BrowsePage
 import it.matteoleggio.alchan.helper.utils.AndroidUtility
 import it.matteoleggio.alchan.ui.base.BaseActivity
 import it.matteoleggio.alchan.ui.base.BaseListener
 import kotlinx.android.synthetic.main.activity_settings.*
+import retrofit2.awaitResponse
+import kotlin.concurrent.thread
 
 
 class ModSettingsActivity : BaseActivity(), BaseListener {

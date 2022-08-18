@@ -129,7 +129,6 @@ class AppSettingsFragment : Fragment() {
 //                        clip.add(arrayListOf(editText.text.toString(), switch.isChecked.toString()))
 //                    }
                     val clip = viewModel.appSettings.postsCustomClipboard
-                    if (hoursCalendarSelection.text.toString().toDouble() < 0.1) { hoursCalendarSelection.setText("0.1") }
                     viewModel.setAppSettings(
                         circularAvatarCheckBox.isChecked,
                         whiteBackgroundAvatarCheckBox.isChecked,
@@ -144,8 +143,9 @@ class AppSettingsFragment : Fragment() {
                         sendFollowsPushNotificationsCheckBox.isChecked,
                         sendRelationsPushNotificationsCheckBox.isChecked,
                         mergePushNotificationsCheckBox.isChecked,
-                        hoursCalendarSelection.text.toString().toDouble(),
-                        clip
+                        0.0,
+                        clip,
+                        viewModel.appSettings.fetchFromMal
                     )
 
                     activity?.recreate()
@@ -160,8 +160,6 @@ class AppSettingsFragment : Fragment() {
         selectedThemeText.text = viewModel.selectedAppTheme?.name.replaceUnderscore()
         selectedThemeText.setOnClickListener { showAppThemeDialog() }
 
-        hoursCalendarSelection.setText(viewModel.pushNotificationsMinHours.toString())
-
         resetDefaultButton.setOnClickListener {
             val isLowOnMemory = AndroidUtility.isLowOnMemory(activity)
             viewModel.pushNotificationsMinHours = 0.5
@@ -175,7 +173,8 @@ class AppSettingsFragment : Fragment() {
                     viewModel.setAppSettings(
                         showSocialTab = !isLowOnMemory,
                         showBio = !isLowOnMemory,
-                        showStats = !isLowOnMemory
+                        showStats = !isLowOnMemory,
+                        fetchFromMal = viewModel.appSettings.fetchFromMal
                     )
                     viewModel.isInit = false
                     initLayout()
@@ -202,8 +201,6 @@ class AppSettingsFragment : Fragment() {
         }
 
         explanationText.setSpan(clickableSpan, startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        pushNotificationExplanation.movementMethod = LinkMovementMethod.getInstance()
-        pushNotificationExplanation.text = explanationText
     }
 
     private fun showAppThemeDialog() {

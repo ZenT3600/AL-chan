@@ -10,12 +10,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 
 import it.matteoleggio.alchan.R
+import it.matteoleggio.alchan.data.network.service.JikanRestService
 import it.matteoleggio.alchan.data.response.AnimePromo
 import it.matteoleggio.alchan.helper.Constant
 import it.matteoleggio.alchan.helper.enums.BrowsePage
@@ -30,10 +32,16 @@ import it.matteoleggio.alchan.ui.base.BaseFragment
 import it.matteoleggio.alchan.ui.browse.BrowseActivity
 import it.matteoleggio.alchan.ui.browse.media.MediaFragment
 import it.matteoleggio.alchan.ui.explore.ExploreActivity
+import it.matteoleggio.alchan.ui.settings.app.AppSettingsViewModel
 import kotlinx.android.synthetic.main.fragment_media_overview.*
+import kotlinx.android.synthetic.main.fragment_media_overview.mediaCharactersLayout
+import kotlinx.android.synthetic.main.fragment_media_overview.mediaFormatText
 import kotlinx.android.synthetic.main.layout_loading.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import type.MediaFormat
 import type.MediaType
+import java.lang.Exception
+import kotlin.concurrent.thread
 
 /**
  * A simple [Fragment] subclass.
@@ -41,6 +49,7 @@ import type.MediaType
 class MediaOverviewFragment : BaseFragment() {
 
     private val viewModel by viewModel<MediaOverviewViewModel>()
+    private val viewModelSettings by viewModel<AppSettingsViewModel>()
 
     private var mediaData: MediaOverviewQuery.Media? = null
 
@@ -437,6 +446,49 @@ class MediaOverviewFragment : BaseFragment() {
                     )
                 }
             }
+            if (viewModelSettings.appSettings.fetchFromMal) {
+                thread(start = true) {
+                    try {
+                        if (mediaData?.type == MediaType.ANIME) {
+                            JikanRestService().getAnimeRecommendations(mediaData?.idMal!!.toInt()).execute()
+                                .body()?.recommendations?.forEach {
+                                    println(it.images)
+                                    viewModel.recommendationsList.add(
+                                        MediaRecommendations(
+                                            0,
+                                            0,
+                                            it.title,
+                                            MediaFormat.TV,
+                                            MediaType.ANIME,
+                                            0,
+                                            0,
+                                            Constant.MAL_ICON_URL
+                                        )
+                                    )
+                                }
+                        } else {
+                            JikanRestService().getMangaRecommendations(mediaData?.idMal!!.toInt()).execute()
+                                .body()?.recommendations?.forEach {
+                                    println(it)
+                                    viewModel.recommendationsList.add(
+                                        MediaRecommendations(
+                                            0,
+                                            0,
+                                            it.title,
+                                            MediaFormat.MANGA,
+                                            MediaType.MANGA,
+                                            0,
+                                            0,
+                                            Constant.MAL_ICON_URL
+                                        )
+                                    )
+                                }
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }
         }
 
         if (!viewModel.recommendationsList.isNullOrEmpty()) {
@@ -538,7 +590,11 @@ class MediaOverviewFragment : BaseFragment() {
         val width = (metrics.widthPixels / 1.3).toInt()
         return OverviewRecommendationsRvAdapter(requireActivity(), viewModel.recommendationsList, width, object : OverviewRecommendationsRvAdapter.OverviewRecommendationsListener {
             override fun passSelectedRecommendations(mediaId: Int, mediaType: MediaType) {
-                listener?.changeFragment(BrowsePage.valueOf(mediaType.name), mediaId)
+                try {
+                    listener?.changeFragment(BrowsePage.valueOf(mediaType.name), mediaId)
+                } catch (e: Exception) {
+                    Toast.makeText(context, "Unable to open recommendation. Media may not belong to AniList", Toast.LENGTH_LONG).show()
+                }
             }
         })
     }

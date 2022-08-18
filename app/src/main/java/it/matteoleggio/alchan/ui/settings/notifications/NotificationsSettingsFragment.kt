@@ -58,7 +58,7 @@ class NotificationsSettingsFragment : Fragment() {
         }
 
         checkBoxList = hashMapOf(
-            Pair(activityReplyCheckBox, NotificationType.ACTIVITY_REPLY),
+            Pair(fetchFromMalCheckBox, NotificationType.ACTIVITY_REPLY),
             Pair(activityReplySubscribedCheckBox, NotificationType.ACTIVITY_REPLY_SUBSCRIBED),
             Pair(followingCheckBox, NotificationType.FOLLOWING),
             Pair(activityMessageCheckBox, NotificationType.ACTIVITY_MESSAGE),

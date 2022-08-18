@@ -110,6 +110,7 @@ class MediaFragment : BaseFragment() {
             setupSection()
         })
 
+
         viewModel.mediaData.observe(viewLifecycleOwner, Observer {
             when (it.responseStatus) {
                 ResponseStatus.LOADING -> loadingLayout.visibility = View.VISIBLE

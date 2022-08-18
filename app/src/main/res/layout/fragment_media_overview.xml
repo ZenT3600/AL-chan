@@ -63,14 +63,14 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/mediaDescriptionArrow"
-                    app:srcCompat="@drawable/ic_chevron_down"
-                    app:tint="?themeContentColor"
-                    android:padding="@dimen/iconPadding"
-                    android:foreground="?selectableItemBackground"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/mediaDescriptionText"
                     android:layout_centerHorizontal="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:foreground="?selectableItemBackground"
+                    android:padding="@dimen/iconPadding"
+                    app:srcCompat="@drawable/ic_chevron_down"
+                    app:tint="?themeContentColor" />
 
             </RelativeLayout>
 

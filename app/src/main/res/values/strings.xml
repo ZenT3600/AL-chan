@@ -542,4 +542,8 @@
     <string name="scheduled_posts">Scheduled Posts</string>
     <string name="nothing_yet">No scheduled posts yet</string>
     <string name="search_an_emoji_alias">Insert an Emoji (e.g. 😳)</string>
+    <string name="fetch_data_from_mal">Fetch data from MyAnimeList</string>
+    <string name="mal">MyAnimeList</string>
+    <string name="mal_performance">MAL Performance</string>
+    <string name="total_watches">Total Watchers</string>
 </resources>
