@@ -20,6 +20,7 @@ import it.matteoleggio.alchan.R
 import it.matteoleggio.alchan.data.network.service.JikanRestService
 import it.matteoleggio.alchan.data.response.AnimePromo
 import it.matteoleggio.alchan.helper.Constant
+import it.matteoleggio.alchan.helper.JikanApiHelper
 import it.matteoleggio.alchan.helper.enums.BrowsePage
 import it.matteoleggio.alchan.helper.enums.ResponseStatus
 import it.matteoleggio.alchan.helper.libs.GlideApp
@@ -38,8 +39,6 @@ import kotlinx.android.synthetic.main.fragment_media_overview.mediaCharactersLay
 import kotlinx.android.synthetic.main.fragment_media_overview.mediaFormatText
 import kotlinx.android.synthetic.main.layout_loading.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import type.MediaFormat
-import type.MediaType
 import java.lang.Exception
 import kotlin.concurrent.thread
 
@@ -450,39 +449,39 @@ class MediaOverviewFragment : BaseFragment() {
                 thread(start = true) {
                     try {
                         if (mediaData?.type == MediaType.ANIME) {
-                            JikanRestService().getAnimeRecommendations(mediaData?.idMal!!.toInt()).execute()
-                                .body()?.recommendations?.forEach {
-                                    println(it.images)
-                                    viewModel.recommendationsList.add(
-                                        MediaRecommendations(
-                                            0,
-                                            0,
-                                            it.title,
-                                            MediaFormat.TV,
-                                            MediaType.ANIME,
-                                            0,
-                                            0,
-                                            Constant.MAL_ICON_URL
-                                        )
+                            val recs: it.matteoleggio.alchan.data.response.MediaRecommendations = JikanApiHelper().getAnimeRecommendations(mediaData?.idMal!!.toInt())
+                            recs.data.forEach {
+                                println(it.entry.images)
+                                viewModel.recommendationsList.add(
+                                    MediaRecommendations(
+                                        0,
+                                        0,
+                                        "(MAL) ${it.entry.title}",
+                                        MediaFormat.TV,
+                                        MediaType.ANIME,
+                                        0,
+                                        0,
+                                        it.entry.images.jpg.imageUrl
                                     )
-                                }
+                                )
+                            }
                         } else {
-                            JikanRestService().getMangaRecommendations(mediaData?.idMal!!.toInt()).execute()
-                                .body()?.recommendations?.forEach {
-                                    println(it)
-                                    viewModel.recommendationsList.add(
-                                        MediaRecommendations(
-                                            0,
-                                            0,
-                                            it.title,
-                                            MediaFormat.MANGA,
-                                            MediaType.MANGA,
-                                            0,
-                                            0,
-                                            Constant.MAL_ICON_URL
-                                        )
+                            val recs: it.matteoleggio.alchan.data.response.MediaRecommendations = JikanApiHelper().getMangaRecommendations(mediaData?.idMal!!.toInt())
+                            recs.data.forEach {
+                                println(it.entry.images)
+                                viewModel.recommendationsList.add(
+                                    MediaRecommendations(
+                                        0,
+                                        0,
+                                        "(MAL) ${it.entry.title}",
+                                        MediaFormat.MANGA,
+                                        MediaType.MANGA,
+                                        0,
+                                        0,
+                                        it.entry.images.jpg.imageUrl
                                     )
-                                }
+                                )
+                            }
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()

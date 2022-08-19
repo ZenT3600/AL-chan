@@ -1,7 +1,7 @@
 package it.matteoleggio.alchan.helper.pojo
 
-import type.MediaFormat
-import type.MediaType
+import android.media.MediaFormat
+import okhttp3.MediaType
 
 class MediaRecommendations(
     val mediaId: Int,

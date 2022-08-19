@@ -114,7 +114,7 @@ class MediaStatsFragment : BaseFragment() {
         mediaPopularityText.text = mediaData?.popularity?.toString() ?: "0"
         mediaFavoritesText.text = mediaData?.favourites?.toString() ?: "0"
 
-        if (viewModelSettings.appSettings.fetchFromMal) {
+        /*if (viewModelSettings.appSettings.fetchFromMal) {
             var animeStats: AnimeStats? = null
             var mangaStats: MangaStats? = null
             try {
@@ -183,6 +183,7 @@ class MediaStatsFragment : BaseFragment() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+            */
         }
     }
 
