@@ -1,6 +1,8 @@
 package it.matteoleggio.alchan.ui.browse.media.overview
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import it.matteoleggio.alchan.data.repository.InfoRepository
 
 class ThemesPlayerViewModel(private val infoRepository: InfoRepository) : ViewModel() {
@@ -16,20 +18,12 @@ class ThemesPlayerViewModel(private val infoRepository: InfoRepository) : ViewMo
         infoRepository.spotifyTrackResponse
     }
 
-    fun getYouTubeVideo() {
+    fun getYouTubeVideo(context: Context) {
         if (mediaTitle.isBlank() || trackTitle.isBlank()) {
             return
         }
 
-        infoRepository.getYouTubeVideo("${mediaTitle} ${getQuery()}")
-    }
-
-    fun getSpotifyTrack() {
-        if (mediaTitle.isBlank() || trackTitle.isBlank()) {
-            return
-        }
-
-        infoRepository.getSpotifyTrack(getQuery())
+        infoRepository.getYouTubeVideo(context, "$mediaTitle ${getQuery()}")
     }
 
     private fun getQuery(): String {

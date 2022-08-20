@@ -5,71 +5,72 @@
     android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/dialogLayout"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/marginNormal"
-        android:paddingBottom="@dimen/marginNormal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/playOnYoutubeLayout"
-            android:paddingStart="@dimen/marginPage"
-            android:paddingEnd="@dimen/marginPage"
+            android:id="@+id/dialogLayout"
+            android:orientation="vertical"
             android:paddingTop="@dimen/marginNormal"
             android:paddingBottom="@dimen/marginNormal"
-            android:gravity="center_vertical"
-            android:foreground="?selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/playOnYoutubeLayout"
+                android:paddingStart="@dimen/marginPage"
+                android:paddingEnd="@dimen/marginPage"
+                android:paddingTop="@dimen/marginNormal"
+                android:paddingBottom="@dimen/marginNormal"
+                android:gravity="center_vertical"
+                android:foreground="?selectableItemBackground"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
             <androidx.appcompat.widget.AppCompatImageView
-                app:srcCompat="@drawable/ic_icons8_play_button"
-                android:layout_width="@dimen/iconSize"
-                android:layout_height="@dimen/iconSize"/>
+                    app:srcCompat="@drawable/ic_icons8_play_button"
+                    android:layout_width="@dimen/iconSize"
+                    android:layout_height="@dimen/iconSize" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:text="@string/play_on_youtube"
-                style="?themeRegularFont"
-                android:layout_marginStart="@dimen/marginPage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                    android:text="@string/play_on_youtube"
+                    style="?themeRegularFont"
+                    android:layout_marginStart="@dimen/marginPage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/playOnSpotifyLayout"
-            android:paddingStart="@dimen/marginPage"
-            android:paddingEnd="@dimen/marginPage"
-            android:paddingTop="@dimen/marginNormal"
-            android:paddingBottom="@dimen/marginNormal"
-            android:gravity="center_vertical"
-            android:foreground="?selectableItemBackground"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                android:id="@+id/playOnSpotifyLayout"
+                android:paddingStart="@dimen/marginPage"
+                android:paddingEnd="@dimen/marginPage"
+                android:paddingTop="@dimen/marginNormal"
+                android:paddingBottom="@dimen/marginNormal"
+                android:gravity="center_vertical"
+                android:foreground="?selectableItemBackground"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
             <androidx.appcompat.widget.AppCompatImageView
-                app:srcCompat="@drawable/ic_icons8_spotify"
-                android:layout_width="@dimen/iconSize"
-                android:layout_height="@dimen/iconSize"/>
+                    app:srcCompat="@drawable/ic_icons8_spotify"
+                    android:layout_width="@dimen/iconSize"
+                    android:layout_height="@dimen/iconSize" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:text="@string/play_on_spotify"
-                style="?themeRegularFont"
-                android:layout_marginStart="@dimen/marginPage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                    android:text="@string/play_on_spotify"
+                    style="?themeRegularFont"
+                    android:layout_marginStart="@dimen/marginPage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.google.android.material.textview.MaterialTextView
-            android:text="@string/this_app_has_no_affiliation_with_above_players_and_can_end_up_opening_the_wrong_track"
-            style="?themeSmallFont"
-            android:layout_marginTop="@dimen/marginNormal"
-            android:layout_marginStart="@dimen/marginPage"
-            android:layout_marginEnd="@dimen/marginPage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+                android:text="@string/this_app_has_no_affiliation_with_above_players_and_can_end_up_opening_the_wrong_track"
+                style="?themeSmallFont"
+                android:layout_marginTop="@dimen/marginNormal"
+                android:layout_marginStart="@dimen/marginPage"
+                android:layout_marginEnd="@dimen/marginPage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

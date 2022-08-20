@@ -27,11 +27,13 @@ object Constant {
     const val GITHUB_URL = "https://github.com/ZenT3600/AL-sama"
     const val ALCHAN_THREAD_URL = "${ANILIST_URL}user/ZenTea"
 
+    // V3 is getting deprecated, gotta fix this to work with V4
     const val JIKAN_URL = "https://api.jikan.moe/v3/"
     const val YOUTUBE_API_URL = "https://www.googleapis.com/youtube/v3/"
     const val SPOTIFY_AUTH_API_URL = "https://accounts.spotify.com/api/"
     const val SPOTIFY_API_URL = "https://api.spotify.com/v1/"
 
+    const val YOUTUBE_URL = "www.youtube.com"
     const val RAW_GITHUB_URL = "https://raw.githubusercontent.com/ZenT3600/AL-sama/master/"
     const val VIDEO_THUMBNAIL_URL = "${RAW_GITHUB_URL}docs/images/video_thumbnail.png"
     const val YOUTUBE_THUMBNAIL_URL = "${RAW_GITHUB_URL}docs/images/youtube_thumbnail.png"

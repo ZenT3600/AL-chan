@@ -35,11 +35,7 @@ class ThemesPlayerDialog : DialogFragment() {
         setupObserver()
 
         dialogView.playOnYoutubeLayout.setOnClickListener {
-            viewModel.getYouTubeVideo()
-        }
-
-        dialogView.playOnSpotifyLayout.setOnClickListener {
-            viewModel.getSpotifyTrack()
+            viewModel.getYouTubeVideo(context!!)
         }
 
         builder.setView(dialogView)
