@@ -12,13 +12,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
+import com.google.gson.Gson
 import it.matteoleggio.alchan.R
-import it.matteoleggio.alchan.data.network.service.JikanRestService
 import it.matteoleggio.alchan.data.response.AnimeStats
-import it.matteoleggio.alchan.data.response.MangaSerialization
 import it.matteoleggio.alchan.data.response.MangaStats
-import it.matteoleggio.alchan.data.response.ScoreEntry
+import it.matteoleggio.alchan.data.response.Scores
+import it.matteoleggio.alchan.data.response.overview.MediaOverview
 import it.matteoleggio.alchan.helper.Constant
+import it.matteoleggio.alchan.helper.JikanApiHelper
 import it.matteoleggio.alchan.helper.enums.ResponseStatus
 import it.matteoleggio.alchan.helper.pojo.StatusDistributionItem
 import it.matteoleggio.alchan.helper.utils.AndroidUtility
@@ -29,23 +30,30 @@ import it.matteoleggio.alchan.ui.common.ChartDialog
 import it.matteoleggio.alchan.ui.settings.app.AppSettingsViewModel
 import kotlinx.android.synthetic.main.fragment_media_stats.*
 import kotlinx.android.synthetic.main.layout_loading.*
+import okhttp3.FormBody
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONException
 import org.json.JSONObject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import type.MediaType
+import java.util.concurrent.TimeUnit
 import kotlin.concurrent.thread
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class MediaStatsFragment : BaseFragment() {
+class MediaStatsFragment(val alId: Int, val mediaType: MediaType) : BaseFragment() {
     private val viewModel by viewModel<MediaStatsViewModel>()
     private val viewModelSettings by viewModel<AppSettingsViewModel>()
 
     var votes = arrayListOf<Int>()
+    var alData: MediaOverview? = null
+    var animeStats: AnimeStats? = null
+    var mangaStats: MangaStats? = null
 
     private var mediaData: MediaStatsQuery.Media? = null
 
@@ -102,10 +110,33 @@ class MediaStatsFragment : BaseFragment() {
         handleScoreDistribution()
     }
 
-    private fun addScoreToArray(scores: ScoreEntry) {
+    private fun addScoreToArray(scores: Scores, n: Int) {
         for (i in 0..scores.votes!!) {
-            this.votes.add(scores.score!!)
+            this.votes.add(n)
         }
+    }
+
+    fun getMalId(url: String): MediaOverview {
+        val httpClient = OkHttpClient.Builder()
+            .callTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .build()
+        val jsonObjectChild = JSONObject()
+        jsonObjectChild.put("id", alId)
+        val jsonObject = JSONObject()
+        jsonObject.put("query", MediaOverviewQuery.QUERY_DOCUMENT)
+        jsonObject.put("variables", jsonObjectChild)
+        val mediaType = "application/json; charset=utf-8".toMediaType()
+        val formBody = jsonObject.toString().toRequestBody(mediaType)
+        val request = Request.Builder()
+            .url(url)
+            .post(formBody)
+            .build()
+        println(httpClient.newCall(request).execute().body?.string().toString())
+        return Gson().fromJson(
+            httpClient.newCall(request).execute().body?.string(),
+            MediaOverview().javaClass
+        )
     }
 
     private fun handlePerformance() {
@@ -114,63 +145,37 @@ class MediaStatsFragment : BaseFragment() {
         mediaPopularityText.text = mediaData?.popularity?.toString() ?: "0"
         mediaFavoritesText.text = mediaData?.favourites?.toString() ?: "0"
 
-        /*if (viewModelSettings.appSettings.fetchFromMal) {
-            var animeStats: AnimeStats? = null
-            var mangaStats: MangaStats? = null
-            try {
-                malPerformanceLayout.visibility = View.VISIBLE
-                malPerformanceTextView.visibility = View.VISIBLE
-                thread(start = true) {
-                    val client = OkHttpClient()
-                    val json = JSONObject()
-                    json.put("query", MediaOverviewQuery.QUERY_DOCUMENT)
-                    json.put("variables", JSONObject("{'id': ${viewModel.mediaId}}"))
-                    val requestBody = RequestBody.create(null, json.toString())
-                    val request = Request.Builder().url(Constant.ANILIST_API_URL).post(requestBody)
-                        .addHeader("content-type", "application/json").build()
-                    val response = client.newCall(request).execute().body?.string()
-                    println(response.toString())
-
-                    val Jobject = JSONObject(response!!)
-                    val data = Jobject.getJSONObject("data")
-                    val media = data.getJSONObject("Media")
-                    var idMal: Int? = null
-                    var type: String? = null
-                    try {
-                        idMal = media.getInt("idMal")
-                        type = media.getString("type")
-                    } catch (e: Exception) {
-                        idMal = 0
-                        type = ""
+        if (viewModelSettings.appSettings.fetchFromMal) {
+            malPerformanceLayout.visibility = View.VISIBLE
+            malPerformanceTextView.visibility = View.VISIBLE
+            thread(start = true) {
+                alData = getMalId(Constant.ANILIST_API_URL)
+                if (alData?.data?.Media?.type == MediaType.ANIME.toString()) {
+                    animeStats =
+                        JikanApiHelper().getAnimeStats(alData?.data?.Media?.idMal!!)
+                    println(animeStats!!.data?.scores?.size)
+                    var i = 1
+                    animeStats!!.data?.scores?.forEach {
+                        this@MediaStatsFragment.addScoreToArray(it, i)
+                        i++
                     }
-
-                    if (type == MediaType.ANIME.toString()) {
-                        println(idMal)
-                        animeStats =
-                            JikanRestService().getAnimeStats(idMal!!).execute().body()
-                        animeStats?.scores?.forEach {
-                            this@MediaStatsFragment.addScoreToArray(it)
-                        }
-                    } else {
-                        println(idMal)
-                        mangaStats =
-                            JikanRestService().getMangaStats(idMal!!).execute().body()
-                        mangaStats?.scores?.forEach {
-                            this@MediaStatsFragment.addScoreToArray(it)
-                        }
+                } else {
+                    mangaStats =
+                        JikanApiHelper().getMangaStats(alData?.data?.Media?.idMal!!)
+                    var i = 1
+                    mangaStats!!.data?.scores?.forEach {
+                        this@MediaStatsFragment.addScoreToArray(it, i)
+                        i++
                     }
                 }
-                println(this.votes)
-                malMediaAvgScoreText.text = "${votes.average().toString() ?: "0"}%"
-                try {
-                    malTotalWatchesText.text = animeStats?.total.toString()
-                } catch (E: Exception) {
-                    malTotalWatchesText.text = mangaStats?.total.toString()
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
+            }.join()
+            malMediaAvgScoreText.text = "${votes.average().toString().substring(0, 3).toFloat().times(10).toInt().toString()}%"
+            if (alData?.data?.Media?.type == MediaType.ANIME.toString()) {
+                malTotalWatchesText.text = animeStats?.data?.total.toString()
+            } else {
+                malTotalWatchesText.text = mangaStats?.data?.total.toString()
             }
-            */
+        }
     }
 
     private fun handleRankings() {
@@ -235,6 +240,127 @@ class MediaStatsFragment : BaseFragment() {
         }
 
         mediaStatsStatusRecyclerView.adapter = MediaStatsStatusRvAdapter(requireActivity(), statusDistributionList)
+
+        if (viewModelSettings.appSettings.fetchFromMal) {
+            malMediaStatsStatusLayout.visibility = View.VISIBLE
+
+            val malStatusDistributionList = ArrayList<StatusDistributionItem>()
+
+            val malPieEntries = ArrayList<PieEntry>()
+
+            if (mediaType == MediaType.ANIME) {
+                malPieEntries.add(PieEntry(animeStats?.data?.watching!!.toFloat()))
+                malStatusDistributionList.add(
+                    StatusDistributionItem(
+                        "CURRENT",
+                        animeStats?.data?.watching!!,
+                        Constant.STATUS_COLOR_LIST[malStatusDistributionList.size]
+                    )
+                )
+                malPieEntries.add(PieEntry(animeStats?.data?.planToWatch!!.toFloat()))
+                malStatusDistributionList.add(
+                    StatusDistributionItem(
+                        "PLANNING",
+                        animeStats?.data?.planToWatch!!,
+                        Constant.STATUS_COLOR_LIST[malStatusDistributionList.size]
+                    )
+                )
+                malPieEntries.add(PieEntry(animeStats?.data?.completed!!.toFloat()))
+                malStatusDistributionList.add(
+                    StatusDistributionItem(
+                        "COMPLETED",
+                        animeStats?.data?.completed!!,
+                        Constant.STATUS_COLOR_LIST[malStatusDistributionList.size]
+                    )
+                )
+                malPieEntries.add(PieEntry(animeStats?.data?.dropped!!.toFloat()))
+                malStatusDistributionList.add(
+                    StatusDistributionItem(
+                        "DROPPED",
+                        animeStats?.data?.dropped!!,
+                        Constant.STATUS_COLOR_LIST[malStatusDistributionList.size]
+                    )
+                )
+                malPieEntries.add(PieEntry(animeStats?.data?.onHold!!.toFloat()))
+                malStatusDistributionList.add(
+                    StatusDistributionItem(
+                        "PAUSED",
+                        animeStats?.data?.onHold!!,
+                        Constant.STATUS_COLOR_LIST[malStatusDistributionList.size]
+                    )
+                )
+            } else {
+                malPieEntries.add(PieEntry(mangaStats?.data?.reading!!.toFloat()))
+                malStatusDistributionList.add(
+                    StatusDistributionItem(
+                        "CURRENT",
+                        mangaStats?.data?.reading!!,
+                        Constant.STATUS_COLOR_LIST[malStatusDistributionList.size]
+                    )
+                )
+                malPieEntries.add(PieEntry(mangaStats?.data?.planToRead!!.toFloat()))
+                malStatusDistributionList.add(
+                    StatusDistributionItem(
+                        "PLANNING",
+                        mangaStats?.data?.planToRead!!,
+                        Constant.STATUS_COLOR_LIST[malStatusDistributionList.size]
+                    )
+                )
+                malPieEntries.add(PieEntry(mangaStats?.data?.completed!!.toFloat()))
+                malStatusDistributionList.add(
+                    StatusDistributionItem(
+                        "COMPLETED",
+                        mangaStats?.data?.completed!!,
+                        Constant.STATUS_COLOR_LIST[malStatusDistributionList.size]
+                    )
+                )
+                malPieEntries.add(PieEntry(mangaStats?.data?.dropped!!.toFloat()))
+                malStatusDistributionList.add(
+                    StatusDistributionItem(
+                        "DROPPED",
+                        mangaStats?.data?.dropped!!,
+                        Constant.STATUS_COLOR_LIST[malStatusDistributionList.size]
+                    )
+                )
+                malPieEntries.add(PieEntry(mangaStats?.data?.onHold!!.toFloat()))
+                malStatusDistributionList.add(
+                    StatusDistributionItem(
+                        "PAUSED",
+                        mangaStats?.data?.onHold!!,
+                        Constant.STATUS_COLOR_LIST[malStatusDistributionList.size]
+                    )
+                )
+            }
+
+            val malPieDataSet = PieDataSet(malPieEntries, "Score Distribution")
+            malPieDataSet.colors = Constant.STATUS_COLOR_LIST
+
+            try {
+                val malPieData = PieData(malPieDataSet)
+                malPieData.setDrawValues(false)
+
+                malMediaStatsStatusPieChart.setHoleColor(
+                    ContextCompat.getColor(
+                        requireActivity(),
+                        android.R.color.transparent
+                    )
+                )
+                malMediaStatsStatusPieChart.setDrawEntryLabels(false)
+                malMediaStatsStatusPieChart.setTouchEnabled(false)
+                malMediaStatsStatusPieChart.description.isEnabled = false
+                malMediaStatsStatusPieChart.legend.isEnabled = false
+                malMediaStatsStatusPieChart.data = malPieData
+                malMediaStatsStatusPieChart.invalidate()
+            } catch (e: Exception) {
+                DialogUtility.showToast(activity, e.localizedMessage)
+            }
+
+            malMediaStatsStatusPieChart.visibility = View.VISIBLE
+            malMediaStatsStatusShowButton.visibility = View.GONE
+
+            malMediaStatsStatusRecyclerView.adapter =
+                MediaStatsStatusRvAdapter(requireActivity(), malStatusDistributionList)
+        }
     }
 
     private fun handleScoreDistribution() {
@@ -295,6 +421,62 @@ class MediaStatsFragment : BaseFragment() {
 
             mediaStatsScoreBarChart.visibility = View.VISIBLE
             mediaStatsScoreShowButton.visibility = View.GONE
+        }
+
+        if (viewModelSettings.appSettings.fetchFromMal) {
+            malMediaStatsScoreLayout.visibility = View.VISIBLE
+
+            val malBarEntries = ArrayList<BarEntry>()
+            if (mediaType == MediaType.ANIME) {
+                animeStats?.data?.scores?.forEach {
+                    val malBarEntry = BarEntry(it.score?.toFloat()!!, it.votes?.toFloat()!!)
+                    malBarEntries.add(malBarEntry)
+                }
+            } else {
+                mangaStats?.data?.scores?.forEach {
+                    val malBarEntry = BarEntry(it.score?.toFloat()!!, it.votes?.toFloat()!!)
+                    malBarEntries.add(malBarEntry)
+                }
+            }
+
+            val malBarDataSet = BarDataSet(malBarEntries, "Score Distribution")
+            malBarDataSet.colors = Constant.SCORE_COLOR_LIST
+
+            try {
+                val malBarData = BarData(malBarDataSet)
+                malBarData.setValueTextColor(
+                    AndroidUtility.getResValueFromRefAttr(
+                        activity,
+                        R.attr.themeContentColor
+                    )
+                )
+                malBarData.barWidth = .25F
+
+                malMediaStatsScoreBarChart.axisLeft.setDrawGridLines(false)
+                malMediaStatsScoreBarChart.axisLeft.setDrawAxisLine(false)
+                malMediaStatsScoreBarChart.axisLeft.setDrawLabels(false)
+
+                malMediaStatsScoreBarChart.axisRight.setDrawGridLines(false)
+                malMediaStatsScoreBarChart.axisRight.setDrawAxisLine(false)
+                malMediaStatsScoreBarChart.axisRight.setDrawLabels(false)
+
+                malMediaStatsScoreBarChart.xAxis.setDrawGridLines(false)
+                malMediaStatsScoreBarChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+                malMediaStatsScoreBarChart.xAxis.setLabelCount(barEntries.size, true)
+                malMediaStatsScoreBarChart.xAxis.textColor =
+                    AndroidUtility.getResValueFromRefAttr(activity, R.attr.themeContentColor)
+
+                malMediaStatsScoreBarChart.setTouchEnabled(false)
+                malMediaStatsScoreBarChart.description.isEnabled = false
+                malMediaStatsScoreBarChart.legend.isEnabled = false
+                malMediaStatsScoreBarChart.data = malBarData
+                malMediaStatsScoreBarChart.invalidate()
+            } catch (e: Exception) {
+                DialogUtility.showToast(activity, e.localizedMessage)
+            }
+
+            malMediaStatsScoreBarChart.visibility = View.VISIBLE
+            malMediaStatsScoreShowButton.visibility = View.GONE
         }
     }
 

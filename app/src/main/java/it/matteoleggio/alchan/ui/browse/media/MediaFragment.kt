@@ -87,7 +87,7 @@ class MediaFragment : BaseFragment() {
             Pair(MediaPage.SOCIAL, Pair(mediaSocialIcon, mediaSocialText))
         )
 
-        mediaFragmentList = arrayListOf(MediaOverviewFragment(), MediaCharactersFragment(), MediaStaffsFragment(), MediaStatsFragment(), MediaReviewsFragment(), MediaSocialFragment())
+        mediaFragmentList = arrayListOf(MediaOverviewFragment(), MediaCharactersFragment(), MediaStaffsFragment(), MediaStatsFragment(viewModel.mediaId!!, viewModel.mediaType!!), MediaReviewsFragment(), MediaSocialFragment())
 
         scaleUpAnim = AnimationUtils.loadAnimation(activity, R.anim.scale_up)
         scaleDownAnim = AnimationUtils.loadAnimation(activity, R.anim.scale_down)

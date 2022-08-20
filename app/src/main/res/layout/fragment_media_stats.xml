@@ -169,7 +169,7 @@
                 android:layout_marginStart="@dimen/marginPage"
                 android:layout_marginEnd="@dimen/marginPage"
                 android:layout_marginBottom="@dimen/marginPage"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="0dp"
@@ -185,7 +185,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="0%"
+                        android:text="Reload"
                         android:textAlignment="center" />
 
                     <com.google.android.material.textview.MaterialTextView
@@ -214,7 +214,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="0"
+                        android:text="Reload"
                         android:textAlignment="center" />
 
                     <com.google.android.material.textview.MaterialTextView
@@ -337,6 +337,96 @@
 
                     <com.github.mikephil.charting.charts.BarChart
                         android:id="@+id/mediaStatsScoreBarChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_constraintDimensionRatio="@fraction/chartRatio"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/malMediaStatsStatusLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/marginPage"
+                android:layout_marginEnd="@dimen/marginPage"
+                android:layout_marginBottom="@dimen/marginPage"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="?themeRegularBoldFont"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/marginNormal"
+                    android:text="@string/mal_status_distribution" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/malMediaStatsStatusShowButton"
+                    style="?themeButtonPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/show"
+                    android:visibility="gone" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/malMediaStatsStatusPieChart"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_constraintDimensionRatio="@fraction/chartRatio"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/malMediaStatsStatusRecyclerView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/marginNormal"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/malMediaStatsScoreLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/marginPage"
+                android:layout_marginEnd="@dimen/marginPage"
+                android:layout_marginBottom="@dimen/marginPage"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="?themeRegularBoldFont"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/marginNormal"
+                    android:text="@string/mal_score_distribution" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/malMediaStatsScoreShowButton"
+                    style="?themeButtonPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/show"
+                    android:visibility="gone" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/malMediaStatsScoreBarChart"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         app:layout_constraintDimensionRatio="@fraction/chartRatio"

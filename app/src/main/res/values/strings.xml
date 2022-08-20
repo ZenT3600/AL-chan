@@ -546,4 +546,6 @@
     <string name="mal">MyAnimeList</string>
     <string name="mal_performance">MAL Performance</string>
     <string name="total_watches">Total Watchers</string>
+    <string name="mal_status_distribution">MAL Status Distribution</string>
+    <string name="mal_score_distribution">MAL Score Distribution</string>
 </resources>
