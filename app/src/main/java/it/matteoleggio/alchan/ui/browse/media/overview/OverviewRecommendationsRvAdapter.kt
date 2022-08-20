@@ -18,7 +18,7 @@ class OverviewRecommendationsRvAdapter(private val context: Context,
 ) : RecyclerView.Adapter<OverviewRecommendationsRvAdapter.ViewHolder>() {
 
     interface OverviewRecommendationsListener {
-        fun passSelectedRecommendations(mediaId: Int, mediaType: MediaType)
+        fun passSelectedRecommendations(mediaId: Int, mediaType: MediaType, url: String)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,8 +35,9 @@ class OverviewRecommendationsRvAdapter(private val context: Context,
         holder.mediaRecRatingText.text = "${context.getString(R.string.recommendation_rating)} ${item.rating ?: 0}"
         holder.mediaRatingText.text = item.averageScore?.toString() ?: "0"
         holder.mediaFavText.text = item.favourites?.toString() ?: "0"
+        GlideApp.with(context).load(item.favicon).into(holder.mediaRecFavicon)
 
-        holder.itemView.setOnClickListener { listener.passSelectedRecommendations(item.mediaId, item.type ?: MediaType.ANIME) }
+        holder.itemView.setOnClickListener { listener.passSelectedRecommendations(item.mediaId, item.type ?: MediaType.ANIME, item.url) }
     }
 
     override fun getItemCount(): Int {
@@ -50,5 +51,6 @@ class OverviewRecommendationsRvAdapter(private val context: Context,
         val mediaRecRatingText = view.mediaRecRatingText!!
         val mediaRatingText = view.mediaRatingText!!
         val mediaFavText = view.mediaFavText!!
+        val mediaRecFavicon = view.mediaRecFavicon!!
     }
 }

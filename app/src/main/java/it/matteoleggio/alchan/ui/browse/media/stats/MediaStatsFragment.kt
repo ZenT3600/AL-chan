@@ -104,7 +104,7 @@ class MediaStatsFragment : BaseFragment() {
 
     private fun addScoreToArray(scores: ScoreEntry) {
         for (i in 0..scores.votes!!) {
-            votes.add(scores.score!!)
+            this.votes.add(scores.score!!)
         }
     }
 
@@ -148,32 +148,19 @@ class MediaStatsFragment : BaseFragment() {
                         println(idMal)
                         animeStats =
                             JikanRestService().getAnimeStats(idMal!!).execute().body()
-                        addScoreToArray(animeStats?.scores?.score1!!)
-                        addScoreToArray(animeStats?.scores?.score2!!)
-                        addScoreToArray(animeStats?.scores?.score3!!)
-                        addScoreToArray(animeStats?.scores?.score4!!)
-                        addScoreToArray(animeStats?.scores?.score5!!)
-                        addScoreToArray(animeStats?.scores?.score6!!)
-                        addScoreToArray(animeStats?.scores?.score7!!)
-                        addScoreToArray(animeStats?.scores?.score8!!)
-                        addScoreToArray(animeStats?.scores?.score9!!)
-                        addScoreToArray(animeStats?.scores?.score10!!)
+                        animeStats?.scores?.forEach {
+                            this@MediaStatsFragment.addScoreToArray(it)
+                        }
                     } else {
                         println(idMal)
                         mangaStats =
                             JikanRestService().getMangaStats(idMal!!).execute().body()
-                        addScoreToArray(mangaStats?.scores?.score1!!)
-                        addScoreToArray(mangaStats?.scores?.score2!!)
-                        addScoreToArray(mangaStats?.scores?.score3!!)
-                        addScoreToArray(mangaStats?.scores?.score4!!)
-                        addScoreToArray(mangaStats?.scores?.score5!!)
-                        addScoreToArray(mangaStats?.scores?.score6!!)
-                        addScoreToArray(mangaStats?.scores?.score7!!)
-                        addScoreToArray(mangaStats?.scores?.score8!!)
-                        addScoreToArray(mangaStats?.scores?.score9!!)
-                        addScoreToArray(mangaStats?.scores?.score10!!)
+                        mangaStats?.scores?.forEach {
+                            this@MediaStatsFragment.addScoreToArray(it)
+                        }
                     }
                 }
+                println(this.votes)
                 malMediaAvgScoreText.text = "${votes.average().toString() ?: "0"}%"
                 try {
                     malTotalWatchesText.text = animeStats?.total.toString()
@@ -184,7 +171,6 @@ class MediaStatsFragment : BaseFragment() {
                 e.printStackTrace()
             }
             */
-        }
     }
 
     private fun handleRankings() {

@@ -5,6 +5,6 @@ import com.google.gson.annotations.SerializedName
 
 data class MediaRecommendations (
 
-  @SerializedName("data" ) var data : ArrayList<Data> = arrayListOf()
+  @SerializedName("data" ) var data : ArrayList<RecommendationsData> = arrayListOf()
 
 )

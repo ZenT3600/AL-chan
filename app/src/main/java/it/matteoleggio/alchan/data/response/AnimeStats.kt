@@ -24,5 +24,5 @@ class AnimeStats(
     val total: Int,
     @SerializedName("scores")
     @Expose
-    val scores: Score,
+    val scores: List<ScoreEntry>,
 )

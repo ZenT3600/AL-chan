@@ -3,7 +3,7 @@ package it.matteoleggio.alchan.data.response
 import com.google.gson.annotations.SerializedName
 
 
-data class Entry (
+data class RecommendationsEntry (
 
   @SerializedName("mal_id" ) var malId  : Int?    = null,
   @SerializedName("url"    ) var url    : String? = null,

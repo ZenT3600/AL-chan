@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.Browser
 import android.util.DisplayMetrics
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -39,8 +40,11 @@ import kotlinx.android.synthetic.main.fragment_media_overview.mediaCharactersLay
 import kotlinx.android.synthetic.main.fragment_media_overview.mediaFormatText
 import kotlinx.android.synthetic.main.layout_loading.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import type.MediaFormat
+import type.MediaType
 import java.lang.Exception
 import kotlin.concurrent.thread
+import it.matteoleggio.alchan.data.response.MediaRecommendations
 
 /**
  * A simple [Fragment] subclass.
@@ -440,7 +444,13 @@ class MediaOverviewFragment : BaseFragment() {
                             it.node.mediaRecommendation.type,
                             it.node.mediaRecommendation.averageScore,
                             it.node.mediaRecommendation.favourites,
-                            it.node.mediaRecommendation.coverImage?.extraLarge
+                            it.node.mediaRecommendation.coverImage?.extraLarge,
+                            if (mediaData?.type == MediaType.ANIME) {
+                                "https://anilist.co/anime/${it.node.mediaRecommendation.id}"
+                            } else {
+                                "https://anilist.co/manga/${it.node.mediaRecommendation.id}"
+                            },
+                            Constant.AL_ICON_URL
                         )
                     )
                 }
@@ -449,36 +459,40 @@ class MediaOverviewFragment : BaseFragment() {
                 thread(start = true) {
                     try {
                         if (mediaData?.type == MediaType.ANIME) {
-                            val recs: it.matteoleggio.alchan.data.response.MediaRecommendations = JikanApiHelper().getAnimeRecommendations(mediaData?.idMal!!.toInt())
+                            val recs: MediaRecommendations = JikanApiHelper().getAnimeRecommendations(mediaData?.idMal!!.toInt())
                             recs.data.forEach {
-                                println(it.entry.images)
+                                println(it.entry?.images)
                                 viewModel.recommendationsList.add(
                                     MediaRecommendations(
                                         0,
-                                        0,
-                                        "(MAL) ${it.entry.title}",
+                                        it.votes,
+                                        it.entry?.title,
                                         MediaFormat.TV,
                                         MediaType.ANIME,
                                         0,
                                         0,
-                                        it.entry.images.jpg.imageUrl
+                                        it.entry?.images?.jpg?.imageUrl,
+                                        it.entry?.url!!,
+                                        Constant.MAL_ICON_URL
                                     )
                                 )
                             }
                         } else {
-                            val recs: it.matteoleggio.alchan.data.response.MediaRecommendations = JikanApiHelper().getMangaRecommendations(mediaData?.idMal!!.toInt())
+                            val recs: MediaRecommendations = JikanApiHelper().getMangaRecommendations(mediaData?.idMal!!.toInt())
                             recs.data.forEach {
-                                println(it.entry.images)
+                                println(it.entry?.images)
                                 viewModel.recommendationsList.add(
                                     MediaRecommendations(
                                         0,
-                                        0,
-                                        "(MAL) ${it.entry.title}",
+                                        it.votes,
+                                        it.entry?.title,
                                         MediaFormat.MANGA,
                                         MediaType.MANGA,
                                         0,
                                         0,
-                                        it.entry.images.jpg.imageUrl
+                                        it.entry?.images?.jpg?.imageUrl,
+                                        it.entry?.url!!,
+                                        Constant.MAL_ICON_URL
                                     )
                                 )
                             }
@@ -588,11 +602,11 @@ class MediaOverviewFragment : BaseFragment() {
         activity?.windowManager?.defaultDisplay?.getMetrics(metrics)
         val width = (metrics.widthPixels / 1.3).toInt()
         return OverviewRecommendationsRvAdapter(requireActivity(), viewModel.recommendationsList, width, object : OverviewRecommendationsRvAdapter.OverviewRecommendationsListener {
-            override fun passSelectedRecommendations(mediaId: Int, mediaType: MediaType) {
-                try {
+            override fun passSelectedRecommendations(mediaId: Int, mediaType: MediaType, url: String) {
+                if (url.contains(Constant.ANILIST_URL)) {
                     listener?.changeFragment(BrowsePage.valueOf(mediaType.name), mediaId)
-                } catch (e: Exception) {
-                    Toast.makeText(context, "Unable to open recommendation. Media may not belong to AniList", Toast.LENGTH_LONG).show()
+                } else {
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
                 }
             }
         })

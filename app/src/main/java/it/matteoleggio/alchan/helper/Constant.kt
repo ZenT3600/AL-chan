@@ -11,7 +11,9 @@ object Constant {
     const val JIKAN_API_URL = "https://api.jikan.moe/v4"
     const val ANILIST_API_URL = "https://graphql.anilist.co"
     const val ANILIST_URL = "https://anilist.co/"
+    const val MAL_URL = "https://myanimelist.net/"
     const val MAL_ICON_URL = "https://myanimelist.net/favicon.ico"
+    const val AL_ICON_URL = "https://anilist.co/favicon.ico"
 
     private const val ANILIST_CLIENT_ID = 1988
     const val ANILIST_LOGIN_URL = "${ANILIST_URL}api/v2/oauth/authorize?client_id=${ANILIST_CLIENT_ID}&response_type=token"

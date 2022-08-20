@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import it.matteoleggio.alchan.data.response.MediaRecommendations
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.ResponseBody
 import java.lang.reflect.Type
 
 class JikanApiHelper {
@@ -14,7 +15,7 @@ class JikanApiHelper {
             .url(url)
             .build()
 
-        return client.newCall(request).execute().body.toString().trimIndent()
+        return client.newCall(request).execute().body?.string() ?: ""
     }
 
     private fun makeRequestAsClass(url: String, cls: Type): Any {
@@ -24,13 +25,13 @@ class JikanApiHelper {
 
     fun getMangaStats(malId: Int) {}
 
-    fun getMangaRecommendations(malId: Int): Any {
-        return makeRequestAsClass("https://api.jikan.moe/v4/manga/$malId/recommendations", MediaRecommendations::class.java)
+    fun getMangaRecommendations(malId: Int): MediaRecommendations {
+        return makeRequestAsClass("https://api.jikan.moe/v4/manga/$malId/recommendations", MediaRecommendations().javaClass) as MediaRecommendations
     }
 
     fun getAnimeStats(malId: Int) {}
 
-    fun getAnimeRecommendations(malId: Int): Any {
-        return makeRequestAsClass("https://api.jikan.moe/v4/anime/$malId/recommendations", MediaRecommendations::class.java)
+    fun getAnimeRecommendations(malId: Int): MediaRecommendations {
+        return makeRequestAsClass("https://api.jikan.moe/v4/anime/$malId/recommendations", MediaRecommendations().javaClass) as MediaRecommendations
     }
 }
