@@ -548,4 +548,6 @@
     <string name="total_watches">Total Watchers</string>
     <string name="mal_status_distribution">MAL Status Distribution</string>
     <string name="mal_score_distribution">MAL Score Distribution</string>
+    <string name="do_you_want_to_update_the_app">Do you want to update the app?</string>
+    <string name="go_to_github">Go to Github</string>
 </resources>

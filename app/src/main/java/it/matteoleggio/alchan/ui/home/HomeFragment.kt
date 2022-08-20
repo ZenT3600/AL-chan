@@ -1,9 +1,12 @@
 package it.matteoleggio.alchan.ui.home
 
 
+import android.app.Dialog
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.net.Uri
 import android.os.Bundle
+import android.os.Looper
 import android.util.DisplayMetrics
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,9 +17,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.Observer
 import com.bumptech.glide.request.RequestOptions
+import com.google.gson.Gson
 
 import it.matteoleggio.alchan.R
 import it.matteoleggio.alchan.data.response.*
+import it.matteoleggio.alchan.data.response.overview.MediaOverview
+import it.matteoleggio.alchan.helper.Constant
 import it.matteoleggio.alchan.helper.doOnApplyWindowInsets
 import it.matteoleggio.alchan.helper.enums.BrowsePage
 import it.matteoleggio.alchan.helper.enums.ResponseStatus
@@ -25,6 +31,7 @@ import it.matteoleggio.alchan.helper.pojo.Review
 import it.matteoleggio.alchan.helper.updateTopPadding
 import it.matteoleggio.alchan.helper.utils.DialogUtility
 import it.matteoleggio.alchan.ui.animelist.editor.AnimeListEditorActivity
+import it.matteoleggio.alchan.ui.auth.SplashActivity
 import it.matteoleggio.alchan.ui.browse.BrowseActivity
 import it.matteoleggio.alchan.ui.browse.media.overview.OverviewGenreRvAdapter
 import it.matteoleggio.alchan.ui.calendar.CalendarActivity
@@ -36,9 +43,13 @@ import it.matteoleggio.alchan.ui.search.SearchActivity
 import it.matteoleggio.alchan.ui.seasonal.SeasonalActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.layout_loading.*
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import type.MediaListStatus
 import type.MediaType
+import java.util.concurrent.TimeUnit
+import kotlin.concurrent.thread
 import kotlin.math.abs
 
 /**
@@ -68,6 +79,26 @@ class HomeFragment : Fragment() {
             view.updateTopPadding(windowInsets, initialPadding)
         }
 
+        var update: AppUpdate? = null
+        thread(start = true) {
+            if (updateAvailable()) {
+                update = getUpdate()
+            }
+        }.join()
+        println(update)
+        if (update != null) {
+            DialogUtility.showOptionDialog(context!!,
+                R.string.new_update_is_available,
+                R.string.do_you_want_to_update_the_app,
+                R.string.go_to_github,
+                {
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(update!!.url)))
+                },
+                R.string.cancel,
+                {}
+            )
+        }
+
         releasingTodayAdapter = assignReleasingTodayRvAdapter()
         releasingTodayRecyclerView.adapter = releasingTodayAdapter
 
@@ -89,6 +120,25 @@ class HomeFragment : Fragment() {
 
         setupObserver()
         initLayout()
+    }
+
+    private fun getUpdate(): AppUpdate {
+        val httpClient = OkHttpClient.Builder()
+            .callTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .build()
+        val request = Request.Builder()
+            .url(Constant.UPDATES_URL)
+            .get()
+            .build()
+        return Gson().fromJson(
+            httpClient.newCall(request).execute().body?.string(),
+            AppUpdate().javaClass
+        )
+    }
+
+    private fun updateAvailable(): Boolean {
+        return getUpdate().version!! > Constant.CURRENT_VERSION
     }
 
     private fun setupObserver() {

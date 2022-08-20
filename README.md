@@ -11,6 +11,7 @@
 - NEW: Fetch additional data from MyAnimeList
 - NEW: Easily add emojis to posts
 - NEW: Get notifications as fast as possible
+- NEW: In-app updates
 - Manage your anime and manga lists.
 - Support various types of scoring method and custom lists.
 - Customise your anime and manga lists.

@@ -50,21 +50,21 @@ class SplashActivity : BaseActivity() {
 
                     // Handle update announcement
                     // Show update dialog if app_version has a value
-                    if (it.data.app_version.isNotBlank() && BuildConfig.VERSION_CODE < it.data.app_version.toInt()) {
-                        AlertDialog.Builder(this).apply {
-                            setTitle(R.string.new_update_is_available)
-                            setMessage(it.data.message)
-                            setCancelable(false)
-                            // show later if required_update is not "1"
-                            if (it.data.required_update != isTrue) {
-                                setNegativeButton(R.string.later) { _, _ ->
-                                    moveToNextPage()
-                                }
-                            }
-                            show()
-                        }
-                        return@Observer
-                    }
+//                    if (it.data.app_version.isNotBlank() && BuildConfig.VERSION_CODE < it.data.app_version.toInt()) {
+//                        AlertDialog.Builder(this).apply {
+//                            setTitle(R.string.new_update_is_available)
+//                            setMessage(it.data.message)
+//                            setCancelable(false)
+//                            // show later if required_update is not "1"
+//                            if (it.data.required_update != isTrue) {
+//                                setNegativeButton(R.string.later) { _, _ ->
+//                                    moveToNextPage()
+//                                }
+//                            }
+//                            show()
+//                        }
+//                        return@Observer
+//                    }
 
                     // Handle message announcement
                     // Show announcement if last saved announcement id is not the same as new id and if dates exist
