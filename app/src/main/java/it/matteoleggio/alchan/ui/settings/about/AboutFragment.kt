@@ -49,7 +49,7 @@ class AboutFragment : Fragment() {
             view.updateBottomPadding(windowInsets, initialPadding)
         }
 
-        versionText.text = "Version X"
+        versionText.text = "Version ${Constant.CURRENT_VERSION}"
         linkGmailText.text = Constant.EMAIL_ADDRESS
 
         linkAniListLayout.setOnClickListener { openLink(Constant.ALCHAN_THREAD_URL) }
