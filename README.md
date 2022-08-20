@@ -8,6 +8,7 @@
 
 ## Features so far
 - NEW: Manage a custom clipboard for your most typed messages
+- NEW: Fetch additional data from MyAnimeList
 - NEW: Easily add emojis to posts
 - NEW: Get notifications as fast as possible
 - Manage your anime and manga lists.
