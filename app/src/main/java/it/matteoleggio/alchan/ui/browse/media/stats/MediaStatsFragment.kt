@@ -51,6 +51,7 @@ class MediaStatsFragment(val alId: Int, val mediaType: MediaType) : BaseFragment
     private val viewModelSettings by viewModel<AppSettingsViewModel>()
 
     var votes = arrayListOf<Int>()
+    var failedMal = false
     var alData: MediaOverview? = null
     var animeStats: AnimeStats? = null
     var mangaStats: MangaStats? = null
@@ -149,31 +150,36 @@ class MediaStatsFragment(val alId: Int, val mediaType: MediaType) : BaseFragment
             malPerformanceLayout.visibility = View.VISIBLE
             malPerformanceTextView.visibility = View.VISIBLE
             thread(start = true) {
-                alData = getMalId(Constant.ANILIST_API_URL)
-                if (alData?.data?.Media?.type == MediaType.ANIME.toString()) {
-                    animeStats =
-                        JikanApiHelper().getAnimeStats(alData?.data?.Media?.idMal!!)
-                    println(animeStats!!.data?.scores?.size)
-                    var i = 1
-                    animeStats!!.data?.scores?.forEach {
-                        this@MediaStatsFragment.addScoreToArray(it, i)
-                        i++
+                try {
+                    alData = getMalId(Constant.ANILIST_API_URL)
+                    if (alData?.data?.Media?.type == MediaType.ANIME.toString()) {
+                        animeStats =
+                            JikanApiHelper().getAnimeStats(alData?.data?.Media?.idMal!!)
+                        println(animeStats!!.data?.scores?.size)
+                        var i = 1
+                        animeStats!!.data?.scores?.forEach {
+                            this@MediaStatsFragment.addScoreToArray(it, i)
+                            i++
+                        }
+                    } else {
+                        mangaStats =
+                            JikanApiHelper().getMangaStats(alData?.data?.Media?.idMal!!)
+                        var i = 1
+                        mangaStats!!.data?.scores?.forEach {
+                            this@MediaStatsFragment.addScoreToArray(it, i)
+                            i++
+                        }
                     }
-                } else {
-                    mangaStats =
-                        JikanApiHelper().getMangaStats(alData?.data?.Media?.idMal!!)
-                    var i = 1
-                    mangaStats!!.data?.scores?.forEach {
-                        this@MediaStatsFragment.addScoreToArray(it, i)
-                        i++
-                    }
-                }
+                } catch (e: java.lang.NullPointerException) { failedMal = true }
             }.join()
-            malMediaAvgScoreText.text = "${votes.average().toString().substring(0, 3).toFloat().times(10).toInt().toString()}%"
-            if (alData?.data?.Media?.type == MediaType.ANIME.toString()) {
-                malTotalWatchesText.text = animeStats?.data?.total.toString()
-            } else {
-                malTotalWatchesText.text = mangaStats?.data?.total.toString()
+            if (!failedMal) {
+                malMediaAvgScoreText.text = "${
+                    votes.average().toString().substring(0, 3).toFloat().times(10).toInt()}%"
+                if (alData?.data?.Media?.type == MediaType.ANIME.toString()) {
+                    malTotalWatchesText.text = animeStats?.data?.total.toString()
+                } else {
+                    malTotalWatchesText.text = mangaStats?.data?.total.toString()
+                }
             }
         }
     }
@@ -208,7 +214,7 @@ class MediaStatsFragment(val alId: Int, val mediaType: MediaType) : BaseFragment
         val pieDataSet = PieDataSet(pieEntries, "Score Distribution")
         pieDataSet.colors = Constant.STATUS_COLOR_LIST
 
-        if (!viewModel.showStatsAutomatically) {
+        if (!viewModel.showStatsAutomatically && !failedMal) {
             mediaStatsStatusPieChart.visibility = View.GONE
             mediaStatsStatusShowButton.visibility = View.VISIBLE
 
@@ -241,7 +247,7 @@ class MediaStatsFragment(val alId: Int, val mediaType: MediaType) : BaseFragment
 
         mediaStatsStatusRecyclerView.adapter = MediaStatsStatusRvAdapter(requireActivity(), statusDistributionList)
 
-        if (viewModelSettings.appSettings.fetchFromMal) {
+        if (viewModelSettings.appSettings.fetchFromMal && !failedMal) {
             malMediaStatsStatusLayout.visibility = View.VISIBLE
 
             val malStatusDistributionList = ArrayList<StatusDistributionItem>()
@@ -423,7 +429,7 @@ class MediaStatsFragment(val alId: Int, val mediaType: MediaType) : BaseFragment
             mediaStatsScoreShowButton.visibility = View.GONE
         }
 
-        if (viewModelSettings.appSettings.fetchFromMal) {
+        if (viewModelSettings.appSettings.fetchFromMal && !failedMal) {
             malMediaStatsScoreLayout.visibility = View.VISIBLE
 
             val malBarEntries = ArrayList<BarEntry>()

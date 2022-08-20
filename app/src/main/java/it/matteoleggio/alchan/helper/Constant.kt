@@ -9,7 +9,7 @@ import type.*
 
 object Constant {
     const val UPDATES_URL = "https://www.matteoleggio.it/static/alsama/latest.txt"
-    const val CURRENT_VERSION = 2
+    const val CURRENT_VERSION = 3
 
     const val JIKAN_API_URL = "https://api.jikan.moe/v4"
     const val ANILIST_API_URL = "https://graphql.anilist.co"
