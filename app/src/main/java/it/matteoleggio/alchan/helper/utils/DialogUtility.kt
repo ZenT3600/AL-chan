@@ -35,6 +35,23 @@ object DialogUtility {
     fun showOptionDialog(
         context: Context,
         title: Int,
+        message: CharSequence,
+        positiveButton: Int,
+        positiveAction: () -> Unit,
+        negativeButton: Int,
+        negativeAction: () -> Unit
+    ) {
+        AlertDialog.Builder(context)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton(positiveButton) { _, _ -> positiveAction() }
+            .setNegativeButton(negativeButton) { _, _ -> negativeAction() }
+            .show()
+    }
+
+    fun showOptionDialog(
+        context: Context,
+        title: Int,
         message: Int,
         positiveButton: Int,
         positiveAction: () -> Unit,

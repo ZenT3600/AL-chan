@@ -89,7 +89,7 @@ class HomeFragment : Fragment() {
         if (update != null) {
             DialogUtility.showOptionDialog(context!!,
                 R.string.new_update_is_available,
-                R.string.do_you_want_to_update_the_app,
+                update!!.newFeatures.joinToString("\n"),
                 R.string.go_to_github,
                 {
                     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(update!!.url)))
