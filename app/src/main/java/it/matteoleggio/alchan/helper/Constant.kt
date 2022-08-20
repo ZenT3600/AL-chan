@@ -4,17 +4,14 @@ import android.graphics.Color
 import it.matteoleggio.alchan.BuildConfig
 import it.matteoleggio.alchan.R
 import it.matteoleggio.alchan.helper.enums.AppColorTheme
-import it.matteoleggio.alchan.ui.browse.media.overview.MediaOverviewViewModel
 import type.*
 
 object Constant {
     const val UPDATES_URL = "https://www.matteoleggio.it/static/alsama/latest.txt"
     const val CURRENT_VERSION = 3
 
-    const val JIKAN_API_URL = "https://api.jikan.moe/v4"
     const val ANILIST_API_URL = "https://graphql.anilist.co"
     const val ANILIST_URL = "https://anilist.co/"
-    const val MAL_URL = "https://myanimelist.net/"
     const val MAL_ICON_URL = "https://myanimelist.net/favicon.ico"
     const val AL_ICON_URL = "https://anilist.co/favicon.ico"
 
@@ -28,7 +25,7 @@ object Constant {
 
     const val EMAIL_ADDRESS = "info@matteoleggio.it"
     const val GITHUB_URL = "https://github.com/ZenT3600/AL-sama"
-    const val ALCHAN_THREAD_URL = "${ANILIST_URL}user/ZenT3600"
+    const val ALCHAN_THREAD_URL = "${ANILIST_URL}user/ZenTea"
 
     const val JIKAN_URL = "https://api.jikan.moe/v3/"
     const val YOUTUBE_API_URL = "https://www.googleapis.com/youtube/v3/"
