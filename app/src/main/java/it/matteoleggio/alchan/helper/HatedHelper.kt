@@ -88,11 +88,18 @@ class HatedHelper(val bioOG: String?) {
         val bio = bioOG?.split("\n")
         val hatedJsonEncoded = bio?.get(bio.size - 1)?.drop(3)?.dropLast(1)
         println("0: $hatedJsonEncoded")
-        val hatedJson = String(Base64.getDecoder().decode(hatedJsonEncoded), Charsets.UTF_8)
-        println("1: $hatedJson")
-        val hated = Gson().fromJson(hatedJson, Hated().javaClass)
+        var hatedJson: String? = null
+        var hated: Hated? = null
+        var firstTime = false
+        try {
+            hatedJson = String(Base64.getDecoder().decode(hatedJsonEncoded), Charsets.UTF_8)
+            println("1: $hatedJson")
+            hated = Gson().fromJson(hatedJson, Hated().javaClass)
+        } catch (e: Exception) {
+            firstTime = true
+        }
         val newHatedCharacters = mutableListOf<HatedCharacter>()
-        for (h in hated.characters!!) {
+        for (h in hated?.characters!!) {
             newHatedCharacters.add(h)
         }
         newHatedCharacters.add(HatedCharacter(image, id))
@@ -105,7 +112,12 @@ class HatedHelper(val bioOG: String?) {
         }
         newHatedJson = "$newHatedJson]}"
         val newAboutB64 = String(Base64.getEncoder().encode(newHatedJson.toByteArray()), Charsets.UTF_8)
-        val newAbout = bio?.dropLast(1)?.joinToString("\n") + "\n[](" + newAboutB64 + ")"
+        var newAbout = ""
+        newAbout = if (!firstTime) {
+            bio?.dropLast(1)?.joinToString("\n") + "\n[](" + newAboutB64 + ")"
+        } else {
+            "\n[]($newAboutB64)"
+        }
         val json = JSONObject()
         json.put("newAbout", newAbout)
         val body = MultipartBody.Builder()
