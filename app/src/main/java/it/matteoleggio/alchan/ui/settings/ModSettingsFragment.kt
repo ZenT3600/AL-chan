@@ -122,7 +122,7 @@ class ModSettingsFragment : BaseFragment() {
                 .setType(MultipartBody.FORM)
                 .addFormDataPart(
                     "query", "query {\n" +
-                            "User(name: ${internalUsername.text.toString()}) {\n" +
+                            "User(name: \"${internalUsername.text.toString()}\") {\n" +
                             "__typename\n" +
                             "id\n" +
                             "name\n" +
@@ -149,6 +149,7 @@ class ModSettingsFragment : BaseFragment() {
             println(responseString)
             val user =
                 JSONObject(responseString).getJSONObject("data").getJSONObject("User")
+            println(user.getInt("id"))
 
             viewModel.setAppSettings(
                 viewModel.appSettings.circularAvatar!!,
