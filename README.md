@@ -6,6 +6,10 @@
 
 <br>
 
+<img alt="1" src="https://raw.githubusercontent.com/ZenT3600/AL-sama/master/imgs/1.png" width="30%">
+<img alt="2" src="https://raw.githubusercontent.com/ZenT3600/AL-sama/master/imgs/2.png" width="30%">
+<img alt="3" src="https://raw.githubusercontent.com/ZenT3600/AL-sama/master/imgs/3.png" width="30%">
+
 ## Features so far
 - NEW: Manage a custom clipboard for your most typed messages
 - NEW: Fetch additional data from MyAnimeList
