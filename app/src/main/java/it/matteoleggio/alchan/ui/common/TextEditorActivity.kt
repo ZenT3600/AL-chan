@@ -16,7 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
-import com.vdurmont.emoji.EmojiParser
+import emoji4j.EmojiUtils
 import it.matteoleggio.alchan.R
 import it.matteoleggio.alchan.data.localstorage.AppSettingsManager
 import it.matteoleggio.alchan.data.repository.AppSettingsRepository
@@ -270,7 +270,7 @@ class TextEditorActivity : BaseActivity() {
                     val newEntry = inputDialogView.inputField.text.toString().trim()
                     if (newEntry.isNotBlank()) {
                         val start = editorEditText.selectionStart
-                        val markdown = EmojiParser.parseToHtmlHexadecimal(EmojiParser.parseToUnicode(newEntry))
+                        val markdown = EmojiUtils.hexHtmlify(newEntry)
                         editorEditText.text?.insert(start, markdown)
                     }
                 },
