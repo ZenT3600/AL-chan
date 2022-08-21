@@ -210,9 +210,11 @@ class HatedFragment(val otherUserId: Int? = null) : BaseFragment() {
 
                 Constant.user_about = user.getString("about")
                 HatedHelper(Constant.user_about).getHatedCharactersSelf().forEach {
-                    viewModel.animeList.add(
-                        HatedCharacter(it.image, it.id)
-                    )
+                    if (it != null) {
+                        viewModel.animeList.add(
+                            HatedCharacter(it.image, it.id)
+                        )
+                    }
                 }
                 hatedAdapter = HatedRvAdapter(requireActivity(), viewModel.getMixedList(), handleListenerAction())
                 hatedListRecyclerView.adapter = hatedAdapter
@@ -233,7 +235,8 @@ class HatedFragment(val otherUserId: Int? = null) : BaseFragment() {
                     viewModelSettings.appSettings.pushNotificationMinimumHours!!,
                     viewModelSettings.appSettings.postsCustomClipboard,
                     viewModelSettings.appSettings.fetchFromMal,
-                    user.getInt("id")
+                    user.getInt("id"),
+                    viewModelSettings.appSettings.enableHatedList
                 )
             }, R.string.cancel, {
                 exitProcess(-1)

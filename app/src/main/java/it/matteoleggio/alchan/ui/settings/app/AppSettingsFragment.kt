@@ -146,7 +146,8 @@ class AppSettingsFragment : Fragment() {
                         0.0,
                         clip,
                         viewModel.appSettings.fetchFromMal,
-                        viewModel.appSettings.userid
+                        viewModel.appSettings.userid,
+                        viewModel.appSettings.enableHatedList
                     )
 
                     activity?.recreate()
@@ -176,7 +177,8 @@ class AppSettingsFragment : Fragment() {
                         showBio = !isLowOnMemory,
                         showStats = !isLowOnMemory,
                         fetchFromMal = viewModel.appSettings.fetchFromMal,
-                        username = viewModel.appSettings.userid
+                        username = viewModel.appSettings.userid,
+                        enableHatedList = viewModel.appSettings.enableHatedList
                     )
                     viewModel.isInit = false
                     initLayout()

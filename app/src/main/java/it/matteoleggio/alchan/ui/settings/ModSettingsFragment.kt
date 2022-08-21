@@ -65,6 +65,7 @@ class ModSettingsFragment : BaseFragment() {
         }
 
         fetchFromMalCheckBox.isChecked = viewModel.appSettings.fetchFromMal
+        internalHatedList.isChecked = viewModel.appSettings.enableHatedList
 
         val userId = viewModel.appSettings.userid
         val body = MultipartBody.Builder()
@@ -168,7 +169,8 @@ class ModSettingsFragment : BaseFragment() {
                 viewModel.appSettings.pushNotificationMinimumHours!!,
                 clip,
                 fetchFromMalCheckBox.isChecked,
-                user.getInt("id")
+                user.getInt("id"),
+                internalHatedList.isChecked
             )
         }
     }

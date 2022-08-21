@@ -39,7 +39,9 @@ import it.matteoleggio.alchan.ui.profile.favorites.FavoritesFragment
 import it.matteoleggio.alchan.ui.profile.hated.HatedFragment
 import it.matteoleggio.alchan.ui.profile.reviews.UserReviewsFragment
 import it.matteoleggio.alchan.ui.profile.stats.StatsFragment
+import it.matteoleggio.alchan.ui.settings.app.AppSettingsViewModel
 import it.sephiroth.android.library.xtooltip.Tooltip
+import kotlinx.android.synthetic.main.fragment_hated.*
 import kotlinx.android.synthetic.main.fragment_user.*
 import kotlinx.android.synthetic.main.layout_loading.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -48,6 +50,7 @@ import kotlin.math.abs
 class UserFragment : BaseFragment() {
 
     private val viewModel by viewModel<UserViewModel>()
+    private val viewModelSettings by viewModel<AppSettingsViewModel>()
 
     private lateinit var profileSectionMap: HashMap<ProfileSection, Pair<ImageView, TextView>>
     private lateinit var profileFragmentList: ArrayList<Fragment>
@@ -81,15 +84,26 @@ class UserFragment : BaseFragment() {
 
         viewModel.userId = arguments?.getInt(USER_ID)
 
-        profileSectionMap = hashMapOf(
-            Pair(ProfileSection.BIO, Pair(userBioIcon, userBioText)),
-            Pair(ProfileSection.FAVORITES, Pair(userFavoritesIcon, userFavoritesText)),
-            Pair(ProfileSection.HATED, Pair(userHatedIcon, userHatedText)),
-            Pair(ProfileSection.STATS, Pair(userStatsIcon, userStatsText)),
-            Pair(ProfileSection.REVIEWS, Pair(userReviewsIcon, userReviewsText))
-        )
+        if (viewModelSettings.appSettings.enableHatedList) {
+            profileSectionMap = hashMapOf(
+                Pair(ProfileSection.BIO, Pair(userBioIcon, userBioText)),
+                Pair(ProfileSection.FAVORITES, Pair(userFavoritesIcon, userFavoritesText)),
+                Pair(ProfileSection.STATS, Pair(userStatsIcon, userStatsText)),
+                Pair(ProfileSection.REVIEWS, Pair(userReviewsIcon, userReviewsText)),
+                Pair(ProfileSection.HATED, Pair(userHatedIcon, userHatedText))
+            )
+            userHatedLayout.visibility = View.VISIBLE
+            profileFragmentList = arrayListOf(BioFragment(), FavoritesFragment(), StatsFragment(), UserReviewsFragment(), HatedFragment())
+        } else {
+            profileSectionMap = hashMapOf(
+                Pair(ProfileSection.BIO, Pair(userBioIcon, userBioText)),
+                Pair(ProfileSection.FAVORITES, Pair(userFavoritesIcon, userFavoritesText)),
+                Pair(ProfileSection.STATS, Pair(userStatsIcon, userStatsText)),
+                Pair(ProfileSection.REVIEWS, Pair(userReviewsIcon, userReviewsText))
+            )
+            profileFragmentList = arrayListOf(BioFragment(), FavoritesFragment(), StatsFragment(), UserReviewsFragment())
+        }
 
-        profileFragmentList = arrayListOf(BioFragment(), FavoritesFragment(), HatedFragment(), StatsFragment(), UserReviewsFragment())
 
         scaleUpAnim = AnimationUtils.loadAnimation(activity, R.anim.scale_up)
         scaleDownAnim = AnimationUtils.loadAnimation(activity, R.anim.scale_down)
@@ -311,7 +325,9 @@ class UserFragment : BaseFragment() {
 
         userBioLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.BIO) }
         userFavoritesLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.FAVORITES) }
-        userHatedLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.HATED) }
+        if (viewModelSettings.appSettings.enableHatedList) {
+            userHatedLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.HATED) }
+        }
         userStatsLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.STATS) }
         userReviewsLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.REVIEWS) }
 
@@ -427,21 +443,43 @@ class UserFragment : BaseFragment() {
 
     private fun setupSection() {
         profileSectionMap.forEach {
-            if (it.key == viewModel.currentSection.value) {
-                it.value.first.imageTintList = ColorStateList.valueOf(AndroidUtility.getResValueFromRefAttr(activity, R.attr.themeSecondaryColor))
-                it.value.second.setTextColor(AndroidUtility.getResValueFromRefAttr(activity, R.attr.themeSecondaryColor))
-            } else {
-                it.value.first.imageTintList = ColorStateList.valueOf(AndroidUtility.getResValueFromRefAttr(activity, R.attr.themeContentColor))
-                it.value.second.setTextColor(AndroidUtility.getResValueFromRefAttr(activity, R.attr.themeContentColor))
-            }
+            try {
+                if (it.key == viewModel.currentSection.value) {
+                    it.value.first.imageTintList = ColorStateList.valueOf(
+                        AndroidUtility.getResValueFromRefAttr(
+                            activity,
+                            R.attr.themeSecondaryColor
+                        )
+                    )
+                    it.value.second.setTextColor(
+                        AndroidUtility.getResValueFromRefAttr(
+                            activity,
+                            R.attr.themeSecondaryColor
+                        )
+                    )
+                } else {
+                    it.value.first.imageTintList = ColorStateList.valueOf(
+                        AndroidUtility.getResValueFromRefAttr(
+                            activity,
+                            R.attr.themeContentColor
+                        )
+                    )
+                    it.value.second.setTextColor(
+                        AndroidUtility.getResValueFromRefAttr(
+                            activity,
+                            R.attr.themeContentColor
+                        )
+                    )
+                }
+            } catch (e: Exception) {}
         }
 
         userViewPager.currentItem = when (viewModel.currentSection.value) {
             ProfileSection.BIO -> 0
             ProfileSection.FAVORITES -> 1
-            ProfileSection.HATED -> 2
-            ProfileSection.STATS -> 3
-            ProfileSection.REVIEWS -> 4
+            ProfileSection.STATS -> 2
+            ProfileSection.REVIEWS -> 3
+            ProfileSection.HATED -> 4
             else -> 0
         }
     }

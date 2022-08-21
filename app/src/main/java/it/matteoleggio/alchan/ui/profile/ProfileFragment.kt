@@ -42,7 +42,15 @@ import it.matteoleggio.alchan.ui.profile.reviews.UserReviewsFragment
 import it.matteoleggio.alchan.ui.settings.SettingsActivity
 import it.matteoleggio.alchan.ui.profile.stats.StatsFragment
 import it.matteoleggio.alchan.ui.settings.ModSettingsActivity
+import it.matteoleggio.alchan.ui.settings.app.AppSettingsViewModel
+import kotlinx.android.synthetic.main.fragment_hated.*
 import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.fragment_profile.badgeSpace
+import kotlinx.android.synthetic.main.fragment_profile.donatorCard
+import kotlinx.android.synthetic.main.fragment_profile.donatorText
+import kotlinx.android.synthetic.main.fragment_profile.modCard
+import kotlinx.android.synthetic.main.fragment_profile.modText
+import kotlinx.android.synthetic.main.fragment_user.*
 import kotlinx.android.synthetic.main.layout_loading.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
@@ -50,6 +58,7 @@ import kotlin.math.abs
 class ProfileFragment : BaseMainFragment() {
 
     private val viewModel by viewModel<ProfileViewModel>()
+    private val viewModelSettings by viewModel<AppSettingsViewModel>()
 
     private var userId: Int? = null
 
@@ -85,15 +94,25 @@ class ProfileFragment : BaseMainFragment() {
             view.updateTopPadding(windowInsets, initialPadding)
         }
 
-        profileSectionMap = hashMapOf(
-            Pair(ProfileSection.BIO, Pair(profileBioIcon, profileBioText)),
-            Pair(ProfileSection.FAVORITES, Pair(profileFavoritesIcon, profileFavoritesText)),
-            Pair(ProfileSection.HATED, Pair(profileHatedIcon, profileHatedText)),
-            Pair(ProfileSection.STATS, Pair(profileStatsIcon, profileStatsText)),
-            Pair(ProfileSection.REVIEWS, Pair(profileReviewsIcon, profileReviewsText))
-        )
-
-        profileFragmentList = arrayListOf(BioFragment(), FavoritesFragment(), HatedFragment(), StatsFragment(), UserReviewsFragment())
+        if (viewModelSettings.appSettings.enableHatedList) {
+            profileSectionMap = hashMapOf(
+                Pair(ProfileSection.BIO, Pair(profileBioIcon, profileBioText)),
+                Pair(ProfileSection.FAVORITES, Pair(profileFavoritesIcon, profileFavoritesText)),
+                Pair(ProfileSection.STATS, Pair(profileStatsIcon, profileStatsText)),
+                Pair(ProfileSection.REVIEWS, Pair(profileReviewsIcon, profileReviewsText)),
+                Pair(ProfileSection.HATED, Pair(profileHatedIcon, profileHatedText)),
+            )
+            profileHatedLayout.visibility = View.VISIBLE
+            profileFragmentList = arrayListOf(BioFragment(), FavoritesFragment(), StatsFragment(), UserReviewsFragment(), HatedFragment())
+        } else {
+            profileSectionMap = hashMapOf(
+                Pair(ProfileSection.BIO, Pair(userBioIcon, userBioText)),
+                Pair(ProfileSection.FAVORITES, Pair(userFavoritesIcon, userFavoritesText)),
+                Pair(ProfileSection.STATS, Pair(userStatsIcon, userStatsText)),
+                Pair(ProfileSection.REVIEWS, Pair(userReviewsIcon, userReviewsText))
+            )
+            profileFragmentList = arrayListOf(BioFragment(), FavoritesFragment(), StatsFragment(), UserReviewsFragment())
+        }
 
         scaleUpAnim = AnimationUtils.loadAnimation(activity, R.anim.scale_up)
         scaleDownAnim = AnimationUtils.loadAnimation(activity, R.anim.scale_down)
@@ -253,7 +272,9 @@ class ProfileFragment : BaseMainFragment() {
 
         profileBioLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.BIO) }
         profileFavoritesLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.FAVORITES) }
-        profileHatedLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.HATED) }
+        if (viewModelSettings.appSettings.enableHatedList) {
+            profileHatedLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.HATED) }
+        }
         profileStatsLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.STATS) }
         profileReviewsLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.REVIEWS) }
 
@@ -360,21 +381,43 @@ class ProfileFragment : BaseMainFragment() {
 
     private fun setupSection() {
         profileSectionMap.forEach {
-            if (it.key == viewModel.currentSection.value) {
-                it.value.first.imageTintList = ColorStateList.valueOf(AndroidUtility.getResValueFromRefAttr(activity, R.attr.themeSecondaryColor))
-                it.value.second.setTextColor(AndroidUtility.getResValueFromRefAttr(activity, R.attr.themeSecondaryColor))
-            } else {
-                it.value.first.imageTintList = ColorStateList.valueOf(AndroidUtility.getResValueFromRefAttr(activity, R.attr.themeContentColor))
-                it.value.second.setTextColor(AndroidUtility.getResValueFromRefAttr(activity, R.attr.themeContentColor))
-            }
+            try {
+                if (it.key == viewModel.currentSection.value) {
+                    it.value.first.imageTintList = ColorStateList.valueOf(
+                        AndroidUtility.getResValueFromRefAttr(
+                            activity,
+                            R.attr.themeSecondaryColor
+                        )
+                    )
+                    it.value.second.setTextColor(
+                        AndroidUtility.getResValueFromRefAttr(
+                            activity,
+                            R.attr.themeSecondaryColor
+                        )
+                    )
+                } else {
+                    it.value.first.imageTintList = ColorStateList.valueOf(
+                        AndroidUtility.getResValueFromRefAttr(
+                            activity,
+                            R.attr.themeContentColor
+                        )
+                    )
+                    it.value.second.setTextColor(
+                        AndroidUtility.getResValueFromRefAttr(
+                            activity,
+                            R.attr.themeContentColor
+                        )
+                    )
+                }
+            } catch (e: Exception) {}
         }
 
         profileViewPager.currentItem = when (viewModel.currentSection.value) {
             ProfileSection.BIO -> 0
             ProfileSection.FAVORITES -> 1
-            ProfileSection.HATED -> 2
-            ProfileSection.STATS -> 3
-            ProfileSection.REVIEWS -> 4
+            ProfileSection.STATS -> 2
+            ProfileSection.REVIEWS -> 3
+            ProfileSection.HATED -> 4
             else -> 0
         }
     }

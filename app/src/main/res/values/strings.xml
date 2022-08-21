@@ -555,4 +555,5 @@
     <string name="set_as_hated">Set as Hated</string>
     <string name="could_not_detect_username">Could not detect your Username</string>
     <string name="internal">Internal</string>
+    <string name="enable_hated_list">Enable Hated Characters List</string>
 </resources>

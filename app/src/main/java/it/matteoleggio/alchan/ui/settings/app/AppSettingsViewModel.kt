@@ -31,7 +31,8 @@ class AppSettingsViewModel(private val appSettingsRepository: AppSettingsReposit
         pushNotificationsMinHoursPassed: Double = 0.5,
         postsCustomClipboard: ArrayList<String> = arrayListOf(),
         fetchFromMal: Boolean,
-        username: Int
+        username: Int,
+        enableHatedList: Boolean
     ) {
         appSettingsRepository.setAppSettings(AppSettings(
             appTheme = selectedAppTheme,
@@ -51,7 +52,8 @@ class AppSettingsViewModel(private val appSettingsRepository: AppSettingsReposit
             pushNotificationMinimumHours = pushNotificationsMinHoursPassed,
             postsCustomClipboard = postsCustomClipboard,
             fetchFromMal = fetchFromMal,
-            userid = username
+            userid = username,
+            enableHatedList = enableHatedList
         ))
     }
 }

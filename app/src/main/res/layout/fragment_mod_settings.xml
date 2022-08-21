@@ -44,6 +44,28 @@
                         android:hint="Your Username"
                         android:id="@+id/internalUsername" />
 
+                <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/marginNormal"
+                        android:gravity="center_vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                            style="?themeRegularFont"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/marginNormal"
+                            android:layout_weight="1"
+                            android:text="@string/enable_hated_list" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                            android:id="@+id/internalHatedList"
+                            style="?themeRegularCheckBox"
+                            android:layout_width="@dimen/iconSize"
+                            android:layout_height="@dimen/iconSize" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
                 <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/malTitle"
                         style="?themeRegularBoldFont"
