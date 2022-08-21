@@ -68,6 +68,7 @@
         <activity android:name=".ui.seasonal.SeasonalActivity" />
         <activity android:name=".ui.explore.ExploreActivity" />
         <activity android:name=".ui.browse.BrowseActivity"
+            android:screenOrientation="portrait"
             android:exported="false"
             tools:ignore="AppLinkUrlError">
             <intent-filter>
