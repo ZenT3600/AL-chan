@@ -10,7 +10,7 @@ import type.*
 object Constant {
     var user_about: String? = null
     const val UPDATES_URL = "https://www.matteoleggio.it/static/alsama/latest.txt"
-    const val CURRENT_VERSION = 4
+    const val CURRENT_VERSION = 5
 
     const val ANILIST_API_URL = "https://graphql.anilist.co"
     const val ANILIST_URL = "https://anilist.co/"
