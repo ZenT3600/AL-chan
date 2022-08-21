@@ -1,4 +1,4 @@
-package it.matteoleggio.alchan.ui.profile.favorites
+package it.matteoleggio.alchan.ui.profile.hated
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,13 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import it.matteoleggio.alchan.R
 import it.matteoleggio.alchan.helper.pojo.FavoriteItem
-import it.matteoleggio.alchan.ui.profile.hated.HatedListener
-import it.matteoleggio.alchan.ui.profile.hated.HatedStudiosRvAdapter
 import kotlinx.android.synthetic.main.list_flexbox_card.view.*
 
-class FavoritesStudiosRvAdapter(private val list: List<FavoriteItem>,
-                                private val listener: FavoritesListener
-) : RecyclerView.Adapter<FavoritesStudiosRvAdapter.ViewHolder>() {
+class HatedStudiosRvAdapter(private val list: List<FavoriteItem>,
+                            private val listener: HatedListener
+) : RecyclerView.Adapter<HatedStudiosRvAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_flexbox_card, parent, false)

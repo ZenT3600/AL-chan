@@ -1,6 +1,7 @@
 package it.matteoleggio.alchan.ui.browse.character
 
 
+import UserQuery
 import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Bundle
@@ -18,29 +19,51 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.api.Input
+import com.apollographql.apollo.rx2.Rx2Apollo
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.appbar.AppBarLayout
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.stfalcon.imageviewer.StfalconImageViewer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 import it.matteoleggio.alchan.R
-import it.matteoleggio.alchan.helper.doOnApplyWindowInsets
+import it.matteoleggio.alchan.data.localstorage.LocalStorage
+import it.matteoleggio.alchan.data.localstorage.LocalStorageImpl
+import it.matteoleggio.alchan.data.network.ApolloHandler
+import it.matteoleggio.alchan.data.network.CountryCodeAdapter
+import it.matteoleggio.alchan.data.network.JsonAdapter
+import it.matteoleggio.alchan.data.network.Resource
+import it.matteoleggio.alchan.data.response.Hated
+import it.matteoleggio.alchan.data.response.User
+import it.matteoleggio.alchan.data.response.UserResponse
+import it.matteoleggio.alchan.helper.*
 import it.matteoleggio.alchan.helper.enums.BrowsePage
 import it.matteoleggio.alchan.helper.enums.ResponseStatus
-import it.matteoleggio.alchan.helper.handleSpoilerAndLink
 import it.matteoleggio.alchan.helper.libs.GlideApp
+import it.matteoleggio.alchan.helper.libs.SingleLiveEvent
 import it.matteoleggio.alchan.helper.pojo.CharacterMedia
 import it.matteoleggio.alchan.helper.pojo.CharacterVoiceActors
-import it.matteoleggio.alchan.helper.updateTopPadding
 import it.matteoleggio.alchan.helper.utils.AndroidUtility
 import it.matteoleggio.alchan.helper.utils.DialogUtility
 import it.matteoleggio.alchan.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_character.*
 import kotlinx.android.synthetic.main.layout_loading.*
+import okhttp3.*
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import type.CustomType
 import type.MediaFormat
 import type.MediaSort
 import type.MediaType
+import java.util.concurrent.TimeUnit
+import kotlin.concurrent.thread
 import kotlin.math.abs
 
 /**
@@ -49,6 +72,9 @@ import kotlin.math.abs
 class CharacterFragment : BaseFragment() {
 
     private val viewModel by viewModel<CharacterViewModel>()
+    private val _userQueryResponse = SingleLiveEvent<Resource<UserQuery.Data>>()
+    private val userQueryResponse: LiveData<Resource<UserQuery.Data>>
+        get() = _userQueryResponse
 
     private lateinit var scaleUpAnim: Animation
     private lateinit var scaleDownAnim: Animation
@@ -197,9 +223,53 @@ class CharacterFragment : BaseFragment() {
                     characterFavoriteButton.strokeWidth = 0
                 }
 
-                characterFavoriteButton.isEnabled = true
+                val hated = HatedHelper(Constant.user_about).getHatedCharactersSelf()
+                var found = false
+                for (h in hated) {
+                    if (h == null) {
+                        continue
+                    }
+                    if (it.data?.character?.id == h.id) {
+                        found = true
+                        characterHatedButton.text = getString(R.string.hated)
+                        characterHatedButton.setTextColor(AndroidUtility.getResValueFromRefAttr(context, R.attr.themePrimaryColor))
+                        characterHatedButton.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(requireActivity(), android.R.color.transparent))
+                        characterHatedButton.strokeColor = ColorStateList.valueOf(AndroidUtility.getResValueFromRefAttr(context, R.attr.themePrimaryColor))
+                        characterHatedButton.strokeWidth = 2
+                        characterHatedButton.setOnClickListener {
+                            val gson = GsonBuilder().serializeSpecialFloatingPointValues().create()
+                            val l = LocalStorageImpl(context!!, Constant.SHARED_PREFERENCES_NAME, gson)
+                            HatedHelper(Constant.user_about).removeHatedCharacter(h, l.bearerToken!!)
+                            characterHatedButton.text = getString(R.string.set_as_hated)
+                            characterHatedButton.setTextColor(AndroidUtility.getResValueFromRefAttr(context, R.attr.themeBackgroundColor))
+                            characterHatedButton.backgroundTintList = ColorStateList.valueOf(AndroidUtility.getResValueFromRefAttr(context, R.attr.themePrimaryColor))
+                            characterHatedButton.strokeWidth = 0
+                        }
+                        break
+                    } else {
+                        continue
+                    }
+                }
+                if (!found) {
+                    characterHatedButton.text = getString(R.string.set_as_hated)
+                    characterHatedButton.setTextColor(AndroidUtility.getResValueFromRefAttr(context, R.attr.themeBackgroundColor))
+                    characterHatedButton.backgroundTintList = ColorStateList.valueOf(AndroidUtility.getResValueFromRefAttr(context, R.attr.themePrimaryColor))
+                    characterHatedButton.strokeWidth = 0
+                    characterHatedButton.setOnClickListener {
+                        val gson = GsonBuilder().serializeSpecialFloatingPointValues().create()
+                        val l = LocalStorageImpl(context!!, Constant.SHARED_PREFERENCES_NAME, gson)
+                        HatedHelper(Constant.user_about).addHatedCharacter(viewModel.characterData.value?.data?.character?.id!!, viewModel.characterData.value?.data?.character?.image?.large!!, l.bearerToken!!)
+                        characterHatedButton.text = getString(R.string.hated)
+                        characterHatedButton.setTextColor(AndroidUtility.getResValueFromRefAttr(context, R.attr.themePrimaryColor))
+                        characterHatedButton.backgroundTintList = ColorStateList.valueOf(AndroidUtility.getResValueFromRefAttr(context, R.attr.themeBackgroundColor))
+                        characterHatedButton.strokeWidth = 0
+                    }
+                }
+
+                characterHatedButton.isEnabled = true
             }
         })
+
 
         viewModel.toggleFavouriteResponse.observe(this, Observer {
             when (it.responseStatus) {

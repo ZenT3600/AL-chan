@@ -346,8 +346,6 @@ class HomeFragment : Fragment() {
 
         searchBar.setOnClickListener { startActivity(Intent(activity, SearchActivity::class.java)) }
 
-        greetingsText.text = "Hello, ${user?.name ?: ""}."
-        
         if (viewModel.circularAvatar) {
             userAvatar.background = ContextCompat.getDrawable(requireActivity(), R.drawable.shape_oval_transparent)
             if (viewModel.whiteBackgroundAvatar) {

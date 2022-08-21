@@ -550,4 +550,9 @@
     <string name="mal_score_distribution">MAL Score Distribution</string>
     <string name="do_you_want_to_update_the_app">Do you want to update the app?</string>
     <string name="go_to_github">Go to Github</string>
+    <string name="hated">Hated</string>
+    <string name="reorder_hated">Reorder Hated</string>
+    <string name="set_as_hated">Set as Hated</string>
+    <string name="could_not_detect_username">Could not detect your Username</string>
+    <string name="internal">Internal</string>
 </resources>

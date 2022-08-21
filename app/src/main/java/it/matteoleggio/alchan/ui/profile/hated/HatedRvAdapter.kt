@@ -1,21 +1,24 @@
-package it.matteoleggio.alchan.ui.profile.favorites
+package it.matteoleggio.alchan.ui.profile.hated
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import it.matteoleggio.alchan.R
+import it.matteoleggio.alchan.data.response.HatedCharacter
 import it.matteoleggio.alchan.helper.enums.BrowsePage
 import it.matteoleggio.alchan.helper.libs.GlideApp
 import it.matteoleggio.alchan.helper.pojo.FavoriteItem
-import it.matteoleggio.alchan.ui.profile.hated.HatedListener
+import it.matteoleggio.alchan.ui.browse.BrowseActivity
 import kotlinx.android.synthetic.main.list_media_cover_grid.view.*
 import kotlinx.android.synthetic.main.list_subtitle.view.*
 
-class FavoritesRvAdapter(private val context: Context,
-                         private val list: List<FavoriteItem>,
-                         private val listener: FavoritesListener
+class HatedRvAdapter(private val context: Context,
+                     private val list: List<HatedCharacter>,
+                     private val listener: HatedListener
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -37,16 +40,21 @@ class FavoritesRvAdapter(private val context: Context,
         if (holder is ItemViewHolder) {
             val item = list[position]
             GlideApp.with(context).load(item.image).into(holder.mediaCoverImage)
-            holder.itemView.setOnClickListener { listener.passSelectedItem(item.id!!, item.browsePage) }
-        } else if (holder is TitleViewHolder) {
-            val item = list[position]
-            holder.subtitleText.text = when (item.browsePage) {
-                BrowsePage.ANIME -> context.getString(R.string.anime)
-                BrowsePage.MANGA -> context.getString(R.string.manga)
-                BrowsePage.CHARACTER -> context.getString(R.string.characters)
-                BrowsePage.STAFF -> context.getString(R.string.staffs)
-                else -> ""
+            holder.itemView.setOnClickListener {
+                val intent = Intent(context, BrowseActivity::class.java)
+                intent.putExtra(BrowseActivity.TARGET_PAGE, "CHARACTER")
+                intent.putExtra(BrowseActivity.LOAD_ID, item.id)
+                startActivity(context, intent, null)
             }
+        } else if (holder is TitleViewHolder) {
+//            val item = list[position]
+//            holder.subtitleText.text = when (item.browsePage) {
+//                BrowsePage.ANIME -> context.getString(R.string.anime)
+//                BrowsePage.MANGA -> context.getString(R.string.manga)
+//                BrowsePage.CHARACTER -> context.getString(R.string.characters)
+//                BrowsePage.STAFF -> context.getString(R.string.staffs)
+//                else -> ""
+//            }
         }
     }
 

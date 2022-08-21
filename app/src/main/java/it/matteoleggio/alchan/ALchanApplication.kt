@@ -58,6 +58,7 @@ import it.matteoleggio.alchan.ui.profile.bio.BioViewModel
 import it.matteoleggio.alchan.ui.profile.favorites.FavoritesViewModel
 import it.matteoleggio.alchan.ui.profile.favorites.reorder.ReorderFavoritesViewModel
 import it.matteoleggio.alchan.ui.profile.follows.FollowsViewModel
+import it.matteoleggio.alchan.ui.profile.hated.HatedViewModel
 import it.matteoleggio.alchan.ui.profile.reviews.UserReviewsViewModel
 import it.matteoleggio.alchan.ui.profile.stats.StatsViewModel
 import it.matteoleggio.alchan.ui.profile.stats.details.StatsDetailViewModel
@@ -225,6 +226,8 @@ class ALchanApplication : Application() {
         viewModel { SocialViewModel(get(), get(), get(), get()) }
         viewModel { GlobalFeedViewModel(get(), get(), get()) }
         viewModel { GlobalFeedFilterViewModel(get()) }
+
+        viewModel { HatedViewModel(get(), get(), gson) }
 
     }
 

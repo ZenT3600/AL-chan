@@ -28,7 +28,6 @@ import it.matteoleggio.alchan.helper.enums.FollowPage
 import it.matteoleggio.alchan.helper.enums.ProfileSection
 import it.matteoleggio.alchan.helper.enums.ResponseStatus
 import it.matteoleggio.alchan.helper.libs.GlideApp
-import it.matteoleggio.alchan.helper.updateSidePadding
 import it.matteoleggio.alchan.helper.updateTopPadding
 import it.matteoleggio.alchan.helper.utils.AndroidUtility
 import it.matteoleggio.alchan.helper.utils.DialogUtility
@@ -37,6 +36,7 @@ import it.matteoleggio.alchan.ui.browse.BrowseActivity
 import it.matteoleggio.alchan.ui.notification.NotificationActivity
 import it.matteoleggio.alchan.ui.profile.bio.BioFragment
 import it.matteoleggio.alchan.ui.profile.favorites.FavoritesFragment
+import it.matteoleggio.alchan.ui.profile.hated.HatedFragment
 import it.matteoleggio.alchan.ui.profile.follows.FollowsActivity
 import it.matteoleggio.alchan.ui.profile.reviews.UserReviewsFragment
 import it.matteoleggio.alchan.ui.settings.SettingsActivity
@@ -50,6 +50,8 @@ import kotlin.math.abs
 class ProfileFragment : BaseMainFragment() {
 
     private val viewModel by viewModel<ProfileViewModel>()
+
+    private var userId: Int? = null
 
     private lateinit var profileSectionMap: HashMap<ProfileSection, Pair<ImageView, TextView>>
     private lateinit var profileFragmentList: List<Fragment>
@@ -86,11 +88,12 @@ class ProfileFragment : BaseMainFragment() {
         profileSectionMap = hashMapOf(
             Pair(ProfileSection.BIO, Pair(profileBioIcon, profileBioText)),
             Pair(ProfileSection.FAVORITES, Pair(profileFavoritesIcon, profileFavoritesText)),
+            Pair(ProfileSection.HATED, Pair(profileHatedIcon, profileHatedText)),
             Pair(ProfileSection.STATS, Pair(profileStatsIcon, profileStatsText)),
             Pair(ProfileSection.REVIEWS, Pair(profileReviewsIcon, profileReviewsText))
         )
 
-        profileFragmentList = arrayListOf(BioFragment(), FavoritesFragment(), StatsFragment(), UserReviewsFragment())
+        profileFragmentList = arrayListOf(BioFragment(), FavoritesFragment(), HatedFragment(), StatsFragment(), UserReviewsFragment())
 
         scaleUpAnim = AnimationUtils.loadAnimation(activity, R.anim.scale_up)
         scaleDownAnim = AnimationUtils.loadAnimation(activity, R.anim.scale_down)
@@ -121,6 +124,7 @@ class ProfileFragment : BaseMainFragment() {
 
         viewModel.viewerData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
+                this.userId = it.id
                 initLayout()
             }
         })
@@ -249,6 +253,7 @@ class ProfileFragment : BaseMainFragment() {
 
         profileBioLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.BIO) }
         profileFavoritesLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.FAVORITES) }
+        profileHatedLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.HATED) }
         profileStatsLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.STATS) }
         profileReviewsLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.REVIEWS) }
 
@@ -367,8 +372,9 @@ class ProfileFragment : BaseMainFragment() {
         profileViewPager.currentItem = when (viewModel.currentSection.value) {
             ProfileSection.BIO -> 0
             ProfileSection.FAVORITES -> 1
-            ProfileSection.STATS -> 2
-            ProfileSection.REVIEWS -> 3
+            ProfileSection.HATED -> 2
+            ProfileSection.STATS -> 3
+            ProfileSection.REVIEWS -> 4
             else -> 0
         }
     }

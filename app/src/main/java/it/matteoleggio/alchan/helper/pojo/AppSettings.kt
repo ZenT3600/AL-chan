@@ -21,4 +21,5 @@ class AppSettings(
     var pushNotificationMinimumHours: Double? = null,
     var postsCustomClipboard: ArrayList<String> = arrayListOf(),
     var fetchFromMal: Boolean = false,
+    var userid: Int = 0
 )

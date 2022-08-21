@@ -43,51 +43,51 @@
                         android:layout_height="match_parent"/>
 
                     <androidx.appcompat.widget.LinearLayoutCompat
-                        android:id="@+id/greetingsLayout"
-                        android:padding="@dimen/marginPage"
-                        android:orientation="vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <androidx.appcompat.widget.LinearLayoutCompat
-                            android:gravity="bottom"
+                            android:id="@+id/greetingsLayout"
+                            android:padding="@dimen/marginPage"
+                            android:orientation="vertical"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                                android:gravity="bottom"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
                             <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/greetingsText"
-                                style="?themeTitleFont"
-                                android:layout_marginEnd="@dimen/marginPage"
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
+                                    android:id="@+id/greetingsText"
+                                    style="?themeTitleFont"
+                                    android:layout_marginEnd="@dimen/marginPage"
+                                    android:layout_weight="1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:id="@+id/userAvatar"
-                                android:background="@drawable/shape_oval_transparent"
-                                android:layout_width="@dimen/imageCircleSize"
-                                android:layout_height="@dimen/imageCircleSize"/>
+                                    android:id="@+id/userAvatar"
+                                    android:background="@drawable/shape_oval_transparent"
+                                    android:layout_width="@dimen/imageCircleSize"
+                                    android:layout_height="@dimen/imageCircleSize" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/searchBar"
-                            app:cardBackgroundColor="@color/white"
-                            app:contentPadding="@dimen/marginNormal"
-                            android:foreground="?selectableItemBackground"
-                            android:layout_marginTop="@dimen/marginPage"
-                            android:layout_marginBottom="@dimen/marginClose"
-                            android:layout_marginStart="@dimen/marginClose"
-                            android:layout_marginEnd="@dimen/marginClose"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                                android:id="@+id/searchBar"
+                                app:cardBackgroundColor="@color/white"
+                                app:contentPadding="@dimen/marginNormal"
+                                android:foreground="?selectableItemBackground"
+                                android:layout_marginTop="@dimen/marginPage"
+                                android:layout_marginBottom="@dimen/marginClose"
+                                android:layout_marginStart="@dimen/marginClose"
+                                android:layout_marginEnd="@dimen/marginClose"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
 
                             <com.google.android.material.textview.MaterialTextView
-                                android:text="@string/what_are_you_looking_for"
-                                style="?themeRegularFont"
-                                android:textColor="@color/black"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
+                                    android:text="@string/what_are_you_looking_for"
+                                    style="?themeRegularFont"
+                                    android:textColor="@color/black"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
 
                         </com.google.android.material.card.MaterialCardView>
 

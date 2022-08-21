@@ -38,9 +38,9 @@
                         android:layout_height="wrap_content">
 
                         <View
-                            android:background="@drawable/dark_gradient_three_background"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
+                                android:background="@drawable/dark_gradient_three_background"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
 
                     </RelativeLayout>
 
@@ -127,14 +127,24 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
                         <com.google.android.material.button.MaterialButton
-                            android:id="@+id/characterFavoriteButton"
-                            android:text="@string/set_as_favorite"
-                            android:textAllCaps="true"
-                            style="?themeButtonBorderPrimary"
-                            android:enabled="false"
-                            android:layout_margin="@dimen/marginPage"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                                android:id="@+id/characterFavoriteButton"
+                                android:text="@string/set_as_favorite"
+                                android:textAllCaps="true"
+                                style="?themeButtonBorderPrimary"
+                                android:enabled="false"
+                                android:layout_margin="@dimen/marginNormal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                        <com.google.android.material.button.MaterialButton
+                                android:id="@+id/characterHatedButton"
+                                android:text="@string/set_as_hated"
+                                android:textAllCaps="true"
+                                style="?themeButtonBorderPrimary"
+                                android:enabled="false"
+                                android:layout_margin="@dimen/marginNormal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 

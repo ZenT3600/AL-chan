@@ -145,7 +145,8 @@ class AppSettingsFragment : Fragment() {
                         mergePushNotificationsCheckBox.isChecked,
                         0.0,
                         clip,
-                        viewModel.appSettings.fetchFromMal
+                        viewModel.appSettings.fetchFromMal,
+                        viewModel.appSettings.userid
                     )
 
                     activity?.recreate()
@@ -174,7 +175,8 @@ class AppSettingsFragment : Fragment() {
                         showSocialTab = !isLowOnMemory,
                         showBio = !isLowOnMemory,
                         showStats = !isLowOnMemory,
-                        fetchFromMal = viewModel.appSettings.fetchFromMal
+                        fetchFromMal = viewModel.appSettings.fetchFromMal,
+                        username = viewModel.appSettings.userid
                     )
                     viewModel.isInit = false
                     initLayout()

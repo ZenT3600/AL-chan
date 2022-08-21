@@ -36,6 +36,7 @@ import it.matteoleggio.alchan.ui.base.BaseFragment
 import it.matteoleggio.alchan.ui.profile.ProfileViewPagerAdapter
 import it.matteoleggio.alchan.ui.profile.bio.BioFragment
 import it.matteoleggio.alchan.ui.profile.favorites.FavoritesFragment
+import it.matteoleggio.alchan.ui.profile.hated.HatedFragment
 import it.matteoleggio.alchan.ui.profile.reviews.UserReviewsFragment
 import it.matteoleggio.alchan.ui.profile.stats.StatsFragment
 import it.sephiroth.android.library.xtooltip.Tooltip
@@ -87,7 +88,7 @@ class UserFragment : BaseFragment() {
             Pair(ProfileSection.REVIEWS, Pair(userReviewsIcon, userReviewsText))
         )
 
-        profileFragmentList = arrayListOf(BioFragment(), FavoritesFragment(), StatsFragment(), UserReviewsFragment())
+        profileFragmentList = arrayListOf(BioFragment(), FavoritesFragment(), HatedFragment(), StatsFragment(), UserReviewsFragment())
 
         scaleUpAnim = AnimationUtils.loadAnimation(activity, R.anim.scale_up)
         scaleDownAnim = AnimationUtils.loadAnimation(activity, R.anim.scale_down)
