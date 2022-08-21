@@ -20,9 +20,13 @@ class HatedHelper(val bioOG: String?) {
         val bio = bioOG?.split("\n")
         val hatedJsonEncoded = bio?.get(bio.size - 1)?.drop(3)?.dropLast(1)
         println("0: $hatedJsonEncoded")
-        val hatedJson = String(Base64.getDecoder().decode(hatedJsonEncoded), Charsets.UTF_8)
-        println("1: $hatedJson")
-        return Gson().fromJson(hatedJson, Hated().javaClass).characters!!
+        try {
+            val hatedJson = String(Base64.getDecoder().decode(hatedJsonEncoded), Charsets.UTF_8)
+            println("1: $hatedJson")
+            return Gson().fromJson(hatedJson, Hated().javaClass).characters!!
+        } catch (e: java.lang.IllegalArgumentException) {
+            return listOf<HatedCharacter>()
+        }
     }
 
     @SuppressLint("NewApi")
@@ -89,7 +93,7 @@ class HatedHelper(val bioOG: String?) {
         val hatedJsonEncoded = bio?.get(bio.size - 1)?.drop(3)?.dropLast(1)
         println("0: $hatedJsonEncoded")
         var hatedJson: String? = null
-        var hated: Hated? = null
+        var hated: Hated? = Hated(listOf<HatedCharacter>())
         var firstTime = false
         try {
             hatedJson = String(Base64.getDecoder().decode(hatedJsonEncoded), Charsets.UTF_8)
