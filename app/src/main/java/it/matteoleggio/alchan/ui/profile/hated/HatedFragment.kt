@@ -37,7 +37,7 @@ import kotlin.system.exitProcess
 /**
  * A simple [Fragment] subclass.
  */
-class HatedFragment() : BaseFragment() {
+class HatedFragment(val otherUserId: Int? = null) : BaseFragment() {
     private val viewModel by viewModel<HatedViewModel>()
     private val viewModelSettings by viewModel<AppSettingsViewModel>()
     private lateinit var hatedAdapter: HatedRvAdapter
@@ -76,7 +76,64 @@ class HatedFragment() : BaseFragment() {
 
     private fun setupObserver() {
         if (viewModel.otherUserId != null && viewModel.otherUserId != viewModelSettings.appSettings.userid) {
-            return
+            println("OTHER USER")
+
+            try {
+                val body = MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart(
+                        "query", "query {\n" +
+                                "User(id: ${viewModel.otherUserId}) {\n" +
+                                "__typename\n" +
+                                "id\n" +
+                                "name\n" +
+                                "about(asHtml: false)\n" +
+                                "}\n" +
+                                "}"
+                    )
+                    .build()
+                var response: Response? = null
+                thread(start = true) {
+                    val okHttpClient = OkHttpClient.Builder()
+                        .connectTimeout(20, TimeUnit.SECONDS)
+                        .readTimeout(20, TimeUnit.SECONDS)
+                        .writeTimeout(20, TimeUnit.SECONDS)
+                        .build()
+                    val request = Request.Builder()
+                        .url(Constant.ANILIST_API_URL)
+                        .post(body)
+                        .build()
+                    response = okHttpClient.newCall(request).execute()
+                }.join()
+                println(response?.code)
+                val responseString = response?.body?.string().toString()
+                println(responseString)
+                val about =
+                    JSONObject(responseString).getJSONObject("data").getJSONObject("User")
+                        .get("about")
+                        .toString()
+                println(about)
+                viewModel.charactersList.clear()
+                lateinit var hatedCharacters: List<HatedCharacter>
+                try {
+                    hatedCharacters = HatedHelper(about).getHatedCharactersSelf()
+                } catch (e: java.lang.NullPointerException) {
+                    return
+                }
+                hatedListLoading.visibility = View.GONE
+                hatedCharacters.forEach {
+                    if (it != null) {
+                        viewModel.charactersList.add(
+                            HatedCharacter(it.image, it.id)
+                        )
+                    }
+                }
+                hatedAdapter = HatedRvAdapter(requireActivity(), viewModel.getMixedList(), handleListenerAction())
+                hatedListRecyclerView.adapter = hatedAdapter
+                return
+            } catch (e: Exception) {
+                return
+            }
         }
 
         try {
@@ -183,7 +240,12 @@ class HatedFragment() : BaseFragment() {
             })
         }
         viewModel.charactersList.clear()
-        val hatedCharacters = HatedHelper(Constant.user_about).getHatedCharactersSelf()
+        lateinit var hatedCharacters: List<HatedCharacter>
+        try {
+            hatedCharacters = HatedHelper(Constant.user_about).getHatedCharactersSelf()
+        } catch (e: java.lang.NullPointerException) {
+            return
+        }
         hatedListLoading.visibility = View.GONE
         hatedCharacters.forEach {
             if (it != null) {

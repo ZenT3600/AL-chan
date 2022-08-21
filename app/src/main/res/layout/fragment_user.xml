@@ -386,6 +386,34 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/userHatedLayout"
+                        android:foreground="?selectableItemBackground"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="@dimen/marginNormal"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/userHatedIcon"
+                            app:srcCompat="@drawable/ic_sad"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/userHatedText"
+                            style="?themeSmallFont"
+                            android:text="@string/hated"
+                            android:layout_marginTop="@dimen/marginClose"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/userStatsLayout"
                     android:foreground="?selectableItemBackground"
                     android:orientation="vertical"

@@ -84,6 +84,7 @@ class UserFragment : BaseFragment() {
         profileSectionMap = hashMapOf(
             Pair(ProfileSection.BIO, Pair(userBioIcon, userBioText)),
             Pair(ProfileSection.FAVORITES, Pair(userFavoritesIcon, userFavoritesText)),
+            Pair(ProfileSection.HATED, Pair(userHatedIcon, userHatedText)),
             Pair(ProfileSection.STATS, Pair(userStatsIcon, userStatsText)),
             Pair(ProfileSection.REVIEWS, Pair(userReviewsIcon, userReviewsText))
         )
@@ -310,6 +311,7 @@ class UserFragment : BaseFragment() {
 
         userBioLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.BIO) }
         userFavoritesLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.FAVORITES) }
+        userHatedLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.HATED) }
         userStatsLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.STATS) }
         userReviewsLayout.setOnClickListener { viewModel.setProfileSection(ProfileSection.REVIEWS) }
 
@@ -437,8 +439,9 @@ class UserFragment : BaseFragment() {
         userViewPager.currentItem = when (viewModel.currentSection.value) {
             ProfileSection.BIO -> 0
             ProfileSection.FAVORITES -> 1
-            ProfileSection.STATS -> 2
-            ProfileSection.REVIEWS -> 3
+            ProfileSection.HATED -> 2
+            ProfileSection.STATS -> 3
+            ProfileSection.REVIEWS -> 4
             else -> 0
         }
     }
