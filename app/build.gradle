@@ -8,11 +8,11 @@ apply plugin: "de.mannodermaus.android-junit5"
 android {
     compileSdkVersion 30
     defaultConfig {
-        applicationId "com.zen.alchan"
+        applicationId "it.matteoleggio.alsama"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 100207
-        versionName "1.2.7"
+        versionCode 5
+        versionName "5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
