@@ -79,7 +79,7 @@ class HomeFragment : Fragment() {
             view.updateTopPadding(windowInsets, initialPadding)
         }
 
-        var update: AppUpdate? = null
+        /*var update: AppUpdate? = null
         thread(start = true) {
             if (updateAvailable()) {
                 update = getUpdate()
@@ -97,7 +97,7 @@ class HomeFragment : Fragment() {
                 R.string.cancel,
                 {}
             )
-        }
+        }*/
 
         releasingTodayAdapter = assignReleasingTodayRvAdapter()
         releasingTodayRecyclerView.adapter = releasingTodayAdapter

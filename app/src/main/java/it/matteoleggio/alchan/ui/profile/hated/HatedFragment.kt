@@ -57,6 +57,7 @@ class HatedFragment(val otherUserId: Int? = null) : BaseFragment() {
             viewModel.otherUserId = arguments?.getInt(UserFragment.USER_ID)
         }
 
+        viewModel.charactersList.clear()
         hatedAdapter = HatedRvAdapter(requireActivity(), viewModel.getMixedList(), handleListenerAction())
         hatedListRecyclerView.adapter = hatedAdapter
 
