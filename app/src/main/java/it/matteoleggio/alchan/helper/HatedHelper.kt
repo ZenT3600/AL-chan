@@ -120,7 +120,7 @@ class HatedHelper(val bioOG: String?) {
         newAbout = if (!firstTime) {
             bio?.dropLast(1)?.joinToString("\n") + "\n[](" + newAboutB64 + ")"
         } else {
-            "\n[]($newAboutB64)"
+            bio?.joinToString("\n") + "\n[]($newAboutB64)"
         }
         val json = JSONObject()
         json.put("newAbout", newAbout)
