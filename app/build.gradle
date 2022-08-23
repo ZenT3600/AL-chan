@@ -11,8 +11,8 @@ android {
         applicationId "it.matteoleggio.alsama"
         minSdkVersion 23
         targetSdkVersion 31
-        versionCode 6
-        versionName "6"
+        versionCode 7
+        versionName "Akio Fudou"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
