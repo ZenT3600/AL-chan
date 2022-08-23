@@ -107,7 +107,7 @@ class SplashActivity : BaseActivity() {
     private fun moveToNextPage() {
         if (viewModel.isLoggedIn) {
             val mIntent = Intent(this, BroadcastReceiverNotifs::class.java)
-            PendingIntent.getBroadcast(this, 0, mIntent, PendingIntent.FLAG_UPDATE_CURRENT).send()
+            PendingIntent.getBroadcast(this, 0, mIntent, PendingIntent.FLAG_IMMUTABLE).send()
             startActivity(Intent(this, MainActivity::class.java))
         } else {
             startActivity(Intent(this, LoginActivity::class.java))

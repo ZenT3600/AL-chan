@@ -31,6 +31,7 @@ import it.matteoleggio.alchan.ui.social.SocialFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.time.Duration.Companion.milliseconds
 
 
 class MainActivity : BaseActivity(), BaseMainFragmentListener {
@@ -119,13 +120,14 @@ class MainActivity : BaseActivity(), BaseMainFragmentListener {
         super.onStart()
         val mIntent = Intent(this, BroadcastReceiverNotifs::class.java)
 
-        val intervalMillis = appSettingManager.appSettings.pushNotificationMinimumHours?.times(60 * 60 * 1000)?.toLong()
-        val mPendingIntent = PendingIntent.getBroadcast(this, 0, mIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val intervalMinutes = 10
+        val intervalMillis = (intervalMinutes * 60 * 1000).toLong()
+        val mPendingIntent = PendingIntent.getBroadcast(this, 0, mIntent, PendingIntent.FLAG_IMMUTABLE)
         val mAlarmManager = this
             .getSystemService(Context.ALARM_SERVICE) as AlarmManager
         mAlarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
-            intervalMillis!!, mPendingIntent
+            intervalMillis, mPendingIntent
         )
         viewModel.getNotificationCount()
     }
