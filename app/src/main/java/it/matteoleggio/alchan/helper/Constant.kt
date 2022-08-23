@@ -11,6 +11,8 @@ object Constant {
     var user_about: String? = null
     const val UPDATES_URL = "https://www.matteoleggio.it/static/alsama/latest.txt"
     const val CURRENT_VERSION = 7
+    const val CURRENT_VERSION_WAIFU = "Akio Fudou"
+    const val CURRENT_VERSION_WAIFU_URL = "https://s4.anilist.co/file/anilistcdn/character/large/b52889-leCPSOEz7jsR.png"
 
     const val ANILIST_API_URL = "https://graphql.anilist.co"
     const val ANILIST_URL = "https://anilist.co/"

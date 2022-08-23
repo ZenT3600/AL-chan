@@ -2,26 +2,25 @@ package it.matteoleggio.alchan.ui.settings.about
 
 
 import android.content.Intent
+import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
-import com.google.firebase.BuildConfig
-
+import androidx.fragment.app.Fragment
+import com.bumptech.glide.request.RequestOptions
 import it.matteoleggio.alchan.R
 import it.matteoleggio.alchan.helper.Constant
 import it.matteoleggio.alchan.helper.doOnApplyWindowInsets
+import it.matteoleggio.alchan.helper.libs.GlideApp
 import it.matteoleggio.alchan.helper.updateBottomPadding
 import kotlinx.android.synthetic.main.fragment_about.*
 import kotlinx.android.synthetic.main.layout_toolbar.*
+import java.net.URL
+
 
 /**
  * A simple [Fragment] subclass.
@@ -36,6 +35,9 @@ class AboutFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_about, container, false)
     }
 
+    val Int.dp: Int
+        get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -49,7 +51,13 @@ class AboutFragment : Fragment() {
             view.updateBottomPadding(windowInsets, initialPadding)
         }
 
-        versionText.text = "Version ${Constant.CURRENT_VERSION}"
+        versionText.text = "Version ${Constant.CURRENT_VERSION} (${Constant.CURRENT_VERSION_WAIFU})"
+        GlideApp.with(this).load(URL(Constant.CURRENT_VERSION_WAIFU_URL)).apply(
+            RequestOptions().override(
+                (48).dp,
+                (72).dp
+            )
+        ).into(versionWaifu)
         linkGmailText.text = Constant.EMAIL_ADDRESS
 
         linkAniListLayout.setOnClickListener { openLink(Constant.ALCHAN_THREAD_URL) }

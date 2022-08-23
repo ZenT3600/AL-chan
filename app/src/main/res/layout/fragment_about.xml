@@ -52,6 +52,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_marginEnd="@dimen/marginSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/versionWaifu"
+                    android:maxWidth="48dp"
+                    android:maxHeight="72dp" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:text="@string/al_chan_is_an_unofficial_app_for_anilist_this_app_exists_with_the_purpose_to_help_manage_your_anilist_account"
                 style="?themeRegularFont"
